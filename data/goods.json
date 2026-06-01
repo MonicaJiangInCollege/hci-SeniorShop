@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "纯牛奶 1L",
+    "price": 19.9,
+    "category": "food",
+    "description": "新鲜优质牛奶"
+  },
+  {
+    "id": 2,
+    "name": "全麦面包",
+    "price": 12.8,
+    "category": "food",
+    "description": "健康全麦配方"
+  },
+  {
+    "id": 3,
+    "name": "卷纸 10卷",
+    "price": 29.9,
+    "category": "daily",
+    "description": "柔软舒适"
+  },
+  {
+    "id": 4,
+    "name": "洗衣液 2kg",
+    "price": 35,
+    "category": "daily",
+    "description": "深层去污"
+  },
+  {
+    "id": 5,
+    "name": "维生素片",
+    "price": 45,
+    "category": "medicine",
+    "description": "每日营养补充"
+  },
+  {
+    "id": 6,
+    "name": "创可贴",
+    "price": 8,
+    "category": "medicine",
+    "description": "家庭常备"
+  }
+]

@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>老年极简购物助手</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            padding: 40px 32px;
+            font-size: 26px;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .title {
+            font-size: 50px;
+            text-align: center;
+            margin: 48px 0 56px 0;
+            font-weight: bold;
+            color: #222222;
+        }
+
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            position: relative;
+            height: 220px;
+            font-size: 36px;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 30px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* 底部色条 - 区分功能 */
+        .btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 6px;
+            border-radius: 0 0 25px 25px;
+        }
+
+        .back {
+            width: 100%;
+            height: 100px;
+            background: #555555;
+            color: white;
+            font-size: 32px;
+            border: none;
+            border-radius: 20px;
+            margin-bottom: 32px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .back:hover {
+            background: #444444;
+        }
+
+        /* 方案 B：单主色 #4A90E2 + 不同深浅 - 更统一 */
+        .food {
+            background: #4A90E2;
+        }
+        .food::after {
+            background: #F7931E;
+        }
+        .daily {
+            background: #4A90E2;
+        }
+        .daily::after {
+            background: #58B352;
+        }
+        .medicine {
+            background: #2E75CC;
+        }
+        .medicine::after {
+            background: #2E75CC;
+        }
+        .look {
+            background: #E8E8E8;
+            color: #333333;
+        }
+        .look::after {
+            background: #BDBDBD;
+        }
+        .cart {
+            background: #4A90E2;
+        }
+        .cart::after {
+            background: #F7931E;
+        }
+        .pay {
+            background: #2E75CC;
+        }
+        .pay::after {
+            background: #2E75CC;
+        }
+        .add {
+            background: #4A90E2;
+            width: 100%;
+            height: 100px;
+            font-size: 32px;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            margin: 24px 0;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .add:hover {
+            background: #3a7bc7;
+        }
+
+        .goods-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 28px;
+        }
+
+        .goods-item {
+            border: 3px solid #e0e0e0;
+            border-radius: 20px;
+            padding: 28px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .goods-name {
+            font-size: 32px;
+            font-weight: bold;
+            color: #222222;
+        }
+
+        .goods-desc {
+            font-size: 22px;
+            color: #666;
+            margin: 8px 0;
+        }
+
+        .goods-price {
+            color: #d94052;
+            font-size: 36px;
+            font-weight: bold;
+            margin: 16px 0;
+        }
+
+        .cart-item {
+            padding: 24px;
+            border: 2px solid #d0d0d0;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 28px;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-item-remove {
+            background: #d94052;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 40px;
+            font-weight: bold;
+            color: #d94052;
+            margin: 32px 0;
+        }
+
+        /* 登录/注册页面样式 */
+        .auth-container {
+            max-width: 500px;
+            margin: 60px auto;
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .auth-title {
+            font-size: 42px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #222;
+        }
+
+        .form-group {
+            margin-bottom: 28px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 28px;
+            margin-bottom: 12px;
+            color: #333;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            height: 70px;
+            font-size: 26px;
+            border: 3px solid #ddd;
+            border-radius: 15px;
+            padding: 0 20px;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #4A90E2;
+        }
+
+        .auth-btn {
+            width: 100%;
+            height: 80px;
+            font-size: 32px;
+            background: #4A90E2;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .auth-btn:hover {
+            background: #3a7bc7;
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 24px;
+            color: #666;
+        }
+
+        .auth-switch a {
+            color: #4A90E2;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .user-info {
+            text-align: center;
+            font-size: 24px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* 子女代付页面样式 */
+        .order-card {
+            border: 3px solid #e0e0e0;
+            border-radius: 20px;
+            padding: 28px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 28px;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .order-id {
+            font-size: 24px;
+            color: #666;
+        }
+
+        .order-status {
+            font-size: 24px;
+            padding: 8px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .order-status.pending {
+            background: #FFF3E0;
+            color: #F7931E;
+        }
+
+        .order-status.paid {
+            background: #E8F5E9;
+            color: #58B352;
+        }
+
+        .order-items {
+            font-size: 26px;
+            margin: 16px 0;
+        }
+
+        .order-item-row {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .order-total {
+            font-size: 32px;
+            font-weight: bold;
+            color: #d94052;
+            text-align: right;
+            margin: 20px 0;
+        }
+
+        .pay-btn {
+            width: 100%;
+            height: 80px;
+            font-size: 30px;
+            background: #58B352;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .pay-btn:hover {
+            background: #4a9e47;
+        }
+
+        .pay-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .empty-tip {
+            text-align: center;
+            font-size: 32px;
+            color: #999;
+            margin: 60px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 登录页面 -->
+    <div id="pageLogin" class="page active">
+        <div class="auth-container">
+            <div class="auth-title">登录</div>
+            <div class="form-group">
+                <label>手机号</label>
+                <input type="tel" id="loginPhone" placeholder="请输入手机号">
+            </div>
+            <div class="form-group">
+                <label>密码</label>
+                <input type="password" id="loginPassword" placeholder="请输入密码">
+            </div>
+            <button class="auth-btn" onclick="login()">登录</button>
+            <div class="auth-switch">
+                还没有账号？<a onclick="showPage('pageRegister')">立即注册</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 注册页面 -->
+    <div id="pageRegister" class="page">
+        <div class="auth-container">
+            <div class="auth-title">注册</div>
+            <div class="form-group">
+                <label>手机号</label>
+                <input type="tel" id="regPhone" placeholder="请输入手机号">
+            </div>
+            <div class="form-group">
+                <label>密码</label>
+                <input type="password" id="regPassword" placeholder="请设置密码">
+            </div>
+            <div class="form-group">
+                <label>您的称呼</label>
+                <input type="text" id="regName" placeholder="请输入您的称呼">
+            </div>
+            <div class="form-group">
+                <label>您的身份</label>
+                <select id="regRelation">
+                    <option value="elder">老年人（我自己买）</option>
+                    <option value="child">子女（帮父母付）</option>
+                </select>
+            </div>
+            <button class="auth-btn" onclick="register()">注册</button>
+            <div class="auth-switch">
+                已有账号？<a onclick="showPage('pageLogin')">返回登录</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页面1：老年人首页 -->
+    <div id="page1" class="page">
+        <div class="user-info">您好，<span id="userName"></span>！</div>
+        <div class="title">您想买点什么？</div>
+        <div class="btn-group">
+            <button class="btn food" onclick="go(2)">食品饮料</button>
+            <button class="btn daily" onclick="go(3)">日用品</button>
+            <button class="btn medicine" onclick="go(4)">药品保健</button>
+            <button class="btn look" onclick="go(5)">随便看看</button>
+        </div>
+        <button class="btn cart" onclick="go(6)" style="width:100%;height:120px;font-size:38px;margin-top:20px">
+            我选好的东西
+        </button>
+        <button class="back" onclick="logout()" style="margin-top:40px;">退出登录</button>
+    </div>
+
+    <!-- 页面7：子女首页 - 待代付订单 -->
+    <div id="page7" class="page">
+        <div class="user-info">您好，<span id="childUserName"></span>！（子女账号）</div>
+        <div class="title">待代付订单</div>
+        <div id="pendingOrdersList"></div>
+        <button class="back" onclick="logout()" style="margin-top:40px;">退出登录</button>
+    </div>
+
+    <!-- 页面2：食品 -->
+    <div id="page2" class="page">
+        <button class="back" onclick="go(1)">返回首页</button>
+        <div class="title">食品饮料</div>
+        <div class="goods-list" id="foodList"></div>
+    </div>
+
+    <!-- 页面3：日用品 -->
+    <div id="page3" class="page">
+        <button class="back" onclick="go(1)">返回首页</button>
+        <div class="title">日用品</div>
+        <div class="goods-list" id="dailyList"></div>
+    </div>
+
+    <!-- 页面4：药品 -->
+    <div id="page4" class="page">
+        <button class="back" onclick="go(1)">返回首页</button>
+        <div class="title">药品保健</div>
+        <div class="goods-list" id="medicineList"></div>
+    </div>
+
+    <!-- 页面5：随便看看 -->
+    <div id="page5" class="page">
+        <button class="back" onclick="go(1)">返回首页</button>
+        <div class="title">随便看看</div>
+        <div class="goods-list" id="allList"></div>
+    </div>
+
+    <!-- 页面6：购物车 = 我选好的东西 -->
+    <div id="page6" class="page">
+        <button class="back" onclick="go(1)">返回首页</button>
+        <div class="title">我选好的东西</div>
+        <div id="cartList"></div>
+        <div class="total">合计：¥<span id="total">0</span></div>
+        <button class="btn pay" onclick="pay()" style="width:100%;height:120px;font-size:40px">
+            去结算（亲情代付）
+        </button>
+    </div>
+</body>
+
+<script>
+    const API = 'http://localhost:3000';
+    let currentUser = null; // { userId, name, relation }
+    let cartItems = [];
+
+    // ============ 页面切换 ============
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+    }
+
+    function go(num) {
+        if (num === 1) {
+            // 根据用户身份跳转到不同首页
+            if (currentUser && currentUser.relation === 'child') {
+                loadPendingOrders();
+                showPage('page7');
+            } else {
+                showPage('page1');
+            }
+        } else if (num === 2) {
+            loadGoods('food', 'foodList');
+            showPage('page2');
+        } else if (num === 3) {
+            loadGoods('daily', 'dailyList');
+            showPage('page3');
+        } else if (num === 4) {
+            loadGoods('medicine', 'medicineList');
+            showPage('page4');
+        } else if (num === 5) {
+            loadAllGoods();
+            showPage('page5');
+        } else if (num === 6) {
+            loadCart();
+            showPage('page6');
+        }
+    }
+
+    // ============ 用户认证 ============
+    async function register() {
+        const phone = document.getElementById('regPhone').value.trim();
+        const password = document.getElementById('regPassword').value.trim();
+        const name = document.getElementById('regName').value.trim();
+        const relation = document.getElementById('regRelation').value;
+
+        if (!phone) { alert('请输入手机号'); return; }
+        if (!password) { alert('请输入密码'); return; }
+
+        try {
+            const res = await fetch(`${API}/api/users`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ phone, password, name, relation })
+            });
+            const data = await res.json();
+            if (!res.ok) { alert(data.error); return; }
+            alert('注册成功！请登录');
+            showPage('pageLogin');
+        } catch (e) {
+            alert('网络错误，请检查服务器是否运行');
+        }
+    }
+
+    async function login() {
+        const phone = document.getElementById('loginPhone').value.trim();
+        const password = document.getElementById('loginPassword').value.trim();
+
+        if (!phone) { alert('请输入手机号'); return; }
+        if (!password) { alert('请输入密码'); return; }
+
+        try {
+            const res = await fetch(`${API}/api/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ phone, password })
+            });
+            const data = await res.json();
+            if (!res.ok) { alert(data.error); return; }
+            currentUser = { userId: data.userId, name: data.name, relation: data.relation };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            alert('登录成功！');
+            go(1);
+        } catch (e) {
+            alert('网络错误，请检查服务器是否运行');
+        }
+    }
+
+    function logout() {
+        currentUser = null;
+        localStorage.removeItem('currentUser');
+        cartItems = [];
+        showPage('pageLogin');
+    }
+
+    // 检查是否已登录
+    function checkLogin() {
+        const saved = localStorage.getItem('currentUser');
+        if (saved) {
+            currentUser = JSON.parse(saved);
+            if (currentUser.relation === 'child') {
+                document.getElementById('childUserName').textContent = currentUser.name || '';
+            } else {
+                document.getElementById('userName').textContent = currentUser.name || '';
+            }
+        }
+    }
+
+    // ============ 商品 ============
+    async function loadGoods(category, containerId) {
+        try {
+            const res = await fetch(`${API}/api/goods/${category}`);
+            const goods = await res.json();
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            goods.forEach(g => {
+                container.innerHTML += `
+                    <div class="goods-item">
+                        <div class="goods-name">${g.name}</div>
+                        <div class="goods-desc">${g.description || ''}</div>
+                        <div class="goods-price">¥${g.price.toFixed(1)}</div>
+                        <button class="add" onclick="addCart(${g.id}, '${g.name}', ${g.price})">加入我选好的东西</button>
+                    </div>
+                `;
+            });
+        } catch (e) {
+            alert('加载商品失败，请检查服务器');
+        }
+    }
+
+    async function loadAllGoods() {
+        try {
+            const res = await fetch(`${API}/api/goods`);
+            const goods = await res.json();
+            const container = document.getElementById('allList');
+            container.innerHTML = '';
+            goods.forEach(g => {
+                container.innerHTML += `
+                    <div class="goods-item">
+                        <div class="goods-name">${g.name}</div>
+                        <div class="goods-desc">${g.description || ''}</div>
+                        <div class="goods-price">¥${g.price.toFixed(1)}</div>
+                        <button class="add" onclick="addCart(${g.id}, '${g.name}', ${g.price})">加入我选好的东西</button>
+                    </div>
+                `;
+            });
+        } catch (e) {
+            alert('加载商品失败，请检查服务器');
+        }
+    }
+
+    // ============ 购物车 ============
+    async function loadCart() {
+        if (!currentUser) return;
+        try {
+            const res = await fetch(`${API}/api/cart/${currentUser.userId}`);
+            cartItems = await res.json();
+            renderCart();
+        } catch (e) {
+            alert('加载购物车失败');
+        }
+    }
+
+    async function addCart(goodsId, name, price) {
+        if (!confirm('确定要把 ' + name + ' 加入购物车吗？')) return;
+        if (!currentUser) { alert('请先登录'); return; }
+        try {
+            const res = await fetch(`${API}/api/cart/${currentUser.userId}/items`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ goodsId, name, price })
+            });
+            const data = await res.json();
+            if (!res.ok) { alert(data.error); return; }
+            cartItems = data.items;
+            alert('已加入购物车！');
+        } catch (e) {
+            alert('网络错误');
+        }
+    }
+
+    async function removeCartItem(itemId) {
+        if (!currentUser) return;
+        try {
+            const res = await fetch(`${API}/api/cart/${currentUser.userId}/items/${itemId}`, {
+                method: 'DELETE'
+            });
+            const data = await res.json();
+            if (!res.ok) { alert(data.error); return; }
+            cartItems = data.items;
+            renderCart();
+        } catch (e) {
+            alert('网络错误');
+        }
+    }
+
+    function renderCart() {
+        const list = document.getElementById('cartList');
+        list.innerHTML = '';
+        let total = 0;
+        cartItems.forEach(item => {
+            total += item.price;
+            list.innerHTML += `
+                <div class="cart-item">
+                    <span>${item.name}  ￥${item.price.toFixed(1)}</span>
+                    <button class="cart-item-remove" onclick="removeCartItem('${item.id}')">删除</button>
+                </div>
+            `;
+        });
+        document.getElementById('total').textContent = total.toFixed(1);
+    }
+
+    // ============ 结算 ============
+    async function pay() {
+        if (cartItems.length === 0) {
+            alert('您还没有选任何东西哦！');
+            return;
+        }
+        if (!confirm('确定要提交订单，请子女代付吗？')) return;
+
+        const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+        try {
+            const res = await fetch(`${API}/api/orders`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userId: currentUser.userId,
+                    items: cartItems,
+                    total
+                })
+            });
+            const data = await res.json();
+            if (!res.ok) { alert(data.error); return; }
+            alert('订单已创建！订单号：' + data.order.id + '\n等待子女代付……');
+            cartItems = [];
+            renderCart();
+            go(1);
+        } catch (e) {
+            alert('网络错误');
+        }
+    }
+
+    // ============ 子女代付功能 ============
+    async function loadPendingOrders() {
+        try {
+            const res = await fetch(`${API}/api/orders/pending`);
+            const orders = await res.json();
+            const container = document.getElementById('pendingOrdersList');
+            container.innerHTML = '';
+
+            if (orders.length === 0) {
+                container.innerHTML = '<div class="empty-tip">暂无待代付订单 ✨</div>';
+                return;
+            }
+
+            orders.forEach(order => {
+                const itemsHtml = order.items.map(item =>
+                    `<div class="order-item-row">${item.name}  ￥${item.price.toFixed(1)}</div>`
+                ).join('');
+
+                container.innerHTML += `
+                    <div class="order-card">
+                        <div class="order-header">
+                            <span class="order-id">订单号：${order.id}</span>
+                            <span class="order-status ${order.status}">${order.status === 'pending' ? '待代付' : '已代付'}</span>
+                        </div>
+                        <div class="order-items">${itemsHtml}</div>
+                        <div class="order-total">合计：¥${order.total.toFixed(1)}</div>
+                        ${order.status === 'pending'
+                            ? `<button class="pay-btn" onclick="childPayOrder('${order.id}')">帮我代付 ¥${order.total.toFixed(1)}</button>`
+                            : '<button class="pay-btn" disabled>已代付</button>'
+                        }
+                    </div>
+                `;
+            });
+        } catch (e) {
+            alert('加载订单失败，请检查服务器');
+        }
+    }
+
+    async function childPayOrder(orderId) {
+        if (!confirm('确认代付此订单吗？')) return;
+        try {
+            const res = await fetch(`${API}/api/orders/${orderId}/pay`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ payerId: currentUser.userId })
+            });
+            const data = await res.json();
+            if (!res.ok) { alert(data.error); return; }
+            alert('代付成功！🎉');
+            loadPendingOrders();
+        } catch (e) {
+            alert('网络错误');
+        }
+    }
+
+    // 初始化
+    checkLogin();
+    if (currentUser) {
+        if (currentUser.relation === 'child') {
+            document.getElementById('childUserName').textContent = currentUser.name || '';
+            loadPendingOrders();
+            showPage('page7');
+        } else {
+            document.getElementById('userName').textContent = currentUser.name || '';
+            showPage('page1');
+        }
+    }
+</script>
+</html>
