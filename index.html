@@ -13,12 +13,18 @@
         }
 
         body {
-            background: #f5f5f5;
-            padding: 40px 32px;
-            font-size: 26px;
-            line-height: 1.6;
-            max-width: 1200px;
+            background: #FFF8F0;
+            padding: 8px 6px;
+            font-size: 15px;
+            line-height: 1.4;
+            max-width: 600px;
             margin: 0 auto;
+            overflow-x: hidden;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
         }
 
         .page {
@@ -30,9 +36,9 @@
         }
 
         .title {
-            font-size: 50px;
+            font-size: 24px;
             text-align: center;
-            margin: 48px 0 56px 0;
+            margin: 12px 0 18px 0;
             font-weight: bold;
             color: #222222;
         }
@@ -40,26 +46,36 @@
         .btn-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 32px;
-            margin-bottom: 40px;
+            gap: 10px;
+            margin-bottom: 14px;
         }
 
         .btn {
             position: relative;
-            height: 220px;
-            font-size: 36px;
+            height: 120px;
+            font-size: 20px;
             border: none;
-            border-radius: 25px;
+            border-radius: 16px;
             color: white;
             font-weight: bold;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.12);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding-bottom: 30px;
+            padding: 10px;
+            overflow: hidden;
+        }
+
+        .btn img {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 6px;
+            background: rgba(255,255,255,0.3);
         }
 
         .btn:hover {
@@ -71,230 +87,214 @@
             transform: translateY(0);
         }
 
-        /* 底部色条 - 区分功能 */
-        .btn::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%;
-            height: 6px;
-            border-radius: 0 0 25px 25px;
-        }
-
         .back {
             width: 100%;
-            height: 100px;
-            background: #555555;
+            height: 48px;
+            background: #8D6E63;
             color: white;
-            font-size: 32px;
+            font-size: 18px;
             border: none;
-            border-radius: 20px;
-            margin-bottom: 32px;
+            border-radius: 12px;
+            margin-bottom: 12px;
             cursor: pointer;
             transition: background 0.2s;
         }
 
         .back:hover {
-            background: #444444;
+            background: #6D4C41;
         }
 
-        /* 方案 B：单主色 #4A90E2 + 不同深浅 - 更统一 */
+        /* 暖色养老风格：米白 + 橙色 */
         .food {
-            background: #4A90E2;
-        }
-        .food::after {
-            background: #F7931E;
+            background: #FF8C42;
         }
         .daily {
-            background: #4A90E2;
-        }
-        .daily::after {
-            background: #58B352;
+            background: #FFA726;
         }
         .medicine {
-            background: #2E75CC;
-        }
-        .medicine::after {
-            background: #2E75CC;
+            background: #FB8C00;
         }
         .look {
-            background: #E8E8E8;
-            color: #333333;
-        }
-        .look::after {
-            background: #BDBDBD;
+            background: #FFE0B2;
+            color: #5D4037;
         }
         .cart {
-            background: #4A90E2;
-        }
-        .cart::after {
-            background: #F7931E;
+            background: #FF8C42;
         }
         .pay {
-            background: #2E75CC;
-        }
-        .pay::after {
-            background: #2E75CC;
+            background: #E65100;
         }
         .add {
-            background: #4A90E2;
+            background: #FF8C42;
             width: 100%;
-            height: 100px;
-            font-size: 32px;
+            height: 48px;
+            font-size: 16px;
             border: none;
-            border-radius: 20px;
+            border-radius: 12px;
             color: white;
-            margin: 24px 0;
+            margin: 8px 0;
             cursor: pointer;
             transition: background 0.2s;
         }
         .add:hover {
-            background: #3a7bc7;
+            background: #F57C00;
         }
 
         .goods-list {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 28px;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
         }
 
         .goods-item {
-            border: 3px solid #e0e0e0;
-            border-radius: 20px;
-            padding: 28px;
-            background: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border: 2px solid #FFE0B2;
+            border-radius: 12px;
+            padding: 8px;
+            background: #FFFDF9;
+            box-shadow: 0 2px 6px rgba(255,140,66,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .goods-image {
+            width: 100%;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            background: #f0f0f0;
         }
 
         .goods-name {
-            font-size: 32px;
+            font-size: 14px;
             font-weight: bold;
             color: #222222;
+            text-align: center;
         }
 
         .goods-desc {
-            font-size: 22px;
+            font-size: 11px;
             color: #666;
-            margin: 8px 0;
+            margin: 3px 0;
+            text-align: center;
         }
 
         .goods-price {
-            color: #d94052;
-            font-size: 36px;
+            color: #E65100;
+            font-size: 16px;
             font-weight: bold;
-            margin: 16px 0;
+            margin: 6px 0;
         }
 
         .cart-item {
-            padding: 24px;
-            border: 2px solid #d0d0d0;
-            border-radius: 15px;
-            margin: 20px 0;
-            font-size: 28px;
-            background: #fff;
+            padding: 8px;
+            border: 2px solid #FFE0B2;
+            border-radius: 10px;
+            margin: 8px 0;
+            font-size: 14px;
+            background: #FFFDF9;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .cart-item-remove {
-            background: #d94052;
+            background: #E65100;
             color: white;
             border: none;
-            border-radius: 10px;
-            padding: 8px 20px;
-            font-size: 24px;
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 12px;
             cursor: pointer;
         }
 
         .total {
             text-align: right;
-            font-size: 40px;
+            font-size: 20px;
             font-weight: bold;
-            color: #d94052;
-            margin: 32px 0;
+            color: #E65100;
+            margin: 12px 0;
         }
 
         /* 登录/注册页面样式 */
         .auth-container {
-            max-width: 500px;
-            margin: 60px auto;
-            background: white;
-            border-radius: 25px;
-            padding: 40px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            max-width: 360px;
+            margin: 20px auto;
+            background: #FFFDF9;
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: 0 4px 12px rgba(255,140,66,0.12);
         }
 
         .auth-title {
-            font-size: 42px;
+            font-size: 24px;
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 18px;
             color: #222;
         }
 
         .form-group {
-            margin-bottom: 28px;
+            margin-bottom: 12px;
         }
 
         .form-group label {
             display: block;
-            font-size: 28px;
-            margin-bottom: 12px;
+            font-size: 14px;
+            margin-bottom: 4px;
             color: #333;
         }
 
         .form-group input, .form-group select {
             width: 100%;
-            height: 70px;
-            font-size: 26px;
-            border: 3px solid #ddd;
-            border-radius: 15px;
-            padding: 0 20px;
+            height: 42px;
+            font-size: 14px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 0 12px;
             transition: border-color 0.2s;
         }
 
         .form-group input:focus, .form-group select:focus {
             outline: none;
-            border-color: #4A90E2;
+            border-color: #FF8C42;
         }
 
         .auth-btn {
             width: 100%;
-            height: 80px;
-            font-size: 32px;
-            background: #4A90E2;
+            height: 46px;
+            font-size: 18px;
+            background: #FF8C42;
             color: white;
             border: none;
-            border-radius: 20px;
+            border-radius: 12px;
             cursor: pointer;
             font-weight: bold;
             transition: background 0.2s;
         }
 
         .auth-btn:hover {
-            background: #3a7bc7;
+            background: #F57C00;
         }
 
         .auth-switch {
             text-align: center;
-            margin-top: 30px;
-            font-size: 24px;
+            margin-top: 12px;
+            font-size: 13px;
             color: #666;
         }
 
         .auth-switch a {
-            color: #4A90E2;
+            color: #FF8C42;
             cursor: pointer;
             text-decoration: underline;
         }
 
         .user-info {
             text-align: center;
-            font-size: 24px;
+            font-size: 13px;
             color: #666;
-            margin-bottom: 20px;
+            margin-bottom: 8px;
         }
 
         .hidden {
@@ -303,30 +303,30 @@
 
         /* 子女代付页面样式 */
         .order-card {
-            border: 3px solid #e0e0e0;
-            border-radius: 20px;
-            padding: 28px;
-            background: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            margin-bottom: 28px;
+            border: 2px solid #FFE0B2;
+            border-radius: 14px;
+            padding: 12px;
+            background: #FFFDF9;
+            box-shadow: 0 2px 6px rgba(255,140,66,0.1);
+            margin-bottom: 14px;
         }
 
         .order-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .order-id {
-            font-size: 24px;
+            font-size: 12px;
             color: #666;
         }
 
         .order-status {
-            font-size: 24px;
-            padding: 8px 20px;
-            border-radius: 10px;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 8px;
             font-weight: bold;
         }
 
@@ -341,38 +341,38 @@
         }
 
         .order-items {
-            font-size: 26px;
-            margin: 16px 0;
+            font-size: 13px;
+            margin: 8px 0;
         }
 
         .order-item-row {
-            padding: 8px 0;
+            padding: 4px 0;
             border-bottom: 1px solid #f0f0f0;
         }
 
         .order-total {
-            font-size: 32px;
+            font-size: 18px;
             font-weight: bold;
-            color: #d94052;
+            color: #E65100;
             text-align: right;
-            margin: 20px 0;
+            margin: 10px 0;
         }
 
         .pay-btn {
             width: 100%;
-            height: 80px;
-            font-size: 30px;
-            background: #58B352;
+            height: 46px;
+            font-size: 18px;
+            background: #FF8C42;
             color: white;
             border: none;
-            border-radius: 20px;
+            border-radius: 12px;
             cursor: pointer;
             font-weight: bold;
             transition: background 0.2s;
         }
 
         .pay-btn:hover {
-            background: #4a9e47;
+            background: #F57C00;
         }
 
         .pay-btn:disabled {
@@ -382,9 +382,9 @@
 
         .empty-tip {
             text-align: center;
-            font-size: 32px;
+            font-size: 18px;
             color: #999;
-            margin: 60px 0;
+            margin: 24px 0;
         }
     </style>
 </head>
@@ -444,15 +444,28 @@
         <div class="user-info">您好，<span id="userName"></span>！</div>
         <div class="title">您想买点什么？</div>
         <div class="btn-group">
-            <button class="btn food" onclick="go(2)">食品饮料</button>
-            <button class="btn daily" onclick="go(3)">日用品</button>
-            <button class="btn medicine" onclick="go(4)">药品保健</button>
-            <button class="btn look" onclick="go(5)">随便看看</button>
+            <button class="btn food" onclick="go(2)">
+                <img src="images/food.png" alt="食品饮料"/>
+                食品饮料
+            </button>
+            <button class="btn daily" onclick="go(3)">
+                <img src="images/daily.png" alt="日用品"/>
+                日用品
+            </button>
+            <button class="btn medicine" onclick="go(4)">
+                <img src="images/medicine.png" alt="药品保健"/>
+                药品保健
+            </button>
+            <button class="btn look" onclick="go(5)">
+                <img src="images/browse.png" alt="随便看看"/>
+                随便看看
+            </button>
         </div>
-        <button class="btn cart" onclick="go(6)" style="width:100%;height:120px;font-size:38px;margin-top:20px">
+        <button class="btn cart" onclick="go(6)" style="width:100%;height:80px;font-size:22px;margin-top:14px;">
+            <img src="images/cart.png" alt="购物车"/>
             我选好的东西
         </button>
-        <button class="back" onclick="logout()" style="margin-top:40px;">退出登录</button>
+        <button class="back" onclick="logout()" style="margin-top:24px;">退出登录</button>
     </div>
 
     <!-- 页面7：子女首页 - 待代付订单 -->
@@ -460,7 +473,7 @@
         <div class="user-info">您好，<span id="childUserName"></span>！（子女账号）</div>
         <div class="title">待代付订单</div>
         <div id="pendingOrdersList"></div>
-        <button class="back" onclick="logout()" style="margin-top:40px;">退出登录</button>
+        <button class="back" onclick="logout()" style="margin-top:24px;">退出登录</button>
     </div>
 
     <!-- 页面2：食品 -->
@@ -497,7 +510,7 @@
         <div class="title">我选好的东西</div>
         <div id="cartList"></div>
         <div class="total">合计：¥<span id="total">0</span></div>
-        <button class="btn pay" onclick="pay()" style="width:100%;height:120px;font-size:40px">
+        <button class="btn pay" onclick="pay()" style="width:100%;height:60px;font-size:20px">
             去结算（亲情代付）
         </button>
     </div>
@@ -618,8 +631,12 @@
             const container = document.getElementById(containerId);
             container.innerHTML = '';
             goods.forEach(g => {
+                const imageHtml = g.image
+                    ? `<img src="${g.image}" alt="${g.name}" class="goods-image" onerror="this.style.display='none'"/>`
+                    : '';
                 container.innerHTML += `
                     <div class="goods-item">
+                        ${imageHtml}
                         <div class="goods-name">${g.name}</div>
                         <div class="goods-desc">${g.description || ''}</div>
                         <div class="goods-price">¥${g.price.toFixed(1)}</div>
@@ -639,8 +656,12 @@
             const container = document.getElementById('allList');
             container.innerHTML = '';
             goods.forEach(g => {
+                const imageHtml = g.image
+                    ? `<img src="${g.image}" alt="${g.name}" class="goods-image" onerror="this.style.display='none'"/>`
+                    : '';
                 container.innerHTML += `
                     <div class="goods-item">
+                        ${imageHtml}
                         <div class="goods-name">${g.name}</div>
                         <div class="goods-desc">${g.description || ''}</div>
                         <div class="goods-price">¥${g.price.toFixed(1)}</div>

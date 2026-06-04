@@ -4,41 +4,191 @@
     "name": "纯牛奶 1L",
     "price": 19.9,
     "category": "food",
-    "description": "新鲜优质牛奶"
+    "description": "新鲜优质牛奶",
+    "image": "https://picsum.photos/200/150?random=1"
   },
   {
     "id": 2,
     "name": "全麦面包",
     "price": 12.8,
     "category": "food",
-    "description": "健康全麦配方"
+    "description": "健康全麦配方",
+    "image": "https://picsum.photos/200/150?random=2"
+  },
+  {
+    "id": 7,
+    "name": "鸡蛋 30枚",
+    "price": 32.5,
+    "category": "food",
+    "description": "农家散养土鸡蛋",
+    "image": "https://picsum.photos/200/150?random=7"
+  },
+  {
+    "id": 8,
+    "name": "东北大米 5kg",
+    "price": 49.9,
+    "category": "food",
+    "description": "粒粒香甜软糯",
+    "image": "https://picsum.photos/200/150?random=8"
+  },
+  {
+    "id": 9,
+    "name": "花生油 5L",
+    "price": 89.9,
+    "category": "food",
+    "description": "压榨一级花生油",
+    "image": "https://picsum.photos/200/150?random=9"
+  },
+  {
+    "id": 10,
+    "name": "红枣 500g",
+    "price": 18.8,
+    "category": "food",
+    "description": "新疆若羌灰枣",
+    "image": "https://picsum.photos/200/150?random=10"
+  },
+  {
+    "id": 11,
+    "name": "绿茶 250g",
+    "price": 56.0,
+    "category": "food",
+    "description": "明前龙井清香回甘",
+    "image": "https://picsum.photos/200/150?random=11"
+  },
+  {
+    "id": 12,
+    "name": "意大利面 500g",
+    "price": 15.6,
+    "category": "food",
+    "description": "硬质小麦制作",
+    "image": "https://picsum.photos/200/150?random=12"
   },
   {
     "id": 3,
     "name": "卷纸 10卷",
     "price": 29.9,
     "category": "daily",
-    "description": "柔软舒适"
+    "description": "柔软舒适",
+    "image": "https://picsum.photos/200/150?random=3"
   },
   {
     "id": 4,
     "name": "洗衣液 2kg",
-    "price": 35,
+    "price": 35.0,
     "category": "daily",
-    "description": "深层去污"
+    "description": "深层去污",
+    "image": "https://picsum.photos/200/150?random=4"
+  },
+  {
+    "id": 13,
+    "name": "洗洁精 1.5kg",
+    "price": 12.9,
+    "category": "daily",
+    "description": "不伤手易冲洗",
+    "image": "https://picsum.photos/200/150?random=13"
+  },
+  {
+    "id": 14,
+    "name": "垃圾袋 3卷",
+    "price": 9.9,
+    "category": "daily",
+    "description": "加厚抽绳式",
+    "image": "https://picsum.photos/200/150?random=14"
+  },
+  {
+    "id": 15,
+    "name": "抽纸 24包",
+    "price": 25.8,
+    "category": "daily",
+    "description": "三层柔软不掉屑",
+    "image": "https://picsum.photos/200/150?random=15"
+  },
+  {
+    "id": 16,
+    "name": "牙膏 120g",
+    "price": 15.5,
+    "category": "daily",
+    "description": "清新口气防蛀",
+    "image": "https://picsum.photos/200/150?random=16"
+  },
+  {
+    "id": 17,
+    "name": "肥皂 3块装",
+    "price": 11.8,
+    "category": "daily",
+    "description": "天然植物配方",
+    "image": "https://picsum.photos/200/150?random=17"
+  },
+  {
+    "id": 18,
+    "name": "保鲜膜 2卷",
+    "price": 8.5,
+    "category": "daily",
+    "description": "食品级安全材质",
+    "image": "https://picsum.photos/200/150?random=18"
   },
   {
     "id": 5,
     "name": "维生素片",
-    "price": 45,
+    "price": 45.0,
     "category": "medicine",
-    "description": "每日营养补充"
+    "description": "每日营养补充",
+    "image": "https://picsum.photos/200/150?random=5"
   },
   {
     "id": 6,
     "name": "创可贴",
-    "price": 8,
+    "price": 8.0,
     "category": "medicine",
-    "description": "家庭常备"
+    "description": "家庭常备",
+    "image": "https://picsum.photos/200/150?random=6"
+  },
+  {
+    "id": 19,
+    "name": "钙片 60粒",
+    "price": 68.0,
+    "category": "medicine",
+    "description": "中老年补钙佳品",
+    "image": "https://picsum.photos/200/150?random=19"
+  },
+  {
+    "id": 20,
+    "name": "鱼油胶囊 30粒",
+    "price": 98.0,
+    "category": "medicine",
+    "description": "深海鱼油护心脑",
+    "image": "https://picsum.photos/200/150?random=20"
+  },
+  {
+    "id": 21,
+    "name": "体温计",
+    "price": 22.0,
+    "category": "medicine",
+    "description": "电子精准测温",
+    "image": "https://picsum.photos/200/150?random=21"
+  },
+  {
+    "id": 22,
+    "name": "口罩 50只",
+    "price": 19.9,
+    "category": "medicine",
+    "description": "三层防护透气",
+    "image": "https://picsum.photos/200/150?random=22"
+  },
+  {
+    "id": 23,
+    "name": "葡萄糖口服液 10支",
+    "price": 28.0,
+    "category": "medicine",
+    "description": "快速补充能量",
+    "image": "https://picsum.photos/200/150?random=23"
+  },
+  {
+    "id": 24,
+    "name": "护手霜 200ml",
+    "price": 35.0,
+    "category": "medicine",
+    "description": "滋润保湿防裂",
+    "image": "https://picsum.photos/200/150?random=24"
   }
 ]
