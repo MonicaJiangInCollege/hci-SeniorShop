@@ -18,6 +18,7 @@ const USERS_FILE = path.join(DATA_DIR, 'users.json');
 const GOODS_FILE = path.join(DATA_DIR, 'goods.json');
 const CARTS_FILE = path.join(DATA_DIR, 'carts.json');
 const ORDERS_FILE = path.join(DATA_DIR, 'orders.json');
+const BEHAVIOR_FILE = path.join(DATA_DIR, 'behavior.json');
 
 // 确保 data 目录存在
 if (!fs.existsSync(DATA_DIR)) {
@@ -76,6 +77,199 @@ initGoods();
 initDataFile(USERS_FILE, []);
 initDataFile(CARTS_FILE, []);
 initDataFile(ORDERS_FILE, []);
+initDataFile(BEHAVIOR_FILE, []);
+
+// ============ 推荐算法 ============
+
+/**
+ * 获取用户行为数据
+ */
+function getUserBehavior(userId) {
+    const behaviors = JSON.parse(fs.readFileSync(BEHAVIOR_FILE, 'utf8'));
+    let behavior = behaviors.find(b => b.userId === userId);
+    if (!behavior) {
+        behavior = {
+            userId,
+            searchHistory: [],
+            browseHistory: [],
+            viewCounts: {}
+        };
+        behaviors.push(behavior);
+        saveData(BEHAVIOR_FILE, behaviors);
+    }
+    return behavior;
+}
+
+/**
+ * 获取全局热门商品（基于所有用户的购物车和订单数据）
+ */
+function getGlobalHotGoods(limit = 10) {
+    const carts = JSON.parse(fs.readFileSync(CARTS_FILE, 'utf8'));
+    const orders = JSON.parse(fs.readFileSync(ORDERS_FILE, 'utf8'));
+    const goods = JSON.parse(fs.readFileSync(GOODS_FILE, 'utf8'));
+
+    const scoreMap = {}; // goodsId -> score
+
+    // 购物车中的商品 +1分
+    carts.forEach(cart => {
+        cart.items.forEach(item => {
+            scoreMap[item.goodsId] = (scoreMap[item.goodsId] || 0) + 1;
+        });
+    });
+
+    // 订单中的商品 +3分
+    orders.forEach(order => {
+        order.items.forEach(item => {
+            scoreMap[item.goodsId] = (scoreMap[item.goodsId] || 0) + 3;
+        });
+    });
+
+    // 按分数排序，取 top N
+    const sorted = Object.entries(scoreMap)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, limit)
+        .map(([goodsId]) => parseInt(goodsId));
+
+    // 补足：如果热门商品不够，用老年用品补充
+    if (sorted.length < limit) {
+        const elderlyGoods = goods
+            .filter(g => g.elderlyFriendly && !sorted.includes(g.id))
+            .map(g => g.id);
+        sorted.push(...elderlyGoods.slice(0, limit - sorted.length));
+    }
+
+    return sorted;
+}
+
+/**
+ * 智能推荐核心算法
+ * @param {string} userId - 用户ID
+ * @param {number} limit - 返回推荐数量
+ * @returns {Array} 推荐的商品列表
+ */
+function getRecommendations(userId, limit = 6) {
+    const goods = JSON.parse(fs.readFileSync(GOODS_FILE, 'utf8'));
+    const behavior = getUserBehavior(userId);
+
+    // 获取用户购物车中的商品ID（用于去重）
+    const carts = JSON.parse(fs.readFileSync(CARTS_FILE, 'utf8'));
+    const userCart = carts.find(c => c.userId === userId);
+    const cartGoodsIds = userCart ? userCart.items.map(i => i.goodsId) : [];
+
+    const hasHistory = behavior.searchHistory.length > 0 || behavior.browseHistory.length > 0;
+
+    if (!hasHistory) {
+        // === 冷启动：返回老年用品 + 热门商品 ===
+        const hotIds = getGlobalHotGoods(limit * 2);
+        const elderlyGoods = goods.filter(g => g.elderlyFriendly && !cartGoodsIds.includes(g.id));
+
+        // 老年用品优先，不够用热门补
+        const result = [];
+        const seen = new Set();
+
+        for (const g of elderlyGoods) {
+            if (result.length >= limit) break;
+            if (!seen.has(g.id)) {
+                result.push(g);
+                seen.add(g.id);
+            }
+        }
+
+        for (const id of hotIds) {
+            if (result.length >= limit) break;
+            if (!seen.has(id) && !cartGoodsIds.includes(id)) {
+                const g = goods.find(g => g.id === id);
+                if (g) {
+                    result.push(g);
+                    seen.add(g.id);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    // === 有行为数据：混合推荐打分 ===
+    const WEIGHTS = {
+        categoryPreference: 0.35,  // 品类偏好
+        keywordMatch: 0.25,       // 关键词匹配
+        collaborative: 0.20,      // 协同过滤（热门）
+        elderlyFriendly: 0.20     // 老年适用
+    };
+
+    // 1. 统计品类偏好
+    const categoryCount = {}; // { food: 5, daily: 2 }
+    behavior.browseHistory.forEach(h => {
+        if (h.category) {
+            categoryCount[h.category] = (categoryCount[h.category] || 0) + 1;
+        }
+    });
+    // 搜索关键词也映射到品类
+    const allKeywords = behavior.searchHistory.map(h => h.keyword.toLowerCase());
+    const categoryKeywords = {
+        food: ['食品', '饮料', '牛奶', '面包', '鸡蛋', '大米', '油', '枣', '茶', '面', '吃', '喝', '零食', '水果', '菜'],
+        daily: ['日用', '纸', '洗衣', '清洁', '牙膏', '肥皂', '垃圾', '保鲜', '家居', '用'],
+        medicine: ['药', '保健', '钙', '维生素', '鱼油', '口罩', '体温', '葡萄糖', '护手', '医疗', '健康', '补']
+    };
+
+    allKeywords.forEach(kw => {
+        for (const [cat, kws] of Object.entries(categoryKeywords)) {
+            if (kws.some(k => kw.includes(k))) {
+                categoryCount[cat] = (categoryCount[cat] || 0) + 2; // 搜索权重更高
+            }
+        }
+    });
+
+    // 计算最高品类次数
+    const maxCategoryCount = Math.max(1, ...Object.values(categoryCount));
+
+    // 2. 获取全局热门商品ID集合
+    const hotGoodsIds = new Set(getGlobalHotGoods(20));
+
+    // 3. 对每个商品打分（排除已在购物车中的）
+    const scoredGoods = goods
+        .filter(g => !cartGoodsIds.includes(g.id))
+        .map(g => {
+            let score = 0;
+
+            // 3a. 品类偏好得分（归一化）
+            const catCount = categoryCount[g.category] || 0;
+            const categoryScore = catCount / maxCategoryCount;
+            score += categoryScore * WEIGHTS.categoryPreference;
+
+            // 3b. 关键词匹配得分
+            let keywordScore = 0;
+            const searchText = (g.name + ' ' + g.description + ' ' + (g.tags || []).join(' ')).toLowerCase();
+            allKeywords.forEach(kw => {
+                if (searchText.includes(kw)) {
+                    keywordScore = Math.max(keywordScore, 0.8); // 精确匹配
+                }
+                // 部分匹配
+                const kwChars = kw.split('');
+                let matchCount = 0;
+                kwChars.forEach(ch => {
+                    if (searchText.includes(ch)) matchCount++;
+                });
+                const partialMatch = matchCount / kwChars.length;
+                keywordScore = Math.max(keywordScore, partialMatch * 0.4);
+            });
+            score += keywordScore * WEIGHTS.keywordMatch;
+
+            // 3c. 协同过滤得分
+            const collabScore = hotGoodsIds.has(g.id) ? 1 : 0;
+            score += collabScore * WEIGHTS.collaborative;
+
+            // 3d. 老年适用得分
+            const elderlyScore = g.elderlyFriendly ? 1 : 0;
+            score += elderlyScore * WEIGHTS.elderlyFriendly;
+
+            return { goods: g, score };
+        });
+
+    // 按分数降序排列，取 top N
+    scoredGoods.sort((a, b) => b.score - a.score);
+    return scoredGoods.slice(0, limit).map(item => item.goods);
+}
 
 // ============ API 路由 ============
 
@@ -237,6 +431,89 @@ app.post('/api/orders/:orderId/pay', (req, res) => {
     order.paidAt = new Date().toISOString();
     saveData(ORDERS_FILE, orders);
     res.json({ message: '代付成功！', order });
+});
+
+// --- 商品搜索 ---
+app.get('/api/search', (req, res) => {
+    const q = (req.query.q || '').trim().toLowerCase();
+    if (!q) {
+        return res.json([]);
+    }
+    const goods = JSON.parse(fs.readFileSync(GOODS_FILE, 'utf8'));
+    // 模糊匹配：名称、描述、分类、标签
+    const results = goods.filter(g => {
+        const searchText = (g.name + ' ' + g.description + ' ' + g.category + ' ' + (g.tags || []).join(' ')).toLowerCase();
+        // 支持多关键词（空格分隔），全部匹配才返回
+        const keywords = q.split(/\s+/);
+        return keywords.every(kw => searchText.includes(kw));
+    });
+    res.json(results);
+});
+
+// --- 记录搜索行为 ---
+app.post('/api/behavior/search', (req, res) => {
+    const { userId, keyword } = req.body;
+    if (!userId || !keyword) {
+        return res.status(400).json({ error: '缺少参数' });
+    }
+    const behaviors = JSON.parse(fs.readFileSync(BEHAVIOR_FILE, 'utf8'));
+    let behavior = behaviors.find(b => b.userId === userId);
+    if (!behavior) {
+        behavior = { userId, searchHistory: [], browseHistory: [], viewCounts: {} };
+        behaviors.push(behavior);
+    }
+    behavior.searchHistory.push({
+        keyword: keyword.trim(),
+        time: new Date().toISOString()
+    });
+    // 只保留最近 50 条搜索记录
+    if (behavior.searchHistory.length > 50) {
+        behavior.searchHistory = behavior.searchHistory.slice(-50);
+    }
+    saveData(BEHAVIOR_FILE, behaviors);
+    res.json({ message: '搜索记录已保存' });
+});
+
+// --- 记录浏览行为 ---
+app.post('/api/behavior/browse', (req, res) => {
+    const { userId, goodsId, category } = req.body;
+    if (!userId) {
+        return res.status(400).json({ error: '缺少用户ID' });
+    }
+    const behaviors = JSON.parse(fs.readFileSync(BEHAVIOR_FILE, 'utf8'));
+    let behavior = behaviors.find(b => b.userId === userId);
+    if (!behavior) {
+        behavior = { userId, searchHistory: [], browseHistory: [], viewCounts: {} };
+        behaviors.push(behavior);
+    }
+    // 记录浏览
+    const browseEntry = {
+        time: new Date().toISOString()
+    };
+    if (goodsId) browseEntry.goodsId = goodsId;
+    if (category) browseEntry.category = category;
+    behavior.browseHistory.push(browseEntry);
+
+    // 更新浏览次数
+    if (goodsId) {
+        const key = String(goodsId);
+        behavior.viewCounts[key] = (behavior.viewCounts[key] || 0) + 1;
+    }
+
+    // 只保留最近 100 条浏览记录
+    if (behavior.browseHistory.length > 100) {
+        behavior.browseHistory = behavior.browseHistory.slice(-100);
+    }
+
+    saveData(BEHAVIOR_FILE, behaviors);
+    res.json({ message: '浏览记录已保存' });
+});
+
+// --- 获取个性化推荐 ---
+app.get('/api/recommendations/:userId', (req, res) => {
+    const { userId } = req.params;
+    const recommendations = getRecommendations(userId, 6);
+    res.json(recommendations);
 });
 
 // ============ 启动服务器 ============

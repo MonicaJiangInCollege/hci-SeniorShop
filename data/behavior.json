@@ -1,0 +1,30 @@
+[
+  {
+    "userId": "1780560275301",
+    "searchHistory": [],
+    "browseHistory": [],
+    "viewCounts": {}
+  },
+  {
+    "userId": "1780680040432",
+    "searchHistory": [],
+    "browseHistory": [
+      {
+        "time": "2026-06-05T17:21:26.070Z",
+        "category": "food"
+      },
+      {
+        "time": "2026-06-05T17:21:49.455Z",
+        "category": "daily"
+      },
+      {
+        "time": "2026-06-05T17:22:01.739Z",
+        "category": "daily"
+      },
+      {
+        "time": "2026-06-05T17:22:21.548Z"
+      }
+    ],
+    "viewCounts": {}
+  }
+]

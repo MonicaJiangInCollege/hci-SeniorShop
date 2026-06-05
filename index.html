@@ -166,6 +166,21 @@
             background: #f0f0f0;
         }
 
+        .goods-emoji {
+            width: 100%;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 52px;
+            border-radius: 10px;
+            margin-bottom: 6px;
+        }
+
+        .emoji-food { background: #FFF3E0; }
+        .emoji-daily { background: #E8F5E9; }
+        .emoji-medicine { background: #F3E5F5; }
+
         .goods-name {
             font-size: 14px;
             font-weight: bold;
@@ -386,6 +401,167 @@
             color: #999;
             margin: 24px 0;
         }
+
+        /* 搜索框样式 */
+        .search-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            height: 48px;
+            font-size: 18px;
+            border: 3px solid #FFE0B2;
+            border-radius: 14px;
+            padding: 0 16px;
+            background: #FFFDF9;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #FF8C42;
+        }
+
+        .search-input::placeholder {
+            color: #bbb;
+            font-size: 16px;
+        }
+
+        .search-btn {
+            width: 80px;
+            height: 48px;
+            font-size: 18px;
+            background: #FF8C42;
+            color: white;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .search-btn:hover {
+            background: #F57C00;
+        }
+
+        /* 推荐区样式 */
+        .recommend-section {
+            margin-top: 18px;
+            margin-bottom: 18px;
+        }
+
+        .recommend-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #E65100;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .recommend-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .recommend-item {
+            border: 2px solid #FFCC80;
+            border-radius: 14px;
+            padding: 10px;
+            background: linear-gradient(135deg, #FFFDF9, #FFF8F0);
+            box-shadow: 0 2px 8px rgba(255,140,66,0.12);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .recommend-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255,140,66,0.2);
+        }
+
+        .recommend-image {
+            width: 100%;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 6px;
+            background: #f0f0f0;
+        }
+
+        .recommend-emoji {
+            width: 100%;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 52px;
+            border-radius: 10px;
+            margin-bottom: 6px;
+        }
+
+        .recommend-name {
+            font-size: 15px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+
+        .recommend-tag {
+            font-size: 11px;
+            color: #FF8C42;
+            background: #FFF3E0;
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin: 4px 0;
+        }
+
+        .recommend-price {
+            font-size: 17px;
+            font-weight: bold;
+            color: #E65100;
+            margin: 4px 0;
+        }
+
+        .recommend-add {
+            width: 100%;
+            height: 38px;
+            font-size: 14px;
+            background: #FF8C42;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+            margin-top: 4px;
+        }
+
+        .recommend-add:hover {
+            background: #F57C00;
+        }
+
+        /* 搜索无结果提示 */
+        .search-no-result {
+            text-align: center;
+            font-size: 18px;
+            color: #999;
+            margin: 24px 0;
+        }
+
+        .search-result-count {
+            font-size: 14px;
+            color: #888;
+            text-align: center;
+            margin-bottom: 12px;
+        }
     </style>
 </head>
 
@@ -442,7 +618,17 @@
     <!-- 页面1：老年人首页 -->
     <div id="page1" class="page">
         <div class="user-info">您好，<span id="userName"></span>！</div>
+        <!-- 搜索框 -->
+        <div class="search-bar">
+            <input type="text" class="search-input" id="searchInput" placeholder="搜索您想要的商品" onkeydown="if(event.key==='Enter')search()">
+            <button class="search-btn" onclick="search()">搜索</button>
+        </div>
         <div class="title">您想买点什么？</div>
+        <!-- 推荐区 -->
+        <div class="recommend-section" id="recommendSection">
+            <div class="recommend-title">猜您喜欢 ❤️</div>
+            <div class="recommend-list" id="recommendList"></div>
+        </div>
         <div class="btn-group">
             <button class="btn food" onclick="go(2)">
                 <img src="images/food.png" alt="食品饮料"/>
@@ -466,6 +652,15 @@
             我选好的东西
         </button>
         <button class="back" onclick="logout()" style="margin-top:24px;">退出登录</button>
+    </div>
+
+    <!-- 页面8：搜索结果 -->
+    <div id="page8" class="page">
+        <button class="back" onclick="go(1)">返回首页</button>
+        <div class="title">搜索结果</div>
+        <div class="search-result-count" id="searchResultCount"></div>
+        <div class="goods-list" id="searchResultList"></div>
+        <div class="search-no-result" id="searchNoResult" style="display:none;">没有找到相关商品，换一个关键词试试吧 🔍</div>
     </div>
 
     <!-- 页面7：子女首页 - 待代付订单 -->
@@ -535,19 +730,27 @@
                 showPage('page7');
             } else {
                 showPage('page1');
+                // 返回首页时刷新推荐
+                if (currentUser) {
+                    loadRecommendations();
+                }
             }
         } else if (num === 2) {
             loadGoods('food', 'foodList');
             showPage('page2');
+            trackBrowse('food');
         } else if (num === 3) {
             loadGoods('daily', 'dailyList');
             showPage('page3');
+            trackBrowse('daily');
         } else if (num === 4) {
             loadGoods('medicine', 'medicineList');
             showPage('page4');
+            trackBrowse('medicine');
         } else if (num === 5) {
             loadAllGoods();
             showPage('page5');
+            trackBrowse(null); // 全部商品，不指定品类
         } else if (num === 6) {
             loadCart();
             showPage('page6');
@@ -610,6 +813,121 @@
         showPage('pageLogin');
     }
 
+    // ============ 搜索功能 ============
+    async function search() {
+        const keyword = document.getElementById('searchInput').value.trim();
+        if (!keyword) {
+            alert('请输入搜索关键词');
+            return;
+        }
+
+        // 记录搜索行为
+        if (currentUser) {
+            try {
+                await fetch(`${API}/api/behavior/search`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: currentUser.userId, keyword })
+                });
+            } catch (e) { /* 静默失败，不影响搜索 */ }
+        }
+
+        // 调用搜索接口
+        try {
+            const res = await fetch(`${API}/api/search?q=${encodeURIComponent(keyword)}`);
+            const results = await res.json();
+            renderSearchResults(keyword, results);
+            showPage('page8');
+        } catch (e) {
+            alert('搜索失败，请检查服务器');
+        }
+    }
+
+    function renderSearchResults(keyword, results) {
+        const list = document.getElementById('searchResultList');
+        const count = document.getElementById('searchResultCount');
+        const noResult = document.getElementById('searchNoResult');
+
+        if (results.length === 0) {
+            count.textContent = '';
+            list.innerHTML = '';
+            noResult.style.display = 'block';
+        } else {
+            noResult.style.display = 'none';
+            count.textContent = `找到 ${results.length} 个与"${keyword}"相关的商品`;
+            list.innerHTML = '';
+            results.forEach(g => {
+                list.innerHTML += `
+                    <div class="goods-item">
+                        ${getEmojiHtml(g, 'goods-emoji')}
+                        <div class="goods-name">${g.name}</div>
+                        <div class="goods-desc">${g.description || ''}</div>
+                        <div class="goods-price">¥${g.price.toFixed(1)}</div>
+                        <button class="add" onclick="addCart(${g.id}, '${g.name}', ${g.price})">加入我选好的东西</button>
+                    </div>
+                `;
+            });
+        }
+    }
+
+    // ============ 推荐功能 ============
+    async function loadRecommendations() {
+        if (!currentUser) return;
+        try {
+            const res = await fetch(`${API}/api/recommendations/${currentUser.userId}`);
+            const recommendations = await res.json();
+            renderRecommendations(recommendations);
+        } catch (e) {
+            // 静默失败，不影响主流程
+            document.getElementById('recommendSection').style.display = 'none';
+        }
+    }
+
+    function renderRecommendations(items) {
+        const section = document.getElementById('recommendSection');
+        const list = document.getElementById('recommendList');
+
+        if (!items || items.length === 0) {
+            section.style.display = 'none';
+            return;
+        }
+
+        section.style.display = 'block';
+        list.innerHTML = '';
+
+        items.forEach(g => {
+            const tagHtml = g.tags && g.tags.length > 0
+                ? `<span class="recommend-tag">${g.tags[0]}</span>`
+                : '';
+
+            list.innerHTML += `
+                <div class="recommend-item">
+                    ${getEmojiHtml(g, 'recommend-emoji')}
+                    <div class="recommend-name">${g.name}</div>
+                    ${tagHtml}
+                    <div class="recommend-price">¥${g.price.toFixed(1)}</div>
+                    <button class="recommend-add" onclick="event.stopPropagation(); addCart(${g.id}, '${g.name.replace(/'/g, "\\'")}', ${g.price})">加入我选好的东西</button>
+                </div>
+            `;
+        });
+    }
+
+    // ============ 行为追踪 ============
+    async function trackBrowse(category, goodsId) {
+        if (!currentUser) return;
+        try {
+            await fetch(`${API}/api/behavior/browse`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userId: currentUser.userId,
+                    category: category || undefined,
+                    goodsId: goodsId || undefined
+                })
+            });
+        } catch (e) { /* 静默失败 */ }
+    }
+
     // 检查是否已登录
     function checkLogin() {
         const saved = localStorage.getItem('currentUser');
@@ -624,6 +942,19 @@
     }
 
     // ============ 商品 ============
+    function getEmojiHtml(g, cssClass) {
+        // 用 emoji 代替图片，图文对应
+        if (g.emoji) {
+            const catClass = 'emoji-' + (g.category || 'food');
+            return `<div class="${cssClass} ${catClass}">${g.emoji}</div>`;
+        }
+        // 无 emoji 时使用原图片
+        if (g.image) {
+            return `<img src="${g.image}" alt="${g.name}" class="${cssClass}" onerror="this.style.display='none'"/>`;
+        }
+        return '';
+    }
+
     async function loadGoods(category, containerId) {
         try {
             const res = await fetch(`${API}/api/goods/${category}`);
@@ -631,12 +962,9 @@
             const container = document.getElementById(containerId);
             container.innerHTML = '';
             goods.forEach(g => {
-                const imageHtml = g.image
-                    ? `<img src="${g.image}" alt="${g.name}" class="goods-image" onerror="this.style.display='none'"/>`
-                    : '';
                 container.innerHTML += `
                     <div class="goods-item">
-                        ${imageHtml}
+                        ${getEmojiHtml(g, 'goods-emoji')}
                         <div class="goods-name">${g.name}</div>
                         <div class="goods-desc">${g.description || ''}</div>
                         <div class="goods-price">¥${g.price.toFixed(1)}</div>
@@ -656,12 +984,9 @@
             const container = document.getElementById('allList');
             container.innerHTML = '';
             goods.forEach(g => {
-                const imageHtml = g.image
-                    ? `<img src="${g.image}" alt="${g.name}" class="goods-image" onerror="this.style.display='none'"/>`
-                    : '';
                 container.innerHTML += `
                     <div class="goods-item">
-                        ${imageHtml}
+                        ${getEmojiHtml(g, 'goods-emoji')}
                         <div class="goods-name">${g.name}</div>
                         <div class="goods-desc">${g.description || ''}</div>
                         <div class="goods-price">¥${g.price.toFixed(1)}</div>
@@ -830,6 +1155,7 @@
         } else {
             document.getElementById('userName').textContent = currentUser.name || '';
             showPage('page1');
+            loadRecommendations();
         }
     }
 </script>

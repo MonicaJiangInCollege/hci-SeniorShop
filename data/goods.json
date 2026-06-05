@@ -5,7 +5,9 @@
     "price": 19.9,
     "category": "food",
     "description": "新鲜优质牛奶",
-    "image": "https://picsum.photos/200/150?random=1"
+    "emoji": "🥛",
+    "tags": ["饮品", "营养"],
+    "elderlyFriendly": true
   },
   {
     "id": 2,
@@ -13,7 +15,9 @@
     "price": 12.8,
     "category": "food",
     "description": "健康全麦配方",
-    "image": "https://picsum.photos/200/150?random=2"
+    "emoji": "🍞",
+    "tags": ["主食", "健康"],
+    "elderlyFriendly": false
   },
   {
     "id": 7,
@@ -21,7 +25,9 @@
     "price": 32.5,
     "category": "food",
     "description": "农家散养土鸡蛋",
-    "image": "https://picsum.photos/200/150?random=7"
+    "emoji": "🥚",
+    "tags": ["营养", "农家"],
+    "elderlyFriendly": true
   },
   {
     "id": 8,
@@ -29,7 +35,9 @@
     "price": 49.9,
     "category": "food",
     "description": "粒粒香甜软糯",
-    "image": "https://picsum.photos/200/150?random=8"
+    "emoji": "🍚",
+    "tags": ["主食", "五谷"],
+    "elderlyFriendly": false
   },
   {
     "id": 9,
@@ -37,7 +45,9 @@
     "price": 89.9,
     "category": "food",
     "description": "压榨一级花生油",
-    "image": "https://picsum.photos/200/150?random=9"
+    "emoji": "🥜",
+    "tags": ["调味", "厨房"],
+    "elderlyFriendly": false
   },
   {
     "id": 10,
@@ -45,7 +55,9 @@
     "price": 18.8,
     "category": "food",
     "description": "新疆若羌灰枣",
-    "image": "https://picsum.photos/200/150?random=10"
+    "emoji": "🫘",
+    "tags": ["养生", "滋补", "老年用品"],
+    "elderlyFriendly": true
   },
   {
     "id": 11,
@@ -53,7 +65,9 @@
     "price": 56.0,
     "category": "food",
     "description": "明前龙井清香回甘",
-    "image": "https://picsum.photos/200/150?random=11"
+    "emoji": "🍵",
+    "tags": ["饮品", "养生"],
+    "elderlyFriendly": true
   },
   {
     "id": 12,
@@ -61,7 +75,9 @@
     "price": 15.6,
     "category": "food",
     "description": "硬质小麦制作",
-    "image": "https://picsum.photos/200/150?random=12"
+    "emoji": "🍝",
+    "tags": ["主食", "西式"],
+    "elderlyFriendly": false
   },
   {
     "id": 3,
@@ -69,7 +85,9 @@
     "price": 29.9,
     "category": "daily",
     "description": "柔软舒适",
-    "image": "https://picsum.photos/200/150?random=3"
+    "emoji": "🧻",
+    "tags": ["纸品", "家居"],
+    "elderlyFriendly": false
   },
   {
     "id": 4,
@@ -77,7 +95,9 @@
     "price": 35.0,
     "category": "daily",
     "description": "深层去污",
-    "image": "https://picsum.photos/200/150?random=4"
+    "emoji": "🧴",
+    "tags": ["清洁", "家居"],
+    "elderlyFriendly": false
   },
   {
     "id": 13,
@@ -85,7 +105,9 @@
     "price": 12.9,
     "category": "daily",
     "description": "不伤手易冲洗",
-    "image": "https://picsum.photos/200/150?random=13"
+    "emoji": "🫧",
+    "tags": ["清洁", "厨房"],
+    "elderlyFriendly": false
   },
   {
     "id": 14,
@@ -93,7 +115,9 @@
     "price": 9.9,
     "category": "daily",
     "description": "加厚抽绳式",
-    "image": "https://picsum.photos/200/150?random=14"
+    "emoji": "🗑️",
+    "tags": ["家居", "清洁"],
+    "elderlyFriendly": false
   },
   {
     "id": 15,
@@ -101,7 +125,9 @@
     "price": 25.8,
     "category": "daily",
     "description": "三层柔软不掉屑",
-    "image": "https://picsum.photos/200/150?random=15"
+    "emoji": "📦",
+    "tags": ["纸品", "家居"],
+    "elderlyFriendly": false
   },
   {
     "id": 16,
@@ -109,7 +135,9 @@
     "price": 15.5,
     "category": "daily",
     "description": "清新口气防蛀",
-    "image": "https://picsum.photos/200/150?random=16"
+    "emoji": "🦷",
+    "tags": ["个护", "口腔"],
+    "elderlyFriendly": false
   },
   {
     "id": 17,
@@ -117,7 +145,9 @@
     "price": 11.8,
     "category": "daily",
     "description": "天然植物配方",
-    "image": "https://picsum.photos/200/150?random=17"
+    "emoji": "🧼",
+    "tags": ["个护", "清洁"],
+    "elderlyFriendly": false
   },
   {
     "id": 18,
@@ -125,7 +155,9 @@
     "price": 8.5,
     "category": "daily",
     "description": "食品级安全材质",
-    "image": "https://picsum.photos/200/150?random=18"
+    "emoji": "🎁",
+    "tags": ["厨房", "家居"],
+    "elderlyFriendly": false
   },
   {
     "id": 5,
@@ -133,7 +165,9 @@
     "price": 45.0,
     "category": "medicine",
     "description": "每日营养补充",
-    "image": "https://picsum.photos/200/150?random=5"
+    "emoji": "💊",
+    "tags": ["保健", "营养", "老年用品"],
+    "elderlyFriendly": true
   },
   {
     "id": 6,
@@ -141,7 +175,9 @@
     "price": 8.0,
     "category": "medicine",
     "description": "家庭常备",
-    "image": "https://picsum.photos/200/150?random=6"
+    "emoji": "🩹",
+    "tags": ["医疗", "应急"],
+    "elderlyFriendly": false
   },
   {
     "id": 19,
@@ -149,7 +185,9 @@
     "price": 68.0,
     "category": "medicine",
     "description": "中老年补钙佳品",
-    "image": "https://picsum.photos/200/150?random=19"
+    "emoji": "🦴",
+    "tags": ["保健", "补钙", "老年用品"],
+    "elderlyFriendly": true
   },
   {
     "id": 20,
@@ -157,7 +195,9 @@
     "price": 98.0,
     "category": "medicine",
     "description": "深海鱼油护心脑",
-    "image": "https://picsum.photos/200/150?random=20"
+    "emoji": "🐟",
+    "tags": ["保健", "护心", "老年用品"],
+    "elderlyFriendly": true
   },
   {
     "id": 21,
@@ -165,7 +205,9 @@
     "price": 22.0,
     "category": "medicine",
     "description": "电子精准测温",
-    "image": "https://picsum.photos/200/150?random=21"
+    "emoji": "🌡️",
+    "tags": ["医疗", "家用"],
+    "elderlyFriendly": true
   },
   {
     "id": 22,
@@ -173,7 +215,9 @@
     "price": 19.9,
     "category": "medicine",
     "description": "三层防护透气",
-    "image": "https://picsum.photos/200/150?random=22"
+    "emoji": "😷",
+    "tags": ["防护", "卫生"],
+    "elderlyFriendly": true
   },
   {
     "id": 23,
@@ -181,7 +225,9 @@
     "price": 28.0,
     "category": "medicine",
     "description": "快速补充能量",
-    "image": "https://picsum.photos/200/150?random=23"
+    "emoji": "🧪",
+    "tags": ["保健", "营养", "老年用品"],
+    "elderlyFriendly": true
   },
   {
     "id": 24,
@@ -189,6 +235,88 @@
     "price": 35.0,
     "category": "medicine",
     "description": "滋润保湿防裂",
-    "image": "https://picsum.photos/200/150?random=24"
+    "emoji": "🧴",
+    "tags": ["个护", "护肤"],
+    "elderlyFriendly": true
+  },
+  {
+    "id": 25,
+    "name": "老花镜 200度",
+    "price": 68.0,
+    "category": "daily",
+    "description": "高清树脂镜片，轻便舒适",
+    "emoji": "👓",
+    "tags": ["老年用品", "视力辅助"],
+    "elderlyFriendly": true
+  },
+  {
+    "id": 26,
+    "name": "放大镜 大号",
+    "price": 25.0,
+    "category": "daily",
+    "description": "手持大镜片，看字更清晰",
+    "emoji": "🔍",
+    "tags": ["老年用品", "视力辅助"],
+    "elderlyFriendly": true
+  },
+  {
+    "id": 27,
+    "name": "四脚拐杖",
+    "price": 89.0,
+    "category": "daily",
+    "description": "防滑稳固，高度可调节",
+    "emoji": "🦯",
+    "tags": ["老年用品", "助行"],
+    "elderlyFriendly": true
+  },
+  {
+    "id": 28,
+    "name": "肩颈按摩器",
+    "price": 168.0,
+    "category": "medicine",
+    "description": "多档力度热敷按摩，缓解酸痛",
+    "emoji": "💆",
+    "tags": ["老年用品", "按摩", "保健"],
+    "elderlyFriendly": true
+  },
+  {
+    "id": 29,
+    "name": "电子血压计",
+    "price": 138.0,
+    "category": "medicine",
+    "description": "一键测量，大字液晶显示",
+    "emoji": "🩺",
+    "tags": ["老年用品", "医疗", "检测"],
+    "elderlyFriendly": true
+  },
+  {
+    "id": 30,
+    "name": "防滑拖鞋",
+    "price": 32.0,
+    "category": "daily",
+    "description": "加厚防滑鞋底，浴室安心穿",
+    "emoji": "🩴",
+    "tags": ["老年用品", "安全", "家居"],
+    "elderlyFriendly": true
+  },
+  {
+    "id": 31,
+    "name": "大屏收音机",
+    "price": 78.0,
+    "category": "daily",
+    "description": "一键搜台，声音洪亮清晰",
+    "emoji": "📻",
+    "tags": ["老年用品", "娱乐", "数码"],
+    "elderlyFriendly": true
+  },
+  {
+    "id": 32,
+    "name": "保温杯 500ml",
+    "price": 45.0,
+    "category": "daily",
+    "description": "不锈钢内胆，24小时保温",
+    "emoji": "☕",
+    "tags": ["老年用品", "饮水", "养生"],
+    "elderlyFriendly": true
   }
 ]
