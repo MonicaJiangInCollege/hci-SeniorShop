@@ -548,6 +548,51 @@
             background: #F57C00;
         }
 
+        /* AI 助手区域样式 */
+        .ai-assistant {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e6f2f5 100%);
+            border: 2px solid #b2dfdb;
+            border-radius: 16px;
+            padding: 15px;
+            margin: 15px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        .ai-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #00796b;
+        }
+        
+        .ai-refresh-btn {
+            background-color: #26a69a;
+            border: none;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .ai-refresh-btn:hover {
+            background-color: #00897b;
+        }
+        
+        .ai-advice-content {
+            background-color: #ffffffcc;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            color: #263238;
+            line-height: 1.5;
+            border-left: 5px solid #26a69a;
+        }
+
         /* 搜索无结果提示 */
         .search-no-result {
             text-align: center;
@@ -705,6 +750,15 @@
         <div class="title">我选好的东西</div>
         <div id="cartList"></div>
         <div class="total">合计：¥<span id="total">0</span></div>
+        <div class="ai-assistant">
+            <div class="ai-header">
+                <span>🤖 AI 导购助手</span>
+                <button class="ai-refresh-btn" onclick="getAiShoppingAdvice()">✨ 获取购买建议</button>
+            </div>
+            <div class="ai-advice-content" id="aiAdviceContent">
+                点击按钮，让AI帮你分析一下购物清单，看看有没有漏掉什么好东西！
+            </div>
+        </div>
         <button class="btn pay" onclick="pay()" style="width:100%;height:60px;font-size:20px">
             去结算（亲情代付）
         </button>
@@ -729,6 +783,9 @@
                 loadPendingOrders();
                 showPage('page7');
             } else {
+                if (currentUser) {
+                    document.getElementById('name').textContent = currentUser.name || '';
+                }
                 showPage('page1');
                 // 返回首页时刷新推荐
                 if (currentUser) {
@@ -1089,6 +1146,69 @@
             alert('网络错误');
         }
     }
+
+    // ========== 新增：AI 购物建议功能 ==========
+    async function getAiShoppingAdvice() {
+        // 1. 检查用户是否已登录
+        if (!currentUser) {
+            alert("请先登录后获取建议。");
+            return;
+        }
+
+        // 2. 获取购物车内容
+        const adviceContentDiv = document.getElementById('aiAdviceContent');
+        if (!adviceContentDiv) return;
+
+        // 显示加载状态
+        adviceContentDiv.innerHTML = '<span style="color: #00796b;">🤔 AI 正在分析您的购物清单，请稍候...</span>';
+    
+        // 3. 获取最新购物车数据
+        try {
+            const cartRes = await fetch(`${API}/api/cart/${currentUser.userId}`);
+            if (!cartRes.ok) {
+                throw new Error("获取购物车失败");
+            }
+            const cartItems = await cartRes.json(); // 假设返回 [{id, name, price, ...}, ...]
+            
+            if (!cartItems || cartItems.length === 0) {
+                adviceContentDiv.innerHTML = "您的购物车还是空的。先去逛逛，添加些心仪的商品再来找我咨询吧！🛒";
+                return;
+            }
+
+            // 准备要发送给后端的商品列表，只提取 name 和 price
+            const itemsForAI = cartItems.map(item => ({
+                name: item.name,
+                price: item.price
+            }));
+    
+            // 4. 调用后端的新接口 /api/ai-advice
+            const response = await fetch(`${API}/api/ai-advice`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ items: itemsForAI })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || "获取建议失败");
+            }
+
+            // 5. 成功获取建议，显示在页面上
+            if (data.success && data.advice) {
+                adviceContentDiv.innerHTML = data.advice;
+            } else {
+                throw new Error("获取建议失败，请稍后重试");
+            }
+    
+        } catch (error) {
+            console.error('获取AI建议错误:', error);
+            adviceContentDiv.innerHTML = `😵 获取建议失败：${error.message || "网络错误，请稍后重试"}`;
+        }
+    }
+
 
     // ============ 子女代付功能 ============
     async function loadPendingOrders() {
