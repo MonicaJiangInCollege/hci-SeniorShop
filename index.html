@@ -780,6 +780,7 @@
         if (num === 1) {
             // 根据用户身份跳转到不同首页
             if (currentUser && currentUser.relation === 'child') {
+                document.getElementById('childUserName').textContent = currentUser.name || '';
                 loadPendingOrders();
                 showPage('page7');
             } else {
