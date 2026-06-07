@@ -617,7 +617,7 @@
 
     <!-- 页面1：老年人首页 -->
     <div id="page1" class="page">
-        <div class="user-info">您好，<span id="userName"></span>！</div>
+        <div class="user-info">您好，<span id="name"></span>！</div>
         <!-- 搜索框 -->
         <div class="search-bar">
             <input type="text" class="search-input" id="searchInput" placeholder="搜索您想要的商品" onkeydown="if(event.key==='Enter')search()">
@@ -936,7 +936,7 @@
             if (currentUser.relation === 'child') {
                 document.getElementById('childUserName').textContent = currentUser.name || '';
             } else {
-                document.getElementById('userName').textContent = currentUser.name || '';
+                document.getElementById('name').textContent = currentUser.name || '';
             }
         }
     }
