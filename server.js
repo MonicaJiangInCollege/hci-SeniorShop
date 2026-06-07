@@ -3,6 +3,9 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 
+const axios = require('axios'); // 引入 axios 用于发起 HTTP 请求
+require('dotenv').config();     // 引入 dotenv 来读取 .env 文件
+
 const app = express();
 const PORT = 3000;
 
@@ -311,6 +314,74 @@ app.post('/api/login', (req, res) => {
         name: user.name,
         relation: user.relation
     });
+});
+
+// ========== 新增 AI 建议接口 ==========
+// 处理 POST 请求，地址为 /api/ai-advice
+app.post('/api/ai-advice', async (req, res) => {
+    // 1. 首先，从环境变量中读取你的 DeepSeek API 密钥
+    const apiKey = process.env.DEEPSEEK_API_KEY;
+    
+    // 重要！检查 API 密钥是否存在，如果没有则返回错误，防止后端挂掉
+    if (!apiKey) {
+        console.error("错误: 环境变量 DEEPSEEK_API_KEY 未在 .env 文件中设置！");
+        return res.status(500).json({ error: '服务器配置错误：缺少API密钥' });
+    }
+
+    // 2. 从前端发来的请求体中，获取购物车的商品列表 (items)
+    //    items 应该是一个数组，里面是 { name, price } 这样的对象
+    const { items } = req.body;
+    
+    // 做一些简单的数据校验，确保 items 存在且不为空
+    if (!items || !Array.isArray(items) || items.length === 0) {
+        return res.status(400).json({ error: '购物车为空，无法提供建议' });
+    }
+
+    // 3. 创建一个友好的提示词（Prompt），发送给 DeepSeek 模型
+    //    这个提示词告诉AI要扮演什么角色，以及根据什么信息生成什么样的建议。
+    const productsList = items.map(item => `- ${item.name} (¥${item.price})`).join('\n');
+    const prompt = `你是一位经验丰富的购物专家和AI导购助手。
+请你根据顾客购物车中的商品清单，为即将结算的用户生成一份购买建议，要求建议内容不超过200字。
+建议应包含：
+1. 对这些商品选择的总体肯定。
+2. 给出 2-3 个实用的后续购买建议（例如相关的搭配商品、补货建议等）。
+3. 语气要亲切、温暖，并提醒一句家人的关爱，符合老年用户和子女代付的场景。
+购物车商品清单如下：
+${productsList}
+请直接返回你的建议文本。`;
+
+    // 4. 调用 DeepSeek API
+    try {
+        const response = await axios.post(
+            'https://api.deepseek.com/chat/completions', // DeepSeek API 地址
+            {
+                model: 'deepseek-chat',        // 使用 deepseek-chat 模型
+                messages: [
+                    { role: "system", content: "你是一位专业的购物导购。" }, // 设定AI的系统角色
+                    { role: "user", content: prompt }   // 用户的提问，也就是我们刚才构造的提示词
+                ],
+                temperature: 0.7,               // 控制回复的随机性和创造性，0.7是个不错的平衡点
+                max_tokens: 500                 // 控制回复的最大长度
+            },
+            {
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`,  // 这里使用我们的API密钥
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        // 5. 从API返回的数据中提取出AI生成的建议文本
+        const advice = response.data.choices[0].message.content;
+        // 将建议文本成功返回给前端
+        res.json({ success: true, advice: advice });
+
+    } catch (error) {
+        // 6. 错误处理：在控制台打印详细的错误信息，帮助调试
+        console.error('DeepSeek API 调用失败详情:', error.response?.data || error.message);
+        // 向前端返回一个通用的服务器内部错误
+        res.status(500).json({ error: '获取AI建议失败，请稍后重试' });
+    }
 });
 
 // --- 获取所有商品 ---
