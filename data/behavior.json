@@ -1,7 +1,12 @@
 [
   {
     "userId": "1780560275301",
-    "searchHistory": [],
+    "searchHistory": [
+      {
+        "keyword": "牛奶",
+        "time": "2026-06-08T08:12:36.218Z"
+      }
+    ],
     "browseHistory": [
       {
         "time": "2026-06-08T05:58:43.619Z"
@@ -35,6 +40,13 @@
       {
         "time": "2026-06-08T06:31:07.734Z",
         "category": "food"
+      },
+      {
+        "time": "2026-06-08T08:14:14.051Z",
+        "category": "food"
+      },
+      {
+        "time": "2026-06-08T08:14:17.639Z"
       }
     ],
     "viewCounts": {}

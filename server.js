@@ -753,7 +753,8 @@ app.post('/api/speech/tts', (req, res) => {
 });
 
 // ============ 启动服务器 ============
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`服务器运行在 http://localhost:${PORT}`);
+    console.log(`局域网访问: http://100.81.72.22:${PORT}`);
     console.log('数据文件存储在 ./data/ 目录');
 });

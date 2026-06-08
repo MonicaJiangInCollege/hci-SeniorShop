@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>老年极简购物助手</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
     <style>
         * {
             margin: 0;
@@ -12,14 +15,27 @@
             font-family: "Microsoft YaHei", sans-serif;
         }
 
+        html {
+            height: 100%;
+            overflow-x: hidden;
+        }
+
         body {
             background: #FFF8F0;
-            padding: 8px 6px;
+            padding: env(safe-area-inset-top) 8px env(safe-area-inset-bottom) 8px;
             font-size: 15px;
             line-height: 1.4;
-            max-width: 600px;
+            max-width: 100%;
             margin: 0 auto;
             overflow-x: hidden;
+            min-height: 100vh;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        @media (min-width: 400px) {
+            body {
+                max-width: 420px;
+            }
         }
 
         img {
@@ -647,18 +663,20 @@
             50% { box-shadow: 0 4px 24px rgba(0,137,123,0.6); }
         }
 
-        /* ===== AI 聊天弹窗 ===== */
+        /* ===== AI 聊天弹窗（居中弹窗，非全屏） ===== */
         .ai-chat-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.4);
+            height: 100dvh;
+            background: rgba(0,0,0,0.5);
             z-index: 2000;
             display: none;
             align-items: center;
             justify-content: center;
+            padding: 12px;
         }
 
         .ai-chat-overlay.active {
@@ -666,29 +684,53 @@
         }
 
         .ai-chat-box {
-            width: 90%;
-            max-width: 420px;
-            max-height: 80vh;
+            width: 100%;
+            max-width: 400px;
+            height: 70vh;
+            max-height: 500px;
             background: #FFFDF9;
             border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.25);
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            animation: aiChatPopIn 0.25s ease-out;
+        }
+
+        @keyframes aiChatPopIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* 键盘弹出时自动调整为底部弹出 */
+        @media (max-height: 700px) {
+            .ai-chat-overlay {
+                align-items: flex-end;
+                padding: 0;
+            }
+
+            .ai-chat-box {
+                max-width: 100%;
+                height: 85vh;
+                max-height: none;
+                border-radius: 20px 20px 0 0;
+                animation: none;
+            }
         }
 
         .ai-chat-header {
             background: linear-gradient(135deg, #26a69a, #00897b);
             color: white;
-            padding: 16px;
+            padding: 14px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .ai-chat-header h3 {
             margin: 0;
-            font-size: 18px;
+            font-size: 17px;
         }
 
         .ai-chat-close {
@@ -700,18 +742,19 @@
             border-radius: 50%;
             font-size: 18px;
             cursor: pointer;
+            flex-shrink: 0;
         }
 
         .ai-chat-messages {
             flex: 1;
             overflow-y: auto;
-            padding: 16px;
-            min-height: 200px;
-            max-height: 400px;
+            -webkit-overflow-scrolling: touch;
+            padding: 14px;
+            min-height: 0;
         }
 
         .ai-msg {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             display: flex;
             gap: 8px;
         }
@@ -730,6 +773,7 @@
             border-radius: 14px;
             font-size: 15px;
             line-height: 1.5;
+            word-break: break-word;
         }
 
         .ai-msg.bot .ai-msg-bubble {
@@ -745,19 +789,22 @@
         }
 
         .ai-chat-input-area {
-            padding: 12px;
+            padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
             border-top: 1px solid #eee;
             display: flex;
             gap: 8px;
+            flex-shrink: 0;
+            background: #FFFDF9;
         }
 
         .ai-chat-input {
             flex: 1;
-            height: 44px;
+            min-width: 0;
+            height: 42px;
             border: 2px solid #ddd;
-            border-radius: 22px;
-            padding: 0 16px;
-            font-size: 15px;
+            border-radius: 21px;
+            padding: 0 14px;
+            font-size: 16px;
             outline: none;
             transition: border-color 0.2s;
         }
@@ -767,8 +814,8 @@
         }
 
         .ai-chat-send {
-            width: 44px;
-            height: 44px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             background: #26a69a;
             color: white;
@@ -776,6 +823,7 @@
             font-size: 18px;
             cursor: pointer;
             transition: background 0.2s;
+            flex-shrink: 0;
         }
 
         .ai-chat-send:hover {
@@ -1200,7 +1248,8 @@
 </body>
 
 <script>
-    const API = 'http://localhost:3000';
+    // 自动获取当前页面地址，支持手机通过局域网访问
+    const API = window.location.origin;
     let currentUser = null; // { userId, name, relation }
     let cartItems = [];
     let selectedRole = null; // 当前选择的身份：'elder' 或 'child'
