@@ -607,14 +607,250 @@
             text-align: center;
             margin-bottom: 12px;
         }
+
+        /* ===== 全场景 AI 浮动按钮 ===== */
+        .ai-float-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #26a69a, #00897b);
+            color: white;
+            font-size: 28px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(0,137,123,0.4);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            animation: aiFloatPulse 2s infinite;
+        }
+
+        .ai-float-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 24px rgba(0,137,123,0.5);
+        }
+
+        @keyframes aiFloatPulse {
+            0%, 100% { box-shadow: 0 4px 16px rgba(0,137,123,0.4); }
+            50% { box-shadow: 0 4px 24px rgba(0,137,123,0.6); }
+        }
+
+        /* ===== AI 聊天弹窗 ===== */
+        .ai-chat-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ai-chat-overlay.active {
+            display: flex;
+        }
+
+        .ai-chat-box {
+            width: 90%;
+            max-width: 420px;
+            max-height: 80vh;
+            background: #FFFDF9;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .ai-chat-header {
+            background: linear-gradient(135deg, #26a69a, #00897b);
+            color: white;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-chat-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .ai-chat-close {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .ai-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            min-height: 200px;
+            max-height: 400px;
+        }
+
+        .ai-msg {
+            margin-bottom: 12px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .ai-msg.bot {
+            justify-content: flex-start;
+        }
+
+        .ai-msg.user {
+            justify-content: flex-end;
+        }
+
+        .ai-msg-bubble {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .ai-msg.bot .ai-msg-bubble {
+            background: #E0F2F1;
+            color: #004D40;
+            border-bottom-left-radius: 4px;
+        }
+
+        .ai-msg.user .ai-msg-bubble {
+            background: #FF8C42;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .ai-chat-input-area {
+            padding: 12px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 8px;
+        }
+
+        .ai-chat-input {
+            flex: 1;
+            height: 44px;
+            border: 2px solid #ddd;
+            border-radius: 22px;
+            padding: 0 16px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .ai-chat-input:focus {
+            border-color: #26a69a;
+        }
+
+        .ai-chat-send {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #26a69a;
+            color: white;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .ai-chat-send:hover {
+            background: #00897b;
+        }
+
+        .ai-chat-send:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* 麦克风按钮 */
+        .ai-chat-mic {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #FF8C42;
+            color: white;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            flex-shrink: 0;
+        }
+
+        .ai-chat-mic:hover {
+            background: #F57C00;
+        }
+
+        .ai-chat-mic.recording {
+            background: #E53935;
+            animation: micPulse 1s infinite;
+        }
+
+        @keyframes micPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        /* 语音播放按钮（在AI消息气泡旁） */
+        .ai-msg-speak-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 2px 4px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .ai-msg-speak-btn:hover {
+            background: rgba(0,0,0,0.08);
+        }
+
+        .ai-msg-bubble-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
     </style>
 </head>
 
 <body>
+    <!-- 身份选择页面（入口） -->
+    <div id="pageRoleSelect" class="page active">
+        <div class="auth-container" style="max-width:420px;">
+            <div class="auth-title">您好！请选择您的身份</div>
+            <div class="btn-group">
+                <button class="btn food" onclick="selectRole('elder')" style="height:100px;">
+                    👴 我是老人
+                </button>
+                <button class="btn daily" onclick="selectRole('child')" style="height:100px;">
+                    👨 我是子女
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- 登录页面 -->
-    <div id="pageLogin" class="page active">
+    <div id="pageLogin" class="page">
         <div class="auth-container">
-            <div class="auth-title">登录</div>
+            <div class="auth-title" id="loginTitle">登录</div>
             <div class="form-group">
                 <label>手机号</label>
                 <input type="tel" id="loginPhone" placeholder="请输入手机号">
@@ -627,13 +863,16 @@
             <div class="auth-switch">
                 还没有账号？<a onclick="showPage('pageRegister')">立即注册</a>
             </div>
+            <div class="auth-switch" style="margin-top:6px;">
+                <a onclick="showPage('pageRoleSelect')">← 切换身份</a>
+            </div>
         </div>
     </div>
 
     <!-- 注册页面 -->
     <div id="pageRegister" class="page">
         <div class="auth-container">
-            <div class="auth-title">注册</div>
+            <div class="auth-title" id="registerTitle">注册</div>
             <div class="form-group">
                 <label>手机号</label>
                 <input type="tel" id="regPhone" placeholder="请输入手机号">
@@ -646,21 +885,23 @@
                 <label>您的称呼</label>
                 <input type="text" id="regName" placeholder="请输入您的称呼">
             </div>
-            <div class="form-group">
-                <label>您的身份</label>
-                <select id="regRelation">
-                    <option value="elder">老年人（我自己买）</option>
-                    <option value="child">子女（帮父母付）</option>
-                </select>
+            <div id="childRegExtra" class="hidden">
+                <div class="form-group">
+                    <label>父母手机号（用于绑定）</label>
+                    <input type="tel" id="regParentPhone" placeholder="请输入已注册的父母手机号">
+                </div>
             </div>
             <button class="auth-btn" onclick="register()">注册</button>
             <div class="auth-switch">
                 已有账号？<a onclick="showPage('pageLogin')">返回登录</a>
             </div>
+            <div class="auth-switch" style="margin-top:6px;">
+                <a onclick="showPage('pageRoleSelect')">← 切换身份</a>
+            </div>
         </div>
     </div>
 
-    <!-- 页面1：老年人首页 -->
+    <!-- 页面1：老年人首页（仅四个分类 + 购物车，无推荐） -->
     <div id="page1" class="page">
         <div class="user-info">您好，<span id="name"></span>！</div>
         <!-- 搜索框 -->
@@ -669,11 +910,6 @@
             <button class="search-btn" onclick="search()">搜索</button>
         </div>
         <div class="title">您想买点什么？</div>
-        <!-- 推荐区 -->
-        <div class="recommend-section" id="recommendSection">
-            <div class="recommend-title">猜您喜欢 ❤️</div>
-            <div class="recommend-list" id="recommendList"></div>
-        </div>
         <div class="btn-group">
             <button class="btn food" onclick="go(2)">
                 <img src="images/food.png" alt="食品饮料"/>
@@ -696,6 +932,10 @@
             <img src="images/cart.png" alt="购物车"/>
             我选好的东西
         </button>
+        <button class="btn look" onclick="go(9)" style="width:100%;height:80px;font-size:22px;margin-top:14px;">
+            <img src="images/cart.png" alt="我的订单"/>
+            我的订单
+        </button>
         <button class="back" onclick="logout()" style="margin-top:24px;">退出登录</button>
     </div>
 
@@ -711,9 +951,21 @@
     <!-- 页面7：子女首页 - 待代付订单 -->
     <div id="page7" class="page">
         <div class="user-info">您好，<span id="childUserName"></span>！（子女账号）</div>
-        <div class="title">待代付订单</div>
+        <div class="title">代付中心</div>
+        <div style="display:flex;gap:8px;margin-bottom:14px;">
+            <button class="btn food" onclick="showChildTab('pending')" id="tabPending" style="height:50px;font-size:16px;">待代付</button>
+            <button class="btn daily" onclick="showChildTab('paid')" id="tabPaid" style="height:50px;font-size:16px;">已代付</button>
+        </div>
         <div id="pendingOrdersList"></div>
+        <div id="paidOrdersList" style="display:none;"></div>
         <button class="back" onclick="logout()" style="margin-top:24px;">退出登录</button>
+    </div>
+
+    <!-- 页面9：老人我的订单 -->
+    <div id="page9" class="page">
+        <button class="back" onclick="go(1)">返回首页</button>
+        <div class="title">我的订单</div>
+        <div id="myOrdersList"></div>
     </div>
 
     <!-- 页面2：食品 -->
@@ -737,10 +989,15 @@
         <div class="goods-list" id="medicineList"></div>
     </div>
 
-    <!-- 页面5：随便看看 -->
+    <!-- 页面5：随便看看（含推荐区 + 全部商品） -->
     <div id="page5" class="page">
         <button class="back" onclick="go(1)">返回首页</button>
         <div class="title">随便看看</div>
+        <!-- 推荐区放在随便看看页面 -->
+        <div class="recommend-section" id="recommendSection">
+            <div class="recommend-title">猜您喜欢 ❤️</div>
+            <div class="recommend-list" id="recommendList"></div>
+        </div>
         <div class="goods-list" id="allList"></div>
     </div>
 
@@ -763,17 +1020,51 @@
             去结算（亲情代付）
         </button>
     </div>
+
+    <!-- ===== 全场景 AI 浮动按钮 ===== -->
+    <button class="ai-float-btn" id="aiFloatBtn" onclick="openAiChat()" title="问AI导购">🤖</button>
+
+    <!-- ===== AI 聊天弹窗 ===== -->
+    <div class="ai-chat-overlay" id="aiChatOverlay">
+        <div class="ai-chat-box">
+            <div class="ai-chat-header">
+                <h3>🤖 AI 导购助手</h3>
+                <button class="ai-chat-close" onclick="closeAiChat()">✕</button>
+            </div>
+            <div class="ai-chat-messages" id="aiChatMessages">
+                <!-- 消息动态插入 -->
+            </div>
+            <div class="ai-chat-input-area">
+                <button class="ai-chat-mic" id="aiChatMicBtn" onclick="toggleVoiceRecord()" title="语音输入">🎤</button>
+                <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="问我任何购物问题..." onkeydown="if(event.key==='Enter')sendAiMessage()">
+                <button class="ai-chat-send" id="aiChatSendBtn" onclick="sendAiMessage()">➤</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script>
     const API = 'http://localhost:3000';
     let currentUser = null; // { userId, name, relation }
     let cartItems = [];
+    let selectedRole = null; // 当前选择的身份：'elder' 或 'child'
 
     // ============ 页面切换 ============
+    const AI_PAGES = ['page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page8', 'page9']; // 显示AI按钮的页面
+
     function showPage(pageId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
+
+        // 控制 AI 浮动按钮显示/隐藏
+        const floatBtn = document.getElementById('aiFloatBtn');
+        if (floatBtn) {
+            if (AI_PAGES.includes(pageId) && currentUser && currentUser.relation !== 'child') {
+                floatBtn.style.display = 'flex';
+            } else {
+                floatBtn.style.display = 'none';
+            }
+        }
     }
 
     function go(num) {
@@ -782,16 +1073,13 @@
             if (currentUser && currentUser.relation === 'child') {
                 document.getElementById('childUserName').textContent = currentUser.name || '';
                 loadPendingOrders();
+                showChildTab('pending');
                 showPage('page7');
             } else {
                 if (currentUser) {
                     document.getElementById('name').textContent = currentUser.name || '';
                 }
                 showPage('page1');
-                // 返回首页时刷新推荐
-                if (currentUser) {
-                    loadRecommendations();
-                }
             }
         } else if (num === 2) {
             loadGoods('food', 'foodList');
@@ -809,27 +1097,64 @@
             loadAllGoods();
             showPage('page5');
             trackBrowse(null); // 全部商品，不指定品类
+            // 随便看看时加载推荐
+            if (currentUser) {
+                loadRecommendations();
+            }
         } else if (num === 6) {
             loadCart();
             showPage('page6');
+        } else if (num === 9) {
+            loadMyOrders();
+            showPage('page9');
         }
+    }
+
+    // ============ 身份选择 ============
+    function selectRole(role) {
+        selectedRole = role;
+        const roleLabel = role === 'elder' ? '👴 老人' : '👨 子女';
+
+        // 更新登录页面标题
+        const loginTitle = document.getElementById('loginTitle');
+        if (loginTitle) loginTitle.textContent = `${roleLabel}登录`;
+
+        // 更新注册页面标题和显示
+        const registerTitle = document.getElementById('registerTitle');
+        if (registerTitle) registerTitle.textContent = `${roleLabel}注册`;
+
+        // 子女注册时显示父母手机号输入框
+        const childExtra = document.getElementById('childRegExtra');
+        if (childExtra) {
+            childExtra.classList.toggle('hidden', role !== 'child');
+        }
+
+        showPage('pageLogin');
     }
 
     // ============ 用户认证 ============
     async function register() {
+        if (!selectedRole) { alert('请先选择身份'); return; }
+
         const phone = document.getElementById('regPhone').value.trim();
         const password = document.getElementById('regPassword').value.trim();
         const name = document.getElementById('regName').value.trim();
-        const relation = document.getElementById('regRelation').value;
+        const parentPhone = document.getElementById('regParentPhone').value.trim();
 
         if (!phone) { alert('请输入手机号'); return; }
         if (!password) { alert('请输入密码'); return; }
+        if (!name) { alert('请输入您的称呼'); return; }
+        if (selectedRole === 'child' && !parentPhone) { alert('请输入父母手机号以完成绑定'); return; }
 
         try {
             const res = await fetch(`${API}/api/users`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ phone, password, name, relation })
+                body: JSON.stringify({
+                    phone, password, name,
+                    relation: selectedRole,
+                    parentPhone: selectedRole === 'child' ? parentPhone : undefined
+                })
             });
             const data = await res.json();
             if (!res.ok) { alert(data.error); return; }
@@ -841,6 +1166,8 @@
     }
 
     async function login() {
+        if (!selectedRole) { alert('请先选择身份'); return; }
+
         const phone = document.getElementById('loginPhone').value.trim();
         const password = document.getElementById('loginPassword').value.trim();
 
@@ -855,7 +1182,15 @@
             });
             const data = await res.json();
             if (!res.ok) { alert(data.error); return; }
-            currentUser = { userId: data.userId, name: data.name, relation: data.relation };
+
+            // 验证身份是否匹配
+            if (data.relation && data.relation !== selectedRole) {
+                alert('该账号的身份与当前选择的身份不一致，请重新选择身份');
+                showPage('pageRoleSelect');
+                return;
+            }
+
+            currentUser = { userId: data.userId, name: data.name, relation: data.relation, parentId: data.parentId || null };
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
             alert('登录成功！');
             go(1);
@@ -868,7 +1203,15 @@
         currentUser = null;
         localStorage.removeItem('currentUser');
         cartItems = [];
-        showPage('pageLogin');
+        selectedRole = null;
+        // 清空输入框
+        document.getElementById('loginPhone').value = '';
+        document.getElementById('loginPassword').value = '';
+        document.getElementById('regPhone').value = '';
+        document.getElementById('regPassword').value = '';
+        document.getElementById('regName').value = '';
+        document.getElementById('regParentPhone').value = '';
+        showPage('pageRoleSelect');
     }
 
     // ============ 搜索功能 ============
@@ -937,7 +1280,8 @@
             renderRecommendations(recommendations);
         } catch (e) {
             // 静默失败，不影响主流程
-            document.getElementById('recommendSection').style.display = 'none';
+            const section = document.getElementById('recommendSection');
+            if (section) section.style.display = 'none';
         }
     }
 
@@ -946,12 +1290,12 @@
         const list = document.getElementById('recommendList');
 
         if (!items || items.length === 0) {
-            section.style.display = 'none';
+            if (section) section.style.display = 'none';
             return;
         }
 
-        section.style.display = 'block';
-        list.innerHTML = '';
+        if (section) section.style.display = 'block';
+        if (list) list.innerHTML = '';
 
         items.forEach(g => {
             const tagHtml = g.tags && g.tags.length > 0
@@ -1214,7 +1558,7 @@
     // ============ 子女代付功能 ============
     async function loadPendingOrders() {
         try {
-            const res = await fetch(`${API}/api/orders/pending`);
+            const res = await fetch(`${API}/api/orders/pending?childUserId=${currentUser.userId}`);
             const orders = await res.json();
             const container = document.getElementById('pendingOrdersList');
             container.innerHTML = '';
@@ -1249,6 +1593,97 @@
         }
     }
 
+    async function loadPaidOrders() {
+        try {
+            const res = await fetch(`${API}/api/orders/paid-by-child?childUserId=${currentUser.userId}`);
+            const orders = await res.json();
+            const container = document.getElementById('paidOrdersList');
+            container.innerHTML = '';
+
+            if (orders.length === 0) {
+                container.innerHTML = '<div class="empty-tip">暂无已代付记录 📋</div>';
+                return;
+            }
+
+            orders.forEach(order => {
+                const itemsHtml = order.items.map(item =>
+                    `<div class="order-item-row">${item.name}  ￥${item.price.toFixed(1)}</div>`
+                ).join('');
+
+                container.innerHTML += `
+                    <div class="order-card">
+                        <div class="order-header">
+                            <span class="order-id">订单号：${order.id}</span>
+                            <span class="order-status paid">已代付</span>
+                        </div>
+                        <div class="order-items">${itemsHtml}</div>
+                        <div class="order-total">合计：¥${order.total.toFixed(1)}</div>
+                        <div style="font-size:12px;color:#999;text-align:right;">代付时间：${order.paidAt ? new Date(order.paidAt).toLocaleString('zh-CN') : '-'}</div>
+                    </div>
+                `;
+            });
+        } catch (e) {
+            alert('加载订单失败');
+        }
+    }
+
+    function showChildTab(tab) {
+        const pendingList = document.getElementById('pendingOrdersList');
+        const paidList = document.getElementById('paidOrdersList');
+        const tabPending = document.getElementById('tabPending');
+        const tabPaid = document.getElementById('tabPaid');
+
+        if (tab === 'pending') {
+            pendingList.style.display = 'block';
+            paidList.style.display = 'none';
+            tabPending.style.opacity = '1';
+            tabPaid.style.opacity = '0.5';
+            loadPendingOrders();
+        } else {
+            pendingList.style.display = 'none';
+            paidList.style.display = 'block';
+            tabPending.style.opacity = '0.5';
+            tabPaid.style.opacity = '1';
+            loadPaidOrders();
+        }
+    }
+
+    // ============ 老人端我的订单 ============
+    async function loadMyOrders() {
+        try {
+            const res = await fetch(`${API}/api/orders/${currentUser.userId}`);
+            const orders = await res.json();
+            const container = document.getElementById('myOrdersList');
+            container.innerHTML = '';
+
+            if (orders.length === 0) {
+                container.innerHTML = '<div class="empty-tip">暂无订单 🛒</div>';
+                return;
+            }
+
+            // 按时间倒序
+            orders.reverse().forEach(order => {
+                const itemsHtml = order.items.map(item =>
+                    `<div class="order-item-row">${item.name}  ￥${item.price.toFixed(1)}</div>`
+                ).join('');
+
+                container.innerHTML += `
+                    <div class="order-card">
+                        <div class="order-header">
+                            <span class="order-id">订单号：${order.id}</span>
+                            <span class="order-status ${order.status}">${order.status === 'pending' ? '等待子女代付中...' : '子女已代付 ✅'}</span>
+                        </div>
+                        <div class="order-items">${itemsHtml}</div>
+                        <div class="order-total">合计：¥${order.total.toFixed(1)}</div>
+                        <div style="font-size:12px;color:#999;text-align:right;">下单时间：${new Date(order.createdAt).toLocaleString('zh-CN')}</div>
+                    </div>
+                `;
+            });
+        } catch (e) {
+            alert('加载订单失败');
+        }
+    }
+
     async function childPayOrder(orderId) {
         if (!confirm('确认代付此订单吗？')) return;
         try {
@@ -1266,18 +1701,404 @@
         }
     }
 
-    // 初始化
+
+    // ============ 全场景 AI 聊天功能 ============
+    let currentScene = '首页'; // 当前页面场景，默认首页
+    let currentGoodsList = []; // 当前页面展示的商品
+    let aiChatHistory = []; // 对话历史
+    let aiWelcomeLoading = false; // 防止重复加载欢迎语
+
+    // 页面场景映射
+    const PAGE_SCENE_MAP = {
+        'page1': '首页',
+        'page2': '食品饮料',
+        'page3': '日用品',
+        'page4': '药品保健',
+        'page5': '随便看看',
+        'page6': '购物车',
+        'page8': '搜索结果'
+    };
+
+    // 更新当前场景（在 go() 函数调用后更新）
+    function updateCurrentScene(pageId) {
+        currentScene = PAGE_SCENE_MAP[pageId] || '购物';
+    }
+
+    // 重写 go() 以追踪场景
+    const originalGo = go;
+    go = function(num) {
+        originalGo(num);
+        let pageId = '';
+        if (num === 1) pageId = currentUser && currentUser.relation === 'child' ? 'page7' : 'page1';
+        else if (num === 2) pageId = 'page2';
+        else if (num === 3) pageId = 'page3';
+        else if (num === 4) pageId = 'page4';
+        else if (num === 5) pageId = 'page5';
+        else if (num === 6) pageId = 'page6';
+        else if (num === 8) pageId = 'page8';
+        else if (num === 9) pageId = 'page9';
+        updateCurrentScene(pageId);
+    };
+
+    // 打开 AI 聊天窗口
+    function openAiChat() {
+        if (!currentUser) {
+            alert('请先登录后使用AI导购');
+            return;
+        }
+        document.getElementById('aiChatOverlay').classList.add('active');
+        document.getElementById('aiChatInput').focus();
+
+        // 如果是首次打开，发送欢迎消息（防止重复调用）
+        if (aiChatHistory.length === 0 && !aiWelcomeLoading) {
+            aiWelcomeLoading = true;
+            addChatMessage('bot', '正在加载欢迎语...');
+            sendAiWelcome();
+        }
+    }
+
+    // 关闭 AI 聊天窗口
+    function closeAiChat() {
+        document.getElementById('aiChatOverlay').classList.remove('active');
+    }
+
+    // 点击遮罩层关闭
+    document.addEventListener('click', function(e) {
+        if (e.target.id === 'aiChatOverlay') {
+            closeAiChat();
+        }
+    });
+
+    // 添加聊天消息到界面（支持语音播放按钮）
+    function addChatMessage(type, text, options = {}) {
+        const messagesDiv = document.getElementById('aiChatMessages');
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `ai-msg ${type}`;
+
+        const bubbleDiv = document.createElement('div');
+        bubbleDiv.className = 'ai-msg-bubble';
+
+        if (type === 'bot' && text) {
+            // AI 消息：添加语音播放按钮
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'ai-msg-bubble-content';
+            contentDiv.textContent = text;
+
+            const speakBtn = document.createElement('button');
+            speakBtn.className = 'ai-msg-speak-btn';
+            speakBtn.innerHTML = '🔊';
+            speakBtn.title = '朗读';
+            speakBtn.onclick = () => speakText(text);
+            contentDiv.appendChild(speakBtn);
+
+            bubbleDiv.appendChild(contentDiv);
+        } else {
+            bubbleDiv.textContent = text;
+        }
+
+        msgDiv.appendChild(bubbleDiv);
+        messagesDiv.appendChild(msgDiv);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    // ============ 语音交互功能 ============
+    // 使用浏览器 Web Speech API 实现实时语音转文字（类似微信语音输入）
+    let recognition = null;
+    let isRecording = false;
+    let currentAudioElement = null; // 当前正在播放的语音
+    let finalTranscript = ''; // 最终识别结果
+
+    // 初始化语音识别
+    function initSpeechRecognition() {
+        // 兼容不同浏览器
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            console.error('浏览器不支持 Web Speech API');
+            return null;
+        }
+
+        const rec = new SpeechRecognition();
+        rec.lang = 'zh-CN';       // 中文
+        rec.interimResults = true; // 开启实时结果
+        rec.continuous = true;     // 连续识别
+
+        rec.onresult = (event) => {
+            const input = document.getElementById('aiChatInput');
+            let interimTranscript = '';
+            finalTranscript = '';
+
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                const transcript = event.results[i][0].transcript;
+                if (event.results[i].isFinal) {
+                    finalTranscript += transcript;
+                } else {
+                    interimTranscript += transcript;
+                }
+            }
+
+            // 实时显示：最终结果 + 正在识别的结果
+            const displayText = finalTranscript + interimTranscript;
+            input.value = displayText;
+            input.placeholder = interimTranscript ? '🎙 正在识别...' : '问我任何购物问题...';
+        };
+
+        rec.onerror = (event) => {
+            console.error('语音识别错误:', event.error);
+            if (event.error === 'not-allowed') {
+                alert('无法获取麦克风权限，请确保浏览器允许访问麦克风');
+            }
+            stopRecording();
+        };
+
+        rec.onend = () => {
+            // 如果还在录音状态，重新启动（保持连续识别）
+            if (isRecording) {
+                try {
+                    rec.start();
+                } catch (e) {
+                    stopRecording();
+                }
+            } else {
+                // 录音结束，如果有识别结果则自动发送
+                if (finalTranscript.trim()) {
+                    const input = document.getElementById('aiChatInput');
+                    input.value = finalTranscript.trim();
+                    input.placeholder = '问我任何购物问题...';
+                    sendAiMessage();
+                }
+            }
+        };
+
+        return rec;
+    }
+
+    // 切换录音状态
+    function toggleVoiceRecord() {
+        const micBtn = document.getElementById('aiChatMicBtn');
+
+        if (!isRecording) {
+            // 开始录音
+            if (!recognition) {
+                recognition = initSpeechRecognition();
+            }
+
+            if (!recognition) {
+                alert('您的浏览器不支持语音识别，请使用 Chrome 或 Edge 浏览器');
+                return;
+            }
+
+            finalTranscript = '';
+            const input = document.getElementById('aiChatInput');
+            input.value = '';
+            input.placeholder = '🎙 请说话...';
+
+            try {
+                recognition.start();
+                isRecording = true;
+                micBtn.classList.add('recording');
+                micBtn.innerHTML = '⏹';
+                micBtn.title = '停止录音';
+            } catch (err) {
+                console.error('启动语音识别失败:', err);
+            }
+        } else {
+            // 停止录音
+            stopRecording();
+        }
+    }
+
+    // 停止录音
+    function stopRecording() {
+        const micBtn = document.getElementById('aiChatMicBtn');
+
+        if (recognition && isRecording) {
+            recognition.stop();
+        }
+
+        isRecording = false;
+        micBtn.classList.remove('recording');
+        micBtn.innerHTML = '🎤';
+        micBtn.title = '语音输入';
+
+        const input = document.getElementById('aiChatInput');
+        input.placeholder = '问我任何购物问题...';
+    }
+
+    // 语音合成：将 AI 回复文字转为语音播放
+    async function speakText(text) {
+        // 如果已有语音在播放，先停止
+        if (currentAudioElement) {
+            currentAudioElement.pause();
+            currentAudioElement = null;
+        }
+
+        try {
+            const res = await fetch(`${API}/api/speech/tts`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text })
+            });
+
+            if (res.ok) {
+                const audioBlob = await res.blob();
+                const audioUrl = URL.createObjectURL(audioBlob);
+                currentAudioElement = new Audio(audioUrl);
+                currentAudioElement.play();
+                currentAudioElement.onended = () => {
+                    URL.revokeObjectURL(audioUrl);
+                    currentAudioElement = null;
+                };
+            } else {
+                console.error('语音合成失败');
+                // Fallback: 使用浏览器内置 TTS
+                speakWithBrowserTTS(text);
+            }
+        } catch (e) {
+            console.error('语音合成错误:', e);
+            // Fallback: 使用浏览器内置 TTS
+            speakWithBrowserTTS(text);
+        }
+    }
+
+    // 浏览器内置 TTS 作为后备方案
+    function speakWithBrowserTTS(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel(); // 停止之前的
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'zh-CN';
+            utterance.rate = 0.9; // 稍慢，适合老年人
+            utterance.pitch = 1;
+            window.speechSynthesis.speak(utterance);
+        }
+    }
+
+    // 发送欢迎消息
+    async function sendAiWelcome() {
+        try {
+            const res = await fetch(`${API}/api/ai-advice`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    context: { scene: currentScene, goodsList: currentGoodsList }
+                })
+            });
+            const data = await res.json();
+
+            // 移除加载提示
+            const messagesDiv = document.getElementById('aiChatMessages');
+            if (messagesDiv.lastChild) messagesDiv.lastChild.remove();
+
+            if (res.ok && data.success) {
+                addChatMessage('bot', data.advice);
+                aiChatHistory.push({ role: 'bot', content: data.advice });
+            } else {
+                console.error('AI 欢迎语失败:', data);
+                addChatMessage('bot', '您好！我是您的AI购物助手 🛒\n\n商店有食品饮料、日用品、药品保健三大类商品，欢迎来逛逛！有什么想了解的，随时问我哦~');
+            }
+        } catch (e) {
+            console.error('AI 欢迎语网络错误:', e);
+            // 网络失败时的 fallback
+            const messagesDiv = document.getElementById('aiChatMessages');
+            if (messagesDiv.lastChild) messagesDiv.lastChild.remove();
+            addChatMessage('bot', '您好！我是您的AI购物助手 🛒\n\n商店有食品饮料、日用品、药品保健三大类商品，欢迎来逛逛！有什么想了解的，随时问我哦~');
+        } finally {
+            aiWelcomeLoading = false;
+        }
+    }
+
+    // 发送用户消息
+    async function sendAiMessage() {
+        const input = document.getElementById('aiChatInput');
+        const question = input.value.trim();
+        if (!question) return;
+
+        // 显示用户消息
+        addChatMessage('user', question);
+        aiChatHistory.push({ role: 'user', content: question });
+        input.value = '';
+
+        // 禁用发送按钮，显示加载
+        const sendBtn = document.getElementById('aiChatSendBtn');
+        sendBtn.disabled = true;
+
+        // 显示"AI正在思考"
+        const loadingId = addChatMessage('bot', '🤔 正在思考...');
+
+        try {
+            // 获取当前购物车
+            let items = [];
+            try {
+                const cartRes = await fetch(`${API}/api/cart/${currentUser.userId}`);
+                if (cartRes.ok) {
+                    items = (await cartRes.json()).map(i => ({ name: i.name, price: i.price }));
+                }
+            } catch (e) {}
+
+            const res = await fetch(`${API}/api/ai-advice`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    question,
+                    items,
+                    context: { scene: currentScene, goodsList: currentGoodsList }
+                })
+            });
+
+            const data = await res.json();
+
+            // 移除加载提示
+            const messagesDiv = document.getElementById('aiChatMessages');
+            messagesDiv.lastChild.remove();
+
+            if (data.success) {
+                addChatMessage('bot', data.advice);
+                aiChatHistory.push({ role: 'bot', content: data.advice });
+            } else {
+                addChatMessage('bot', '抱歉，我暂时无法回答，请稍后再试。');
+            }
+        } catch (e) {
+            const messagesDiv = document.getElementById('aiChatMessages');
+            messagesDiv.lastChild.remove();
+            addChatMessage('bot', '网络错误，请稍后再试。');
+        } finally {
+            sendBtn.disabled = false;
+        }
+    }
+
+    // 重写 loadGoods 和 loadAllGoods 以记录当前商品列表
+    const originalLoadGoods = loadGoods;
+    loadGoods = async function(category, containerId) {
+        await originalLoadGoods(category, containerId);
+        try {
+            const res = await fetch(`${API}/api/goods/${category}`);
+            currentGoodsList = await res.json();
+        } catch (e) {}
+    };
+
+    const originalLoadAllGoods = loadAllGoods;
+    loadAllGoods = async function() {
+        await originalLoadAllGoods();
+        try {
+            const res = await fetch(`${API}/api/goods`);
+            currentGoodsList = await res.json();
+        } catch (e) {}
+    };
+
+    // ============ 初始化 ============
     checkLogin();
     if (currentUser) {
+        // 已登录：直接进入对应首页
+        selectedRole = currentUser.relation;
         if (currentUser.relation === 'child') {
             document.getElementById('childUserName').textContent = currentUser.name || '';
             loadPendingOrders();
+            showChildTab('pending');
             showPage('page7');
         } else {
-            document.getElementById('userName').textContent = currentUser.name || '';
+            document.getElementById('name').textContent = currentUser.name || '';
             showPage('page1');
-            loadRecommendations();
         }
     }
+    // 未登录：默认显示身份选择页面（pageRoleSelect 已在 HTML 中设为 active）
 </script>
 </html>

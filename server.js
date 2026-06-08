@@ -6,12 +6,36 @@ const path = require('path');
 const axios = require('axios'); // 引入 axios 用于发起 HTTP 请求
 require('dotenv').config();     // 引入 dotenv 来读取 .env 文件
 
+// 百度语音 SDK
+let AipSpeech;
+try {
+    AipSpeech = require('baidu-aip-sdk').speech;
+} catch (e) {
+    try {
+        AipSpeech = require('baidu-aip').speech;
+    } catch (e2) {
+        AipSpeech = null;
+    }
+}
+const baiduSpeechAppId = process.env.BAIDU_SPEECH_APP_ID;
+const baiduSpeechApiKey = process.env.BAIDU_SPEECH_API_KEY;
+const baiduSpeechSecretKey = process.env.BAIDU_SPEECH_SECRET_KEY;
+let baiduSpeechClient = null;
+if (AipSpeech && baiduSpeechAppId && baiduSpeechAppId !== 'your_app_id') {
+    try {
+        baiduSpeechClient = new AipSpeech(baiduSpeechAppId, baiduSpeechApiKey, baiduSpeechSecretKey);
+    } catch (e) {
+        console.warn('百度语音 SDK 初始化失败:', e.message);
+    }
+}
+
 const app = express();
 const PORT = 3000;
 
 // 中间件
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' })); // 增大请求体限制以支持音频base64
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 // 提供静态文件（前端页面）
 app.use(express.static(path.join(__dirname)));
 
@@ -278,7 +302,7 @@ function getRecommendations(userId, limit = 6) {
 
 // --- 用户注册 ---
 app.post('/api/users', (req, res) => {
-    const { phone, password, name, relation } = req.body;
+    const { phone, password, name, relation, parentPhone } = req.body;
     if (!phone || !password) {
         return res.status(400).json({ error: '手机号和密码不能为空' });
     }
@@ -287,14 +311,26 @@ app.post('/api/users', (req, res) => {
     if (users.find(u => u.phone === phone)) {
         return res.status(409).json({ error: '该手机号已注册' });
     }
+
     const newUser = {
         id: Date.now().toString(),
         phone,
-        password, // 实际项目中需要加密
+        password,
         name: name || '',
-        relation: relation || '', // 'elder' 老年人 / 'child' 子女
+        relation: relation || '',
+        parentId: null, // 绑定的老人用户ID（仅子女账号有值）
         createdAt: new Date().toISOString()
     };
+
+    // 如果是子女注册，通过父母手机号建立绑定关系
+    if (relation === 'child' && parentPhone) {
+        const parent = users.find(u => u.phone === parentPhone && u.relation === 'elder');
+        if (!parent) {
+            return res.status(400).json({ error: '未找到该手机号对应的老人账号，请先让父母注册' });
+        }
+        newUser.parentId = parent.id;
+    }
+
     users.push(newUser);
     saveData(USERS_FILE, users);
     res.json({ message: '注册成功', userId: newUser.id });
@@ -312,35 +348,55 @@ app.post('/api/login', (req, res) => {
         message: '登录成功',
         userId: user.id,
         name: user.name,
-        relation: user.relation
+        relation: user.relation,
+        parentId: user.parentId || null
     });
 });
 
-// ========== 新增 AI 建议接口 ==========
+// ========== AI 导购接口（支持全场景） ==========
 // 处理 POST 请求，地址为 /api/ai-advice
 app.post('/api/ai-advice', async (req, res) => {
-    // 1. 首先，从环境变量中读取你的 DeepSeek API 密钥
+    // 1. 从环境变量中读取 DeepSeek API 密钥
     const apiKey = process.env.DEEPSEEK_API_KEY;
-    
-    // 重要！检查 API 密钥是否存在，如果没有则返回错误，防止后端挂掉
+
     if (!apiKey) {
         console.error("错误: 环境变量 DEEPSEEK_API_KEY 未在 .env 文件中设置！");
         return res.status(500).json({ error: '服务器配置错误：缺少API密钥' });
     }
 
-    // 2. 从前端发来的请求体中，获取购物车的商品列表 (items)
-    //    items 应该是一个数组，里面是 { name, price } 这样的对象
-    const { items } = req.body;
-    
-    // 做一些简单的数据校验，确保 items 存在且不为空
-    if (!items || !Array.isArray(items) || items.length === 0) {
-        return res.status(400).json({ error: '购物车为空，无法提供建议' });
-    }
+    // 2. 从请求体中获取数据
+    const { items, context, question } = req.body;
+    // context: 场景上下文，如 "首页"、"浏览食品饮料"、"搜索牛奶"、"购物车结算"
+    // question: 用户主动提出的问题（全场景聊天时使用）
+    // items: 购物车商品列表（购物车场景时使用）
 
-    // 3. 创建一个友好的提示词（Prompt），发送给 DeepSeek 模型
-    //    这个提示词告诉AI要扮演什么角色，以及根据什么信息生成什么样的建议。
-    const productsList = items.map(item => `- ${item.name} (¥${item.price})`).join('\n');
-    const prompt = `你是一位经验丰富的购物专家和AI导购助手。
+    const goods = JSON.parse(fs.readFileSync(GOODS_FILE, 'utf8'));
+
+    let prompt = '';
+
+    // 3. 根据不同场景构建不同的 prompt
+    if (question) {
+        // === 全场景聊天模式：用户主动提问 ===
+        // 构建当前场景的商品信息
+        let goodsInfo = '';
+        if (context && context.goodsList && context.goodsList.length > 0) {
+            goodsInfo = `\n当前页面展示的商品：\n${context.goodsList.map(g => `- ${g.emoji || ''} ${g.name} (¥${g.price}) - ${g.description || ''}`).join('\n')}`;
+        }
+        let cartInfo = '';
+        if (items && items.length > 0) {
+            cartInfo = `\n用户购物车中的商品：\n${items.map(i => `- ${i.name} (¥${i.price})`).join('\n')}`;
+        }
+
+        prompt = `你是一位亲切温暖的AI购物导购助手，正在帮助一位老年用户购物。
+用户当前在${context ? context.scene : '购物'}页面。
+${goodsInfo}
+${cartInfo}
+用户的问题是：${question}
+请根据以上信息，用亲切、简洁的语言回答用户的问题。回答不超过150字，适合老年人阅读。如果问题与购物无关，友好地引导回购物话题。`;
+    } else if (items && Array.isArray(items) && items.length > 0) {
+        // === 购物车建议模式（原有功能） ===
+        const productsList = items.map(item => `- ${item.name} (¥${item.price})`).join('\n');
+        prompt = `你是一位经验丰富的购物专家和AI导购助手。
 请你根据顾客购物车中的商品清单，为即将结算的用户生成一份购买建议，注意用户是老年人，要求建议内容不超过200字。
 建议应包含：
 1. 对这些商品选择的总体肯定。
@@ -349,37 +405,46 @@ app.post('/api/ai-advice', async (req, res) => {
 购物车商品清单如下：
 ${productsList}
 请直接返回你的建议文本。`;
+    } else {
+        // === 默认欢迎模式 ===
+        const allGoodsSummary = `
+商店共有 ${goods.length} 件商品，分为三大类：
+- 食品饮料：${goods.filter(g => g.category === 'food').map(g => g.name).join('、')}
+- 日用品：${goods.filter(g => g.category === 'daily').map(g => g.name).join('、')}
+- 药品保健：${goods.filter(g => g.category === 'medicine').map(g => g.name).join('、')}
+`;
+        prompt = `你是一位亲切温暖的AI购物导购助手，正在帮助一位老年用户购物。
+请主动打招呼，简要介绍商店有哪些商品可以买，引导用户开始浏览。
+${allGoodsSummary}
+回答不超过120字，语气亲切温暖，用简单易懂的语言。`;
+    }
 
     // 4. 调用 DeepSeek API
     try {
         const response = await axios.post(
-            'https://api.deepseek.com/chat/completions', // DeepSeek API 地址
+            'https://api.deepseek.com/chat/completions',
             {
-                model: 'deepseek-chat',        // 使用 deepseek-chat 模型
+                model: 'deepseek-chat',
                 messages: [
-                    { role: "system", content: "你是一位专业的购物导购。" }, // 设定AI的系统角色
-                    { role: "user", content: prompt }   // 用户的提问，也就是我们刚才构造的提示词
+                    { role: "system", content: "你是一位专业的购物导购，专门帮助老年人在线购物。语气亲切温暖，语言简洁易懂。" },
+                    { role: "user", content: prompt }
                 ],
-                temperature: 0.7,               // 控制回复的随机性和创造性，0.7是个不错的平衡点
-                max_tokens: 500                 // 控制回复的最大长度
+                temperature: 0.7,
+                max_tokens: 500
             },
             {
                 headers: {
-                    'Authorization': `Bearer ${apiKey}`,  // 这里使用我们的API密钥
+                    'Authorization': `Bearer ${apiKey}`,
                     'Content-Type': 'application/json'
                 }
             }
         );
 
-        // 5. 从API返回的数据中提取出AI生成的建议文本
         const advice = response.data.choices[0].message.content;
-        // 将建议文本成功返回给前端
         res.json({ success: true, advice: advice });
 
     } catch (error) {
-        // 6. 错误处理：在控制台打印详细的错误信息，帮助调试
         console.error('DeepSeek API 调用失败详情:', error.response?.data || error.message);
-        // 向前端返回一个通用的服务器内部错误
         res.status(500).json({ error: '获取AI建议失败，请稍后重试' });
     }
 });
@@ -479,11 +544,44 @@ app.get('/api/orders/:userId', (req, res) => {
     res.json(userOrders);
 });
 
-// --- 获取待代付订单（子女查看） ---
+// --- 获取待代付订单（子女查看，按绑定关系过滤） ---
 app.get('/api/orders/pending', (req, res) => {
+    const { childUserId } = req.query; // 子女用户ID
     let orders = JSON.parse(fs.readFileSync(ORDERS_FILE, 'utf8'));
+    let users = JSON.parse(fs.readFileSync(USERS_FILE, 'utf8'));
+
+    if (childUserId) {
+        // 查找该子女绑定的老人ID
+        const child = users.find(u => u.id === childUserId);
+        if (!child || !child.parentId) {
+            return res.json([]); // 未绑定老人，无订单
+        }
+        // 只返回绑定老人的待付订单
+        const pending = orders.filter(o => o.userId === child.parentId && o.status === 'pending');
+        return res.json(pending);
+    }
+
+    // 兼容：无 childUserId 时返回所有待付订单（向后兼容）
     const pending = orders.filter(o => o.status === 'pending');
     res.json(pending);
+});
+
+// --- 子女查看已代付的订单记录 ---
+app.get('/api/orders/paid-by-child', (req, res) => {
+    const { childUserId } = req.query;
+    if (!childUserId) return res.json([]);
+
+    let orders = JSON.parse(fs.readFileSync(ORDERS_FILE, 'utf8'));
+    let users = JSON.parse(fs.readFileSync(USERS_FILE, 'utf8'));
+    const child = users.find(u => u.id === childUserId);
+
+    if (!child || !child.parentId) {
+        return res.json([]);
+    }
+
+    // 返回绑定老人的已代付订单
+    const paid = orders.filter(o => o.userId === child.parentId && o.status === 'paid');
+    res.json(paid);
 });
 
 // --- 支付订单（子女代付） ---
@@ -585,6 +683,73 @@ app.get('/api/recommendations/:userId', (req, res) => {
     const { userId } = req.params;
     const recommendations = getRecommendations(userId, 6);
     res.json(recommendations);
+});
+
+// ========== 百度语音接口 ==========
+
+// --- 语音识别（ASR）：base64 音频 → 文字 ---
+app.post('/api/speech/asr', (req, res) => {
+    if (!baiduSpeechClient) {
+        return res.status(500).json({ error: '百度语音服务未配置，请在 .env 中设置 BAIDU_SPEECH_*' });
+    }
+
+    const { audioBase64 } = req.body;
+    if (!audioBase64) {
+        return res.status(400).json({ error: '缺少音频数据' });
+    }
+
+    // 百度语音识别：16000Hz, PCM/WAV, 中文
+    baiduSpeechClient
+        .recognize(Buffer.from(audioBase64, 'base64'), {
+            devPid: 15372, // 中文普通话远场
+        })
+        .then(result => {
+            if (result.result) {
+                // result.result 是数组，拼接所有识别片段
+                const text = result.result.join('');
+                res.json({ success: true, text });
+            } else if (result.err_no) {
+                res.status(500).json({ error: `识别失败: ${result.err_msg}` });
+            } else {
+                res.status(500).json({ error: '识别结果为空' });
+            }
+        })
+        .catch(err => {
+            console.error('百度语音识别错误:', err);
+            res.status(500).json({ error: '语音识别服务异常' });
+        });
+});
+
+// --- 语音合成（TTS）：文字 → 语音音频 ---
+app.post('/api/speech/tts', (req, res) => {
+    if (!baiduSpeechClient) {
+        return res.status(500).json({ error: '百度语音服务未配置，请在 .env 中设置 BAIDU_SPEECH_*' });
+    }
+
+    const { text } = req.body;
+    if (!text) {
+        return res.status(400).json({ error: '缺少文本内容' });
+    }
+
+    // 限制文本长度（百度TTS单次最多1024字节）
+    const safeText = text.substring(0, 500);
+
+    baiduSpeechClient
+        .synthesis(safeText)
+        .then(result => {
+            if (result.err_no === 0) {
+                const audioBuffer = result.result;
+                res.set('Content-Type', 'audio/mpeg');
+                res.set('Content-Length', audioBuffer.length);
+                res.send(audioBuffer);
+            } else {
+                res.status(500).json({ error: `合成失败: ${result.err_msg}` });
+            }
+        })
+        .catch(err => {
+            console.error('百度语音合成错误:', err);
+            res.status(500).json({ error: '语音合成服务异常' });
+        });
 });
 
 // ============ 启动服务器 ============
