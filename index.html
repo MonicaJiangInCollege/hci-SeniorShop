@@ -339,7 +339,7 @@
             display: none !important;
         }
 
-        /* 子女代付页面样式 */
+        /* 子女帮付页面样式 */
         .order-card {
             border: 2px solid #FFE0B2;
             border-radius: 14px;
@@ -425,7 +425,7 @@
             margin: 24px 0;
         }
 
-        /* 搜索框样式 */
+        /* 找找框样式 */
         .search-bar {
             display: flex;
             gap: 8px;
@@ -616,7 +616,7 @@
             border-left: 5px solid #26a69a;
         }
 
-        /* 搜索无结果提示 */
+        /* 没找到结果提示 */
         .search-no-result {
             text-align: center;
             font-size: 18px;
@@ -757,12 +757,12 @@
         }
 
         .ai-chat-box {
-            width: 400px !important;
-            max-width: 400px !important;
+            width: 800px !important;
+            max-width: 800px !important;
             height: 520px;
             max-height: 75vh;
             background: #FFFDF9;
-            border-radius: 24px;
+            border-radius: 24px 24px 24px 24px;
             box-shadow: 0 12px 40px rgba(0,0,0,0.25);
             display: flex;
             flex-direction: column;
@@ -784,6 +784,7 @@
 
             .ai-chat-box {
                 max-width: 100%;
+                width: 100% !important;
                 height: 60vh;
                 max-height: none;
                 border-radius: 20px 20px 0 0;
@@ -982,7 +983,7 @@
             gap: 6px;
         }
 
-        /* AI 消息中可点击的商品链接 */
+        /* AI 消息中可点击的东西链接 */
         .ai-product-link {
             display: inline-block;
             background: linear-gradient(135deg, #FF8C42, #F57C00);
@@ -1101,7 +1102,7 @@
             border-color: #FFE0B2;
         }
 
-        /* 商品详情页 */
+        /* 东西详情页 */
         .detail-container {
             background: #FFFDF9;
             border-radius: 16px;
@@ -1263,8 +1264,8 @@
         <div class="user-info">您好，<span id="name"></span>！</div>
         <!-- 搜索框 -->
         <div class="search-bar">
-            <input type="text" class="search-input" id="searchInput" placeholder="搜索您想要的商品" onkeydown="if(event.key==='Enter')search()">
-            <button class="search-btn" onclick="search()">搜索</button>
+            <input type="text" class="search-input" id="searchInput" placeholder="找找您想要的东西" onkeydown="if(event.key==='Enter')search()">
+            <button class="search-btn" onclick="search()">找找</button>
         </div>
         <div class="title">您想买点什么？</div>
         <div class="btn-group">
@@ -1290,42 +1291,42 @@
             我选好的东西
         </button>
         <button class="btn look" onclick="go(9)" style="width:100%;height:80px;font-size:22px;margin-top:14px;">
-            <img src="images/cart.png" alt="我的订单"/>
-            我的订单
+            <img src="images/cart.png" alt="我买的东西"/>
+            我买的东西
         </button>
         <button class="back" onclick="logout()" style="margin-top:24px;">退出登录</button>
     </div>
 
-    <!-- 页面8：搜索结果 -->
+    <!-- 页面8：找找结果 -->
     <div id="page8" class="page">
         <button class="back" onclick="go(1)">返回首页</button>
-        <div class="title">搜索结果</div>
+        <div class="title">找找结果</div>
         <div class="search-result-count" id="searchResultCount"></div>
         <div class="goods-list" id="searchResultList"></div>
-        <div class="search-no-result" id="searchNoResult" style="display:none;">没有找到相关商品，换一个关键词试试吧 🔍</div>
+        <div class="search-no-result" id="searchNoResult" style="display:none;">没有找到相关东西，换一个词试试吧 🔍</div>
     </div>
 
-    <!-- 页面7：子女首页 - 待代付订单 -->
+    <!-- 页面7：子女首页 - 需要帮付的东西 -->
     <div id="page7" class="page">
         <div class="user-info">您好，<span id="childUserName"></span>！（子女账号）</div>
-        <div class="title">代付中心</div>
+        <div class="title">帮付中心</div>
         <div style="display:flex;gap:8px;margin-bottom:14px;">
-            <button class="btn food" onclick="showChildTab('pending')" id="tabPending" style="height:50px;font-size:16px;">待代付</button>
-            <button class="btn daily" onclick="showChildTab('paid')" id="tabPaid" style="height:50px;font-size:16px;">已代付</button>
+            <button class="btn food" onclick="showChildTab('pending')" id="tabPending" style="height:50px;font-size:16px;">等着我付</button>
+            <button class="btn daily" onclick="showChildTab('paid')" id="tabPaid" style="height:50px;font-size:16px;">已付过的</button>
         </div>
         <div id="pendingOrdersList"></div>
         <div id="paidOrdersList" style="display:none;"></div>
         <button class="back" onclick="logout()" style="margin-top:24px;">退出登录</button>
     </div>
 
-    <!-- 页面9：老人我的订单 -->
+    <!-- 页面9：老人我买的东西 -->
     <div id="page9" class="page">
         <button class="back" onclick="go(1)">返回首页</button>
-        <div class="title">我的订单</div>
+        <div class="title">我买的东西</div>
         <div id="myOrdersList"></div>
     </div>
 
-    <!-- 页面10：商品详情页 -->
+    <!-- 页面10：东西详情页 -->
     <div id="page10" class="page">
         <button class="back" onclick="goBackFromDetail()">返回</button>
         <div class="detail-container" id="detailContainer"></div>
@@ -1373,7 +1374,7 @@
         <div class="goods-list" id="medicineList"></div>
     </div>
 
-    <!-- 页面5：随便看看（含推荐区 + 全部商品） -->
+    <!-- 页面5：随便看看（含推荐区 + 全部东西） -->
     <div id="page5" class="page">
         <button class="back" onclick="go(1)">返回首页</button>
         <div class="title">随便看看</div>
@@ -1401,7 +1402,7 @@
             </div>
         </div>
         <button class="btn pay" onclick="pay()" style="width:100%;height:60px;font-size:20px">
-            去结算（亲情代付）
+            去付钱（让子女帮忙付）
         </button>
     </div>
 
@@ -1431,10 +1432,10 @@
                 <span id="aiChildNotifyText">已通知子女关注您的购物</span>
             </div>
             <div class="ai-quick-questions" id="aiQuickQuestions">
-                <button class="ai-quick-btn" onclick="quickAsk('帮我推荐适合老人的食品')">🍎 推荐老人食品</button>
+                <button class="ai-quick-btn" onclick="quickAsk('帮我推荐点零食')">🍎 推荐点零食</button>
                 <button class="ai-quick-btn" onclick="quickAsk('有没有降血压的药？')">💊 有没有降压药</button>
                 <button class="ai-quick-btn" onclick="quickAsk('牛奶多少钱？')">🥛 牛奶多少钱</button>
-                <button class="ai-quick-btn" onclick="quickAsk('购物车里的东西合适吗')">🛒 购物车建议</button>
+                <button class="ai-quick-btn" onclick="quickAsk('有没有好用的日用品？')">🛒 有没有好用的日用品</button>
             </div>
             <div class="ai-chat-input-area">
                 <button class="ai-chat-mic" id="aiChatMicBtn" onclick="toggleVoiceRecord()" title="语音输入">🎤</button>
@@ -1511,7 +1512,7 @@
         } else if (num === 5) {
             loadAllGoods();
             showPage('page5');
-            trackBrowse(null); // 全部商品，不指定品类
+            trackBrowse(null); // 全部东西，不指定品类
             // 随便看看时加载推荐
             if (currentUser) {
                 loadRecommendations();
@@ -1629,15 +1630,15 @@
         showPage('pageRoleSelect');
     }
 
-    // ============ 搜索功能 ============
+    // ============ 找找功能 ============
     async function search() {
         const keyword = document.getElementById('searchInput').value.trim();
         if (!keyword) {
-            alert('请输入搜索关键词');
+            alert('请输入要找的东西');
             return;
         }
 
-        // 记录搜索行为
+        // 记录找找行为
         if (currentUser) {
             try {
                 await fetch(`${API}/api/behavior/search`, {
@@ -1645,17 +1646,17 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ userId: currentUser.userId, keyword })
                 });
-            } catch (e) { /* 静默失败，不影响搜索 */ }
+            } catch (e) { /* 静默失败，不影响找找 */ }
         }
 
-        // 调用搜索接口
+        // 调用找找接口
         try {
             const res = await fetch(`${API}/api/search?q=${encodeURIComponent(keyword)}`);
             const results = await res.json();
             renderSearchResults(keyword, results);
             showPage('page8');
         } catch (e) {
-            alert('搜索失败，请检查服务器');
+            alert('找找失败，请检查服务器');
         }
     }
 
@@ -1670,7 +1671,7 @@
             noResult.style.display = 'block';
         } else {
             noResult.style.display = 'none';
-            count.textContent = `找到 ${results.length} 个与"${keyword}"相关的商品`;
+            count.textContent = `找到 ${results.length} 个与"${keyword}"相关的东西`;
             list.innerHTML = '';
             results.forEach(g => {
                 list.innerHTML += `
@@ -1783,7 +1784,7 @@
             const container = document.getElementById(containerId);
             container.innerHTML = '';
             if (goods.length === 0) {
-                container.innerHTML = '<div class="empty-tip">该分类暂无商品</div>';
+                container.innerHTML = '<div class="empty-tip">该分类暂无东西</div>';
                 return;
             }
             goods.forEach(g => {
@@ -1798,11 +1799,11 @@
                 `;
             });
         } catch (e) {
-            alert('加载商品失败，请检查服务器');
+            alert('加载东西失败，请检查服务器');
         }
     }
 
-    // ============ 商品详情页 ============
+    // ============ 东西详情页 ============
     function showDetail(goodsId) {
         // 记录当前页面，用于返回
         lastPage = document.querySelector('.page.active').id;
@@ -1811,7 +1812,7 @@
             .then(res => res.json())
             .then(goods => {
                 const g = goods.find(p => p.id === goodsId);
-                if (!g) { alert('商品不存在'); return; }
+                if (!g) { alert('东西不存在'); return; }
 
                 // 记录浏览行为
                 trackBrowse(g.category, g.id);
@@ -1826,7 +1827,7 @@
                     <div class="detail-price">¥${g.price.toFixed(1)}</div>
                     ${tagsHtml ? `<div class="detail-tags">${tagsHtml}</div>` : ''}
                     <div class="detail-desc">
-                        <div class="detail-desc-title">📋 商品详情</div>
+                        <div class="detail-desc-title">📋 东西详情</div>
                         ${g.detailDesc || g.description || '暂无详细介绍'}
                     </div>
                     <button class="detail-add-btn" onclick="addCart(${g.id}, '${g.name.replace(/'/g, "\\'")}', ${g.price})">加入我选好的东西</button>
@@ -1834,7 +1835,7 @@
 
                 showPage('page10');
             })
-            .catch(() => alert('加载商品详情失败'));
+            .catch(() => alert('加载东西详情失败'));
     }
 
     function goBackFromDetail() {
@@ -1858,7 +1859,7 @@
         }
     }
 
-    // ============ 商品 ============
+    // ============ 东西 ============
     function getEmojiHtml(g, cssClass) {
         // 用 emoji 代替图片，图文对应
         if (g.emoji) {
@@ -1890,7 +1891,7 @@
                 `;
             });
         } catch (e) {
-            alert('加载商品失败，请检查服务器');
+            alert('加载东西失败，请检查服务器');
         }
     }
 
@@ -1912,11 +1913,11 @@
                 `;
             });
         } catch (e) {
-            alert('加载商品失败，请检查服务器');
+            alert('加载东西失败，请检查服务器');
         }
     }
 
-    // ============ 购物车 ============
+    // ============ 我选好的东西 ============
     async function loadCart() {
         if (!currentUser) return;
         try {
@@ -1977,15 +1978,46 @@
         document.getElementById('total').textContent = total.toFixed(1);
     }
 
-    // ============ 结算 ============
+    // ============ 去付钱 ============
     async function pay() {
         if (cartItems.length === 0) {
             alert('您还没有选任何东西哦！');
             return;
         }
-        if (!confirm('确定要提交订单，请子女代付吗？')) return;
 
         const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+
+        // === 智能提醒检测 ===
+        const hasMedicine = cartItems.some(item =>
+            item.name.includes('维生素') || item.name.includes('钙片') ||
+            item.name.includes('鱼油') || item.name.includes('体温计') ||
+            item.name.includes('口罩') || item.name.includes('葡萄糖') ||
+            item.name.includes('护手霜') || item.name.includes('创可贴')
+        );
+        const isLargeAmount = total > 100;
+
+        // 如果有药品或大额消费，显示智能提醒
+        if (hasMedicine || isLargeAmount) {
+            const reminderMsgs = [];
+            if (hasMedicine) {
+                const medNames = cartItems.filter(item =>
+                    item.name.includes('维生素') || item.name.includes('钙片') ||
+                    item.name.includes('鱼油') || item.name.includes('体温计') ||
+                    item.name.includes('口罩') || item.name.includes('葡萄糖') ||
+                    item.name.includes('护手霜') || item.name.includes('创可贴')
+                ).map(i => i.name).join('、');
+                reminderMsgs.push(`📦 检测到药品：${medNames}`);
+            }
+            if (isLargeAmount) {
+                reminderMsgs.push(`💰 要买的东西金额较大：¥${total.toFixed(1)}`);
+            }
+
+            const confirmMsg = `⚠️ 智能安全提醒\n\n${reminderMsgs.join('\n')}\n\n👨‍👧‍👦 提交后，您的子女会收到通知并帮您付钱。\n\n确定要提交吗？`;
+            if (!confirm(confirmMsg)) return;
+        } else {
+            if (!confirm('确定要提交，请子女帮忙付钱吗？')) return;
+        }
+
         try {
             const res = await fetch(`${API}/api/orders`, {
                 method: 'POST',
@@ -1998,7 +2030,14 @@
             });
             const data = await res.json();
             if (!res.ok) { alert(data.error); return; }
-            alert('订单已创建！订单号：' + data.order.id + '\n等待子女代付……');
+
+            // 显示成功 + 智能提醒结果
+            let successMsg = '要买的东西已提交！编号：' + data.order.id + '\n等待子女帮忙付钱……';
+            if (data.smartReminder) {
+                successMsg += '\n\n🔔 已自动通知子女关注';
+            }
+            alert(successMsg);
+
             cartItems = [];
             renderCart();
             go(1);
@@ -2031,11 +2070,11 @@
             const cartItems = await cartRes.json(); // 假设返回 [{id, name, price, ...}, ...]
             
             if (!cartItems || cartItems.length === 0) {
-                adviceContentDiv.innerHTML = "您的购物车还是空的。先去逛逛，添加些心仪的商品再来找我咨询吧！🛒";
+                adviceContentDiv.innerHTML = "您还没有选好任何东西。先去逛逛，添加些心仪的东西再来找我咨询吧！🛒";
                 return;
             }
 
-            // 准备要发送给后端的商品列表，只提取 name 和 price
+            // 准备要发送给后端的东西列表，只提取 name 和 price
             const itemsForAI = cartItems.map(item => ({
                 name: item.name,
                 price: item.price
@@ -2070,7 +2109,7 @@
     }
 
 
-    // ============ 子女代付功能 ============
+    // ============ 子女帮付功能 ============
     async function loadPendingOrders() {
         try {
             const res = await fetch(`${API}/api/orders/pending?childUserId=${currentUser.userId}`);
@@ -2079,7 +2118,7 @@
             container.innerHTML = '';
 
             if (orders.length === 0) {
-                container.innerHTML = '<div class="empty-tip">暂无待代付订单 ✨</div>';
+                container.innerHTML = '<div class="empty-tip">暂无等着付的东西 ✨</div>';
                 return;
             }
 
@@ -2088,23 +2127,37 @@
                     `<div class="order-item-row">${item.name}  ￥${item.price.toFixed(1)}</div>`
                 ).join('');
 
+                // 智能提醒标记
+                let reminderBadge = '';
+                if (order.smartReminder && order.smartReminder.triggered) {
+                    const badges = [];
+                    if (order.smartReminder.medicineCount > 0) {
+                        badges.push('<span style="background:#FFF3E0;color:#E65100;padding:3px 8px;border-radius:6px;font-size:11px;margin-right:4px;">💊 含药品</span>');
+                    }
+                    if (order.smartReminder.isLargeAmount) {
+                        badges.push('<span style="background:#FCE4EC;color:#C62828;padding:3px 8px;border-radius:6px;font-size:11px;">💰 大额</span>');
+                    }
+                    reminderBadge = `<div style="margin:8px 0;">${badges.join('')}</div>`;
+                }
+
                 container.innerHTML += `
-                    <div class="order-card">
+                    <div class="order-card" style="${order.smartReminder && order.smartReminder.triggered ? 'border-color:#FFCC80;background:#FFFEF8;' : ''}">
                         <div class="order-header">
-                            <span class="order-id">订单号：${order.id}</span>
-                            <span class="order-status ${order.status}">${order.status === 'pending' ? '待代付' : '已代付'}</span>
+                            <span class="order-id">编号：${order.id}</span>
+                            <span class="order-status ${order.status}">${order.status === 'pending' ? '等着我付' : '已付过'}</span>
                         </div>
+                        ${reminderBadge}
                         <div class="order-items">${itemsHtml}</div>
                         <div class="order-total">合计：¥${order.total.toFixed(1)}</div>
                         ${order.status === 'pending'
-                            ? `<button class="pay-btn" onclick="childPayOrder('${order.id}')">帮我代付 ¥${order.total.toFixed(1)}</button>`
-                            : '<button class="pay-btn" disabled>已代付</button>'
+                            ? `<button class="pay-btn" onclick="childPayOrder('${order.id}')">帮我付 ¥${order.total.toFixed(1)}</button>`
+                            : '<button class="pay-btn" disabled>已付过</button>'
                         }
                     </div>
                 `;
             });
         } catch (e) {
-            alert('加载订单失败，请检查服务器');
+            alert('加载失败，请检查服务器');
         }
     }
 
@@ -2116,7 +2169,7 @@
             container.innerHTML = '';
 
             if (orders.length === 0) {
-                container.innerHTML = '<div class="empty-tip">暂无已代付记录 📋</div>';
+                container.innerHTML = '<div class="empty-tip">暂无已付过的记录 📋</div>';
                 return;
             }
 
@@ -2128,17 +2181,17 @@
                 container.innerHTML += `
                     <div class="order-card">
                         <div class="order-header">
-                            <span class="order-id">订单号：${order.id}</span>
-                            <span class="order-status paid">已代付</span>
+                            <span class="order-id">编号：${order.id}</span>
+                            <span class="order-status paid">已付过</span>
                         </div>
                         <div class="order-items">${itemsHtml}</div>
                         <div class="order-total">合计：¥${order.total.toFixed(1)}</div>
-                        <div style="font-size:12px;color:#999;text-align:right;">代付时间：${order.paidAt ? new Date(order.paidAt).toLocaleString('zh-CN') : '-'}</div>
+                        <div style="font-size:12px;color:#999;text-align:right;">付钱时间：${order.paidAt ? new Date(order.paidAt).toLocaleString('zh-CN') : '-'}</div>
                     </div>
                 `;
             });
         } catch (e) {
-            alert('加载订单失败');
+            alert('加载失败');
         }
     }
 
@@ -2163,7 +2216,7 @@
         }
     }
 
-    // ============ 老人端我的订单 ============
+    // ============ 老人端我买的东西 ============
     async function loadMyOrders() {
         try {
             const res = await fetch(`${API}/api/orders/${currentUser.userId}`);
@@ -2172,7 +2225,7 @@
             container.innerHTML = '';
 
             if (orders.length === 0) {
-                container.innerHTML = '<div class="empty-tip">暂无订单 🛒</div>';
+                container.innerHTML = '<div class="empty-tip">暂无要买的东西 🛒</div>';
                 return;
             }
 
@@ -2185,22 +2238,22 @@
                 container.innerHTML += `
                     <div class="order-card">
                         <div class="order-header">
-                            <span class="order-id">订单号：${order.id}</span>
-                            <span class="order-status ${order.status}">${order.status === 'pending' ? '等待子女代付中...' : '子女已代付 ✅'}</span>
+                            <span class="order-id">编号：${order.id}</span>
+                            <span class="order-status ${order.status}">${order.status === 'pending' ? '等子女帮忙付钱中...' : '子女已帮忙付钱 ✅'}</span>
                         </div>
                         <div class="order-items">${itemsHtml}</div>
                         <div class="order-total">合计：¥${order.total.toFixed(1)}</div>
-                        <div style="font-size:12px;color:#999;text-align:right;">下单时间：${new Date(order.createdAt).toLocaleString('zh-CN')}</div>
+                        <div style="font-size:12px;color:#999;text-align:right;">提交时间：${new Date(order.createdAt).toLocaleString('zh-CN')}</div>
                     </div>
                 `;
             });
         } catch (e) {
-            alert('加载订单失败');
+            alert('加载失败');
         }
     }
 
     async function childPayOrder(orderId) {
-        if (!confirm('确认代付此订单吗？')) return;
+        if (!confirm('确认帮忙付钱吗？')) return;
         try {
             const res = await fetch(`${API}/api/orders/${orderId}/pay`, {
                 method: 'POST',
@@ -2209,7 +2262,7 @@
             });
             const data = await res.json();
             if (!res.ok) { alert(data.error); return; }
-            alert('代付成功！🎉');
+            alert('付钱成功！🎉');
             loadPendingOrders();
         } catch (e) {
             alert('网络错误');
@@ -2468,9 +2521,9 @@
             go(6);
             return true;
         }
-        if (t.includes('我的订单') || t.includes('看看订单')) {
-            showVoiceCommandToast('📋 正在打开我的订单...');
-            speakWithBrowserTTS('好的，正在打开我的订单');
+        if (t.includes('我的订单') || t.includes('看看订单') || t.includes('我买的东西')) {
+            showVoiceCommandToast('📋 正在打开我买的东西...');
+            speakWithBrowserTTS('好的，正在打开我买的东西');
             go(9);
             return true;
         }
@@ -2520,12 +2573,12 @@
                     if (results.length > 0) {
                         renderSearchResults(keyword, results);
                         showPage('page8');
-                        speakWithBrowserTTS(`找到了${results.length}个${keyword}相关的商品`);
+                        speakWithBrowserTTS(`找到了${results.length}个${keyword}相关的东西`);
                     } else {
-                        speakWithBrowserTTS(`抱歉，没有找到${keyword}相关的商品`);
+                        speakWithBrowserTTS(`抱歉，没有找到${keyword}相关的东西`);
                     }
                 } catch (e) {
-                    speakWithBrowserTTS('搜索失败，请稍后再试');
+                    speakWithBrowserTTS('找找失败，请稍后再试');
                 }
                 return true;
             }
@@ -2578,7 +2631,7 @@
             const cartRes = await fetch(`${API}/api/cart/${currentUser.userId}`);
             const items = await cartRes.json();
             if (items.length === 0) {
-                speakWithBrowserTTS('购物车是空的，先加些商品吧');
+                speakWithBrowserTTS('购物车是空的，先加些东西吧');
                 return;
             }
             const total = items.reduce((sum, item) => sum + item.price, 0);
@@ -2593,12 +2646,12 @@
             });
             const data = await res.json();
             if (res.ok) {
-                showVoiceCommandToast('✅ 订单已提交，等待子女代付');
-                speakWithBrowserTTS(`订单已提交，合计${total.toFixed(1)}元，等待子女代付`);
+                showVoiceCommandToast('✅ 要买的东西已提交，等待子女帮忙付钱');
+                speakWithBrowserTTS(`要买的东西已提交，合计${total.toFixed(1)}元，等待子女帮忙付钱`);
                 cartItems = [];
                 go(1);
             } else {
-                speakWithBrowserTTS('下单失败，请稍后再试');
+                speakWithBrowserTTS('提交失败，请稍后再试');
             }
         } catch (e) {
             speakWithBrowserTTS('网络错误，请稍后再试');
@@ -2969,86 +3022,103 @@
         input.placeholder = '问我任何购物问题...';
     }
 
-    // 语音合成：将 AI 回复文字转为语音播放
-    async function speakText(text) {
-        // 如果已有语音在播放，先停止
-        if (currentAudioElement) {
-            currentAudioElement.pause();
-            currentAudioElement = null;
-        }
+    // 移除文本中的 Emoji 和特殊符号（TTS 无法正确朗读）
+    function stripEmojis(text) {
+        // 移除 Emoji 字符（Unicode 范围）
+        return text
+            .replace(/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]|[\u{FE00}-\u{FE0F}]|[\u{1F900}-\u{1F9FF}]|[\u{1FA00}-\u{1FA6F}]|[\u{1FA70}-\u{1FAFF}]|[\u{200D}]|[\u{20E3}]|[\u{E0020}-\u{E007F}]/gu, '')
+            // 移除多余空白
+            .replace(/\n+/g, '。')
+            .replace(/  +/g, ' ')
+            .trim();
+    }
 
+    // 语音合成：先尝试百度 TTS，失败则降级浏览器 TTS
+    async function speakText(text) {
+        if (!text) return;
+
+        // 清理 emoji 和特殊字符
+        const cleanText = stripEmojis(text);
+        if (!cleanText) return;
+
+        // 先尝试百度 TTS（更自然的声音）
         try {
             const res = await fetch(`${API}/api/speech/tts`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text })
+                body: JSON.stringify({ text: cleanText })
             });
 
             if (res.ok) {
                 const audioBlob = await res.blob();
                 const audioUrl = URL.createObjectURL(audioBlob);
+                if (currentAudioElement) {
+                    currentAudioElement.pause();
+                }
                 currentAudioElement = new Audio(audioUrl);
-                currentAudioElement.play();
+                await currentAudioElement.play();
                 currentAudioElement.onended = () => {
                     URL.revokeObjectURL(audioUrl);
                     currentAudioElement = null;
                 };
-            } else {
-                console.error('语音合成失败');
-                // Fallback: 使用浏览器内置 TTS
-                speakWithBrowserTTS(text);
+                return;
             }
         } catch (e) {
-            console.error('语音合成错误:', e);
-            // Fallback: 使用浏览器内置 TTS
-            speakWithBrowserTTS(text);
+            console.warn('百度 TTS 失败，降级浏览器 TTS:', e);
         }
+
+        // 降级：浏览器内置 TTS
+        speakWithBrowserTTS(cleanText);
     }
 
-    // 浏览器内置 TTS 作为后备方案
+    // 浏览器内置 TTS
     function speakWithBrowserTTS(text) {
-        if ('speechSynthesis' in window) {
-            window.speechSynthesis.cancel(); // 停止之前的
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'zh-CN';
-            utterance.rate = 0.9; // 稍慢，适合老年人
-            utterance.pitch = 1;
-            window.speechSynthesis.speak(utterance);
+        if (!('speechSynthesis' in window)) return;
+
+        // 停止之前的语音
+        window.speechSynthesis.cancel();
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'zh-CN';
+        utterance.rate = 0.85;   // 稍慢，适合老年人
+        utterance.pitch = 1.0;   // 正常音调
+        utterance.volume = 1.0;
+
+        // 尝试选择更自然的中文语音
+        const voices = window.speechSynthesis.getVoices();
+        const zhVoices = voices.filter(v => v.lang.startsWith('zh'));
+        // 优先选择 Google 或 Microsoft 的自然语音
+        const preferred = zhVoices.find(v =>
+            v.name.includes('Google') || v.name.includes('Microsoft') || v.name.includes('Xiaoxiao')
+        );
+        if (preferred) {
+            utterance.voice = preferred;
+        } else if (zhVoices.length > 0) {
+            utterance.voice = zhVoices[0];
         }
+
+        window.speechSynthesis.speak(utterance);
     }
 
-    // 发送欢迎消息
+    // 预加载语音列表（部分浏览器需要）
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.onvoiceschanged = () => {
+            window.speechSynthesis.getVoices();
+        };
+    }
+
+    // 发送欢迎消息（固定欢迎词）
     async function sendAiWelcome() {
-        try {
-            const res = await fetch(`${API}/api/ai-advice`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    context: { scene: currentScene, goodsList: currentGoodsList }
-                })
-            });
-            const data = await res.json();
+        // 移除加载提示
+        const messagesDiv = document.getElementById('aiChatMessages');
+        if (messagesDiv.lastChild) messagesDiv.lastChild.remove();
 
-            // 移除加载提示
-            const messagesDiv = document.getElementById('aiChatMessages');
-            if (messagesDiv.lastChild) messagesDiv.lastChild.remove();
-
-            if (res.ok && data.success) {
-                addChatMessage('bot', data.advice);
-                aiChatHistory.push({ role: 'bot', content: data.advice });
-            } else {
-                console.error('AI 欢迎语失败:', data);
-                addChatMessage('bot', '您好！我是您的AI购物助手 🛒\n\n商店有食品饮料、日用品、药品保健三大类商品，欢迎来逛逛！有什么想了解的，随时问我哦~');
-            }
-        } catch (e) {
-            console.error('AI 欢迎语网络错误:', e);
-            // 网络失败时的 fallback
-            const messagesDiv = document.getElementById('aiChatMessages');
-            if (messagesDiv.lastChild) messagesDiv.lastChild.remove();
-            addChatMessage('bot', '您好！我是您的AI购物助手 🛒\n\n商店有食品饮料、日用品、药品保健三大类商品，欢迎来逛逛！有什么想了解的，随时问我哦~');
-        } finally {
-            aiWelcomeLoading = false;
-        }
+        const welcomeText = '叔叔阿姨好呀！我是您的购物助手小伴😊。咱们这里有16种食品饮料、14种日用品、10种药品保健，都是适合您的宝贝！您随时可以问我："推荐适合老人的零食"、"帮我找降压药"、"牛奶多少钱"或者"看看购物车"。有啥需要尽管说，小伴帮您挑最合适的！';
+        addChatMessage('bot', welcomeText);
+        aiChatHistory.push({ role: 'bot', content: welcomeText });
+        // 自动语音播报
+        speakText(welcomeText);
+        aiWelcomeLoading = false;
     }
 
     // 发送用户消息
@@ -3108,6 +3178,8 @@
             if (data.success) {
                 addChatMessage('bot', data.advice);
                 aiChatHistory.push({ role: 'bot', content: data.advice });
+                // 自动语音播报
+                speakText(data.advice.replace(/【|】/g, ''));
 
                 // 执行后端检测到的动作（加购/导航/结算）
                 if (data.action) {
@@ -3126,12 +3198,18 @@
                     notifyEl.classList.add('show');
                 }
             } else {
-                addChatMessage('bot', '抱歉，我暂时无法回答，请稍后再试。');
+                const errorText = '抱歉，我暂时无法回答，请稍后再试。';
+                addChatMessage('bot', errorText);
+                // 自动语音播报
+                speakText(errorText);
             }
         } catch (e) {
             const messagesDiv = document.getElementById('aiChatMessages');
             messagesDiv.lastChild.remove();
-            addChatMessage('bot', '网络错误，请稍后再试。');
+            const errorText = '网络错误，请稍后再试。';
+            addChatMessage('bot', errorText);
+            // 自动语音播报
+            speakText(errorText);
         } finally {
             sendBtn.disabled = false;
         }

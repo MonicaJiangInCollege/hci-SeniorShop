@@ -63,6 +63,18 @@
       {
         "time": "2026-06-08T10:50:34.476Z",
         "category": "medicine"
+      },
+      {
+        "time": "2026-06-08T11:08:35.982Z",
+        "category": "food"
+      },
+      {
+        "time": "2026-06-08T13:18:09.870Z",
+        "category": "food"
+      },
+      {
+        "time": "2026-06-08T13:18:11.968Z",
+        "category": "daily"
       }
     ],
     "viewCounts": {}

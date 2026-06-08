@@ -505,13 +505,14 @@ ${historyText}
         const dailyCount = goods.filter(g => g.category === 'daily').length;
         const medCount = goods.filter(g => g.category === 'medicine').length;
 
-        prompt = `请主动打招呼，简要介绍商店有${foodCount}种食品饮料、${dailyCount}种日用品、${medCount}种药品保健。
-告诉用户可以问你的问题类型：
-- "有没有降血压的药？"
-- "牛奶多少钱？"
-- "帮我推荐适合老人的食品"
-- "帮我列一周买菜清单"
-语气亲切温暖，不超过120字。`;
+        prompt = `请用亲切的语气打招呼，称呼用户为"叔叔阿姨"，介绍自己是"购物助手小伴"。
+简要介绍商店有${foodCount}种食品饮料、${dailyCount}种日用品、${medCount}种药品保健。
+告诉用户可以这样问你：
+- "推荐适合老人的零食"
+- "帮我找降压药"
+- "牛奶多少钱"
+- "看看购物车"
+语气亲切温暖，像家人一样，不超过120字。`;
     }
 
     try {
@@ -645,22 +646,62 @@ app.delete('/api/cart/:userId/items/:itemId', (req, res) => {
     res.json({ message: '已删除', items: cart.items });
 });
 
-// --- 创建订单 ---
+// --- 创建订单（含智能提醒：药品/大额消费） ---
 app.post('/api/orders', (req, res) => {
     const { userId, items, total } = req.body;
     if (!userId || !items || items.length === 0) {
         return res.status(400).json({ error: '订单信息不完整' });
     }
+
+    // 智能提醒检测
+    const goods = JSON.parse(fs.readFileSync(GOODS_FILE, 'utf8'));
+    const users = JSON.parse(fs.readFileSync(USERS_FILE, 'utf8'));
+    const user = users.find(u => u.id === userId);
+
+    // 检测是否包含药品
+    const medicineItems = items.filter(item => {
+        const g = goods.find(g => g.name === item.name || g.id === item.goodsId);
+        return g && g.category === 'medicine';
+    });
+
+    // 检测是否大额消费（超过100元）
+    const isLargeAmount = total > 100;
+
+    // 构建智能提醒信息
+    let smartReminder = null;
+    if (medicineItems.length > 0 || isLargeAmount) {
+        const reasons = [];
+        if (medicineItems.length > 0) {
+            reasons.push(`药品${medicineItems.length}件：${medicineItems.map(i => i.name).join('、')}`);
+        }
+        if (isLargeAmount) {
+            reasons.push(`大额消费：¥${total.toFixed(1)}`);
+        }
+
+        smartReminder = {
+            triggered: true,
+            reasons: reasons,
+            medicineCount: medicineItems.length,
+            isLargeAmount: isLargeAmount,
+            total: total,
+            message: reasons.join('，')
+        };
+
+        // 记录提醒日志（方便子女查看）
+        console.log(`[智能提醒] 用户${user?.name || userId}创建订单: ${smartReminder.message}`);
+    }
+
     let orders = JSON.parse(fs.readFileSync(ORDERS_FILE, 'utf8'));
     const order = {
         id: 'ORD' + Date.now(),
         userId,
         items,
         total,
-        status: 'pending', // pending -> paid -> completed
+        status: 'pending',
         payerId: null,
         createdAt: new Date().toISOString(),
-        paidAt: null
+        paidAt: null,
+        smartReminder: smartReminder // 保存提醒信息到订单中
     };
     orders.push(order);
     saveData(ORDERS_FILE, orders);
@@ -673,17 +714,15 @@ app.post('/api/orders', (req, res) => {
         saveData(CARTS_FILE, carts);
     }
 
-    res.json({ message: '订单已创建', order });
+    res.json({
+        message: '订单已创建',
+        order,
+        smartReminder: smartReminder
+    });
 });
 
-// --- 获取用户订单 ---
-app.get('/api/orders/:userId', (req, res) => {
-    let orders = JSON.parse(fs.readFileSync(ORDERS_FILE, 'utf8'));
-    const userOrders = orders.filter(o => o.userId === req.params.userId);
-    res.json(userOrders);
-});
-
-// --- 获取待代付订单（子女查看，按绑定关系过滤） ---
+// --- 获取待代付订单（子女查看，按绑定关系过滤）---
+// 注意：此路由必须在 /api/orders/:userId 之前，否则 "pending" 会被当作 userId 匹配
 app.get('/api/orders/pending', (req, res) => {
     const { childUserId } = req.query; // 子女用户ID
     let orders = JSON.parse(fs.readFileSync(ORDERS_FILE, 'utf8'));
@@ -703,6 +742,13 @@ app.get('/api/orders/pending', (req, res) => {
     // 兼容：无 childUserId 时返回所有待付订单（向后兼容）
     const pending = orders.filter(o => o.status === 'pending');
     res.json(pending);
+});
+
+// --- 获取用户订单（必须在 /api/orders/pending 之后，避免 "pending" 被当作 userId）---
+app.get('/api/orders/:userId', (req, res) => {
+    let orders = JSON.parse(fs.readFileSync(ORDERS_FILE, 'utf8'));
+    const userOrders = orders.filter(o => o.userId === req.params.userId);
+    res.json(userOrders);
 });
 
 // --- 子女查看已代付的订单记录 ---
@@ -873,12 +919,21 @@ app.post('/api/speech/tts', (req, res) => {
     // 限制文本长度（百度TTS单次最多1024字节）
     const safeText = text.substring(0, 500);
 
+    // baidu-aip SDK 的 TTS 方法名为 text2audio(text, options)
+    // per 参数说明：
+    //   0 = 标准女声(机械感强)
+    //   1 = 标准男声(机械感强)
+    //   3 = 度小美-普通话女声(较自然)
+    //   4 = 度小宇-普通话男声(较自然)
+    //   5003 = 度小美-情感女声(更自然，需要额外配额)
+    //   106 = 度小娇-情感女声(更自然)
+    // spd: 语速(0-15), pit: 音调(0-15), vol: 音量(0-15)
     baiduSpeechClient
-        .synthesis(safeText)
+        .text2audio(safeText, { per: 106, spd: 5, pit: 5, vol: 6 })
         .then(result => {
             if (result.err_no === 0) {
                 const audioBuffer = result.result;
-                res.set('Content-Type', 'audio/mpeg');
+                res.set('Content-Type', 'audio/mp3');
                 res.set('Content-Length', audioBuffer.length);
                 res.send(audioBuffer);
             } else {

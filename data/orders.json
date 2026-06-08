@@ -16,5 +16,30 @@
     "payerId": null,
     "createdAt": "2026-06-08T06:05:21.734Z",
     "paidAt": null
+  },
+  {
+    "id": "ORD1780924701995",
+    "userId": "1780560275301",
+    "items": [
+      {
+        "id": "1780915042287",
+        "goodsId": 40,
+        "name": "黑芝麻糊 300g",
+        "price": 16.8,
+        "addedAt": "2026-06-08T10:37:22.287Z"
+      },
+      {
+        "id": "1780924694148",
+        "goodsId": 3,
+        "name": "卷纸 10卷",
+        "price": 29.9,
+        "addedAt": "2026-06-08T13:18:14.148Z"
+      }
+    ],
+    "total": 46.7,
+    "status": "pending",
+    "payerId": null,
+    "createdAt": "2026-06-08T13:18:21.995Z",
+    "paidAt": null
   }
 ]
