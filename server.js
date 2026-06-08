@@ -392,6 +392,70 @@ app.post('/api/ai-advice', async (req, res) => {
         historyText = '\n之前的对话：\n' + chatHistory.map(h => `${h.role === 'user' ? '用户' : '助手'}: ${h.content}`).join('\n');
     }
 
+    // 检测用户意图，判断是否需要执行动作
+    let detectedAction = null;
+    if (question) {
+        const q = question.toLowerCase().replace(/[，。！？、]/g, '');
+        // 加购物车意图
+        const addCartPatterns = [
+            /我要买\s*(.+)/,
+            /帮我加\s*(.+)/,
+            /把\s*(.+)\s*加入购物车/,
+            /加入购物车\s*(.+)/,
+            /加\s*(.+)\s*到购物车/,
+            /我要\s*(.+)/,
+            /帮我买\s*(.+)/,
+            /购买\s*(.+)/,
+            /要\s*(.+)/,           // "要纯牛奶"
+            /给我\s*(.+)/,         // "给我来点牛奶"
+            /来点\s*(.+)/,         // "来点面包"
+            /来份\s*(.+)/,         // "来份牛奶"
+            /来个\s*(.+)/,         // "来个面包"
+            /就买\s*(.+)/,         // "就买它了"（上下文已提到商品）
+            /就要\s*(.+)/,         // "就要这个"
+        ];
+        for (const pattern of addCartPatterns) {
+            const match = q.match(pattern);
+            if (match && match[1]) {
+                let productName = match[1].replace(/加入购物车|一下|一个|一份|一点|一些|好吗|吗|呢|呀|了/g, '').trim();
+                // 在商品目录中查找匹配的商品
+                const matchedGoods = goods.find(g =>
+                    g.name.includes(productName) || productName.includes(g.name.split(' ')[0]) ||
+                    g.name.includes(productName.split(' ')[0])
+                );
+                if (matchedGoods) {
+                    detectedAction = {
+                        type: 'add_to_cart',
+                        goods: matchedGoods
+                    };
+                    break;
+                }
+            }
+        }
+
+        // 如果没有加购意图，检查是否是结算意图
+        if (!detectedAction && (q.includes('结算') || q.includes('下单') || q.includes('付款') || q.includes('去结算') || q.includes('帮我付') || q.includes('付钱') || q.includes('提交订单') || q.includes('帮我付'))) {
+            detectedAction = { type: 'checkout' };
+        }
+
+        // 检查是否是导航意图
+        if (!detectedAction) {
+            if (q.includes('食品饮料') || q.includes('食品') || q.includes('饮料')) {
+                detectedAction = { type: 'navigate', target: 'food' };
+            } else if (q.includes('日用品')) {
+                detectedAction = { type: 'navigate', target: 'daily' };
+            } else if (q.includes('药品') || q.includes('保健')) {
+                detectedAction = { type: 'navigate', target: 'medicine' };
+            } else if (q.includes('购物车') || q.includes('我选好的')) {
+                detectedAction = { type: 'navigate', target: 'cart' };
+            } else if (q.includes('随便看看')) {
+                detectedAction = { type: 'navigate', target: 'browse' };
+            } else if (q.includes('首页') || q.includes('返回')) {
+                detectedAction = { type: 'navigate', target: 'home' };
+            }
+        }
+    }
+
     let prompt = '';
     let systemPrompt = `你是一位亲切温暖的AI购物导购助手，专门帮助老年用户在线购物。
 
@@ -411,7 +475,17 @@ ${historyText}
 5. 如果用户问价格对比，列出同类商品价格并推荐最实惠的
 6. 如果用户要求生成购物清单，列出商品后用【商品名】格式标记
 7. 如果问题与购物无关，友好地引导回购物话题
-8. 不要编造商品目录中没有的商品`;
+8. 不要编造商品目录中没有的商品
+9. 如果用户说"我要买XX"或"帮我加XX"，确认已帮用户加入购物车，并推荐搭配商品
+10. 如果用户说"好呀"、"好的"、"行"等确认词，表示确认上文的加购操作`;
+
+    // 如果有检测到的动作，在system prompt中告知
+    if (detectedAction && detectedAction.type === 'add_to_cart') {
+        systemPrompt += `\n\n【重要提示】用户要求把【${detectedAction.goods.name}】加入购物车，你已经在回复中确认了。请在回复中确认已加入购物车，并推荐相关搭配商品（用【商品名】格式）。`;
+    }
+    if (detectedAction && detectedAction.type === 'checkout') {
+        systemPrompt += `\n\n【重要提示】用户要求结算，请确认订单信息并告知等待子女代付。`;
+    }
 
     // 根据不同场景构建 prompt
     if (question) {
@@ -504,7 +578,8 @@ ${historyText}
             success: true,
             advice: advice,
             products: productMentions,
-            notifyChild: notifyChild
+            notifyChild: notifyChild,
+            action: detectedAction
         });
 
     } catch (error) {

@@ -23,8 +23,8 @@
         body {
             background: #FFF8F0;
             padding: env(safe-area-inset-top) 8px env(safe-area-inset-bottom) 8px;
-            font-size: 15px;
-            line-height: 1.4;
+            font-size: 20px;
+            line-height: 1.5;
             max-width: 100%;
             margin: 0 auto;
             overflow-x: hidden;
@@ -52,7 +52,7 @@
         }
 
         .title {
-            font-size: 24px;
+            font-size: 32px;
             text-align: center;
             margin: 12px 0 18px 0;
             font-weight: bold;
@@ -69,7 +69,7 @@
         .btn {
             position: relative;
             height: 120px;
-            font-size: 20px;
+            font-size: 24px;
             border: none;
             border-radius: 16px;
             color: white;
@@ -105,10 +105,10 @@
 
         .back {
             width: 100%;
-            height: 48px;
+            height: 56px;
             background: #8D6E63;
             color: white;
-            font-size: 18px;
+            font-size: 22px;
             border: none;
             border-radius: 12px;
             margin-bottom: 12px;
@@ -143,8 +143,8 @@
         .add {
             background: #FF8C42;
             width: 100%;
-            height: 48px;
-            font-size: 16px;
+            height: 56px;
+            font-size: 20px;
             border: none;
             border-radius: 12px;
             color: white;
@@ -205,14 +205,14 @@
         .emoji-medicine { background: #F3E5F5; }
 
         .goods-name {
-            font-size: 14px;
+            font-size: 18px;
             font-weight: bold;
             color: #222222;
             text-align: center;
         }
 
         .goods-desc {
-            font-size: 11px;
+            font-size: 15px;
             color: #666;
             margin: 3px 0;
             text-align: center;
@@ -220,17 +220,17 @@
 
         .goods-price {
             color: #E65100;
-            font-size: 16px;
+            font-size: 22px;
             font-weight: bold;
             margin: 6px 0;
         }
 
         .cart-item {
-            padding: 8px;
+            padding: 12px;
             border: 2px solid #FFE0B2;
             border-radius: 10px;
             margin: 8px 0;
-            font-size: 14px;
+            font-size: 18px;
             background: #FFFDF9;
             display: flex;
             justify-content: space-between;
@@ -249,7 +249,7 @@
 
         .total {
             text-align: right;
-            font-size: 20px;
+            font-size: 26px;
             font-weight: bold;
             color: #E65100;
             margin: 12px 0;
@@ -266,7 +266,7 @@
         }
 
         .auth-title {
-            font-size: 24px;
+            font-size: 30px;
             text-align: center;
             margin-bottom: 18px;
             color: #222;
@@ -278,15 +278,15 @@
 
         .form-group label {
             display: block;
-            font-size: 14px;
+            font-size: 18px;
             margin-bottom: 4px;
             color: #333;
         }
 
         .form-group input, .form-group select {
             width: 100%;
-            height: 42px;
-            font-size: 14px;
+            height: 50px;
+            font-size: 18px;
             border: 2px solid #ddd;
             border-radius: 10px;
             padding: 0 12px;
@@ -300,8 +300,8 @@
 
         .auth-btn {
             width: 100%;
-            height: 46px;
-            font-size: 18px;
+            height: 56px;
+            font-size: 22px;
             background: #FF8C42;
             color: white;
             border: none;
@@ -318,7 +318,7 @@
         .auth-switch {
             text-align: center;
             margin-top: 12px;
-            font-size: 13px;
+            font-size: 16px;
             color: #666;
         }
 
@@ -330,7 +330,7 @@
 
         .user-info {
             text-align: center;
-            font-size: 13px;
+            font-size: 18px;
             color: #666;
             margin-bottom: 8px;
         }
@@ -435,8 +435,8 @@
 
         .search-input {
             flex: 1;
-            height: 48px;
-            font-size: 18px;
+            height: 56px;
+            font-size: 22px;
             border: 3px solid #FFE0B2;
             border-radius: 14px;
             padding: 0 16px;
@@ -455,9 +455,9 @@
         }
 
         .search-btn {
-            width: 80px;
-            height: 48px;
-            font-size: 18px;
+            width: 90px;
+            height: 56px;
+            font-size: 22px;
             background: #FF8C42;
             color: white;
             border: none;
@@ -736,7 +736,7 @@
             50% { box-shadow: 0 4px 24px rgba(0,137,123,0.6); }
         }
 
-        /* ===== AI 聊天弹窗（居中弹窗，非全屏） ===== */
+        /* ===== AI 聊天弹窗（居中弹窗，四周留白） ===== */
         .ai-chat-overlay {
             position: fixed;
             top: 0;
@@ -744,12 +744,12 @@
             width: 100%;
             height: 100%;
             height: 100dvh;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.4);
             z-index: 2000;
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 12px;
+            padding: 40px 20px;
         }
 
         .ai-chat-overlay.active {
@@ -757,10 +757,10 @@
         }
 
         .ai-chat-box {
-            width: 100%;
-            max-width: 400px;
-            height: 70vh;
-            max-height: 500px;
+            width: 320px !important;
+            max-width: 320px !important;
+            height: 520px;
+            max-height: 75vh;
             background: #FFFDF9;
             border-radius: 20px;
             box-shadow: 0 12px 40px rgba(0,0,0,0.25);
@@ -779,12 +779,12 @@
         @media (max-height: 700px) {
             .ai-chat-overlay {
                 align-items: flex-end;
-                padding: 0;
+                padding: 20px 12px 12px 12px;
             }
 
             .ai-chat-box {
                 max-width: 100%;
-                height: 85vh;
+                height: 60vh;
                 max-height: none;
                 border-radius: 20px 20px 0 0;
                 animation: none;
@@ -794,7 +794,7 @@
         .ai-chat-header {
             background: linear-gradient(135deg, #26a69a, #00897b);
             color: white;
-            padding: 14px 16px;
+            padding: 10px 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -803,7 +803,7 @@
 
         .ai-chat-header h3 {
             margin: 0;
-            font-size: 17px;
+            font-size: 14px;
         }
 
         .ai-chat-close {
@@ -841,10 +841,10 @@
         }
 
         .ai-msg-bubble {
-            max-width: 80%;
-            padding: 10px 14px;
-            border-radius: 14px;
-            font-size: 15px;
+            max-width: 90%;
+            padding: 8px 10px;
+            border-radius: 12px;
+            font-size: 13px;
             line-height: 1.5;
             word-break: break-word;
             writing-mode: horizontal-tb !important;
@@ -887,10 +887,10 @@
         }
 
         .ai-chat-input-area {
-            padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+            padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
             border-top: 1px solid #eee;
             display: flex;
-            gap: 8px;
+            gap: 5px;
             flex-shrink: 0;
             background: #FFFDF9;
         }
@@ -898,11 +898,11 @@
         .ai-chat-input {
             flex: 1;
             min-width: 0;
-            height: 42px;
+            height: 34px;
             border: 2px solid #ddd;
-            border-radius: 21px;
-            padding: 0 14px;
-            font-size: 16px;
+            border-radius: 17px;
+            padding: 0 10px;
+            font-size: 13px;
             outline: none;
             transition: border-color 0.2s;
         }
@@ -912,13 +912,13 @@
         }
 
         .ai-chat-send {
-            width: 42px;
-            height: 42px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             background: #26a69a;
             color: white;
             border: none;
-            font-size: 18px;
+            font-size: 14px;
             cursor: pointer;
             transition: background 0.2s;
             flex-shrink: 0;
@@ -935,13 +935,13 @@
 
         /* 麦克风按钮 */
         .ai-chat-mic {
-            width: 44px;
-            height: 44px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             background: #FF8C42;
             color: white;
             border: none;
-            font-size: 20px;
+            font-size: 15px;
             cursor: pointer;
             transition: background 0.2s, transform 0.2s;
             flex-shrink: 0;
@@ -1434,9 +1434,7 @@
                 <button class="ai-quick-btn" onclick="quickAsk('帮我推荐适合老人的食品')">🍎 推荐老人食品</button>
                 <button class="ai-quick-btn" onclick="quickAsk('有没有降血压的药？')">💊 有没有降压药</button>
                 <button class="ai-quick-btn" onclick="quickAsk('牛奶多少钱？')">🥛 牛奶多少钱</button>
-                <button class="ai-quick-btn" onclick="quickAsk('帮我列一周买菜清单')">📝 一周买菜清单</button>
                 <button class="ai-quick-btn" onclick="quickAsk('购物车里的东西合适吗')">🛒 购物车建议</button>
-                <button class="ai-quick-btn" onclick="quickAsk('日用品哪个最实惠？')">💰 最实惠推荐</button>
             </div>
             <div class="ai-chat-input-area">
                 <button class="ai-chat-mic" id="aiChatMicBtn" onclick="toggleVoiceRecord()" title="语音输入">🎤</button>
@@ -2344,6 +2342,35 @@
         sendAiMessage();
     }
 
+    // 执行AI检测到的动作
+    async function executeAiAction(action) {
+        if (!action) return;
+        console.log('🎯 执行AI动作:', action.type);
+
+        if (action.type === 'add_to_cart' && action.goods) {
+            const g = action.goods;
+            // 静默加入购物车（不弹confirm）
+            await addCartSilent(g.id, g.name, g.price);
+            showVoiceCommandToast(`✅ ${g.name} 已加入购物车`);
+            speakWithBrowserTTS(`${g.name}已经加入购物车了`);
+        } else if (action.type === 'checkout') {
+            showVoiceCommandToast('💰 正在结算...');
+            await paySilent();
+        } else if (action.type === 'navigate') {
+            const navMap = {
+                'food': 2,
+                'daily': 3,
+                'medicine': 4,
+                'cart': 6,
+                'browse': 5,
+                'home': 1
+            };
+            if (navMap[action.target] !== undefined) {
+                go(navMap[action.target]);
+            }
+        }
+    }
+
     // 搜索并选择商品（从AI回复中点击商品名时）
     async function searchAndSelectProduct(name) {
         try {
@@ -3081,6 +3108,12 @@
             if (data.success) {
                 addChatMessage('bot', data.advice);
                 aiChatHistory.push({ role: 'bot', content: data.advice });
+
+                // 执行后端检测到的动作（加购/导航/结算）
+                if (data.action) {
+                    console.log('🎯 执行AI动作:', data.action);
+                    executeAiAction(data.action);
+                }
 
                 // 处理子女联动通知
                 if (data.notifyChild) {
