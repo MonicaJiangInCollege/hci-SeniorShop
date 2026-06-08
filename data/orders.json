@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "id": "ORD1780898721734",
+    "userId": "1780560275301",
+    "items": [
+      {
+        "id": "1780898717474",
+        "goodsId": 1,
+        "name": "纯牛奶 1L",
+        "price": 19.9,
+        "addedAt": "2026-06-08T06:05:17.474Z"
+      }
+    ],
+    "total": 19.9,
+    "status": "pending",
+    "payerId": null,
+    "createdAt": "2026-06-08T06:05:21.734Z",
+    "paidAt": null
+  }
+]

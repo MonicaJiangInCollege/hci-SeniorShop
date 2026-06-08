@@ -2,7 +2,41 @@
   {
     "userId": "1780560275301",
     "searchHistory": [],
-    "browseHistory": [],
+    "browseHistory": [
+      {
+        "time": "2026-06-08T05:58:43.619Z"
+      },
+      {
+        "time": "2026-06-08T06:04:00.741Z"
+      },
+      {
+        "time": "2026-06-08T06:04:08.548Z",
+        "category": "food"
+      },
+      {
+        "time": "2026-06-08T06:04:12.761Z",
+        "category": "food"
+      },
+      {
+        "time": "2026-06-08T06:05:15.347Z",
+        "category": "food"
+      },
+      {
+        "time": "2026-06-08T06:11:36.515Z"
+      },
+      {
+        "time": "2026-06-08T06:13:08.852Z",
+        "category": "food"
+      },
+      {
+        "time": "2026-06-08T06:30:52.015Z",
+        "category": "food"
+      },
+      {
+        "time": "2026-06-08T06:31:07.734Z",
+        "category": "food"
+      }
+    ],
     "viewCounts": {}
   },
   {
