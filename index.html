@@ -653,6 +653,79 @@
             animation: aiFloatPulse 2s infinite;
         }
 
+        /* ===== 语音唤起麦克风指示器 ===== */
+        .wake-mic-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(38, 166, 154, 0.15);
+            border: 2px solid rgba(38, 166, 154, 0.3);
+            z-index: 999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: #26a69a;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .wake-mic-indicator.listening {
+            display: flex;
+            animation: wakeMicIdle 2s infinite;
+        }
+
+        .wake-mic-indicator.speaking {
+            display: flex;
+            background: rgba(38, 166, 154, 0.6);
+            border-color: #26a69a;
+            transform: scale(1.3);
+            animation: wakeMicSpeaking 0.4s infinite;
+            box-shadow: 0 0 16px rgba(38, 166, 154, 0.5);
+        }
+
+        @keyframes wakeMicIdle {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes wakeMicSpeaking {
+            0%, 100% { transform: scale(1.2); }
+            50% { transform: scale(1.35); }
+        }
+
+        /* ===== 语音命令执行提示 ===== */
+        .voice-command-toast {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(38, 166, 154, 0.95);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 24px;
+            font-size: 16px;
+            font-weight: bold;
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            animation: toastSlideIn 0.3s ease-out;
+        }
+
+        .voice-command-toast.show {
+            display: flex;
+        }
+
+        @keyframes toastSlideIn {
+            from { top: 60px; opacity: 0; }
+            to { top: 80px; opacity: 1; }
+        }
+
         .ai-float-btn:hover {
             transform: scale(1.1);
             box-shadow: 0 6px 24px rgba(0,137,123,0.5);
@@ -774,6 +847,9 @@
             font-size: 15px;
             line-height: 1.5;
             word-break: break-word;
+            writing-mode: horizontal-tb !important;
+            text-orientation: mixed !important;
+            direction: ltr;
         }
 
         .ai-msg.bot .ai-msg-bubble {
@@ -786,6 +862,28 @@
             background: #FF8C42;
             color: white;
             border-bottom-right-radius: 4px;
+        }
+
+        .ai-msg-bubble-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            flex-wrap: wrap;
+            writing-mode: horizontal-tb !important;
+            text-orientation: mixed !important;
+            direction: ltr;
+        }
+
+        .ai-msg-bubble-content span {
+            writing-mode: horizontal-tb !important;
+            text-orientation: mixed !important;
+            display: inline;
+        }
+
+        .ai-product-link {
+            display: inline-block;
+            writing-mode: horizontal-tb !important;
+            text-orientation: mixed !important;
         }
 
         .ai-chat-input-area {
@@ -882,6 +980,88 @@
             display: flex;
             align-items: flex-start;
             gap: 6px;
+        }
+
+        /* AI 消息中可点击的商品链接 */
+        .ai-product-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF8C42, #F57C00);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 13px;
+            cursor: pointer;
+            margin: 2px 2px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            border: none;
+            font-weight: bold;
+        }
+
+        .ai-product-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(255,140,66,0.4);
+        }
+
+        .ai-product-link:active {
+            transform: scale(0.95);
+        }
+
+        /* 快捷问题按钮 */
+        .ai-quick-questions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 10px 14px;
+            border-top: 1px solid #eee;
+            background: #FFFDF9;
+        }
+
+        .ai-quick-btn {
+            flex: 1 1 auto;
+            min-width: 120px;
+            padding: 8px 12px;
+            font-size: 13px;
+            background: #E0F2F1;
+            color: #00796b;
+            border: 1.5px solid #B2DFDB;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+            text-align: center;
+        }
+
+        .ai-quick-btn:hover {
+            background: #B2DFDB;
+            border-color: #26a69a;
+        }
+
+        .ai-quick-btn:active {
+            background: #26a69a;
+            color: white;
+        }
+
+        /* 子女联动通知横幅 */
+        .ai-child-notify {
+            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+            border: 1.5px solid #FFCC80;
+            border-radius: 10px;
+            padding: 8px 12px;
+            margin: 6px 14px;
+            font-size: 12px;
+            color: #E65100;
+            display: none;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ai-child-notify.show {
+            display: flex;
+        }
+
+        .ai-child-notify-icon {
+            font-size: 16px;
+            flex-shrink: 0;
         }
 
         /* 子分类选择器 */
@@ -1013,11 +1193,11 @@
     <div id="pageRoleSelect" class="page active">
         <div class="auth-container" style="max-width:420px;">
             <div class="auth-title">您好！请选择您的身份</div>
-            <div class="btn-group">
-                <button class="btn food" onclick="selectRole('elder')" style="height:100px;">
+            <div style="display:flex;flex-direction:column;gap:12px;">
+                <button class="btn food" onclick="selectRole('elder')" style="height:80px;width:100%;">
                     👴 我是老人
                 </button>
-                <button class="btn daily" onclick="selectRole('child')" style="height:100px;">
+                <button class="btn daily" onclick="selectRole('child')" style="height:80px;width:100%;">
                     👨 我是子女
                 </button>
             </div>
@@ -1228,6 +1408,14 @@
     <!-- ===== 全场景 AI 浮动按钮 ===== -->
     <button class="ai-float-btn" id="aiFloatBtn" onclick="openAiChat()" title="问AI导购">🤖</button>
 
+    <!-- ===== 语音唤起麦克风指示器 ===== -->
+    <div class="wake-mic-indicator" id="wakeMicIndicator">🎤</div>
+
+    <!-- ===== 语音命令执行提示 ===== -->
+    <div class="voice-command-toast" id="voiceCommandToast">
+        <span id="voiceCommandToastText">正在执行...</span>
+    </div>
+
     <!-- ===== AI 聊天弹窗 ===== -->
     <div class="ai-chat-overlay" id="aiChatOverlay">
         <div class="ai-chat-box">
@@ -1237,6 +1425,18 @@
             </div>
             <div class="ai-chat-messages" id="aiChatMessages">
                 <!-- 消息动态插入 -->
+            </div>
+            <div class="ai-child-notify" id="aiChildNotify">
+                <span class="ai-child-notify-icon">👨‍👧‍👦</span>
+                <span id="aiChildNotifyText">已通知子女关注您的购物</span>
+            </div>
+            <div class="ai-quick-questions" id="aiQuickQuestions">
+                <button class="ai-quick-btn" onclick="quickAsk('帮我推荐适合老人的食品')">🍎 推荐老人食品</button>
+                <button class="ai-quick-btn" onclick="quickAsk('有没有降血压的药？')">💊 有没有降压药</button>
+                <button class="ai-quick-btn" onclick="quickAsk('牛奶多少钱？')">🥛 牛奶多少钱</button>
+                <button class="ai-quick-btn" onclick="quickAsk('帮我列一周买菜清单')">📝 一周买菜清单</button>
+                <button class="ai-quick-btn" onclick="quickAsk('购物车里的东西合适吗')">🛒 购物车建议</button>
+                <button class="ai-quick-btn" onclick="quickAsk('日用品哪个最实惠？')">💰 最实惠推荐</button>
             </div>
             <div class="ai-chat-input-area">
                 <button class="ai-chat-mic" id="aiChatMicBtn" onclick="toggleVoiceRecord()" title="语音输入">🎤</button>
@@ -2086,7 +2286,7 @@
         }
     });
 
-    // 添加聊天消息到界面（支持语音播放按钮）
+    // 添加聊天消息到界面（支持商品链接 + 语音播放按钮）
     function addChatMessage(type, text, options = {}) {
         const messagesDiv = document.getElementById('aiChatMessages');
         const msgDiv = document.createElement('div');
@@ -2096,16 +2296,35 @@
         bubbleDiv.className = 'ai-msg-bubble';
 
         if (type === 'bot' && text) {
-            // AI 消息：添加语音播放按钮
             const contentDiv = document.createElement('div');
             contentDiv.className = 'ai-msg-bubble-content';
-            contentDiv.textContent = text;
 
+            // 解析【商品名】为可点击链接
+            const parts = text.split(/(【.+?】)/g);
+            parts.forEach(part => {
+                if (part.startsWith('【') && part.endsWith('】')) {
+                    const productName = part.slice(1, -1);
+                    const linkBtn = document.createElement('button');
+                    linkBtn.className = 'ai-product-link';
+                    linkBtn.textContent = productName;
+                    linkBtn.onclick = () => {
+                        // 搜索并跳转到商品详情或加入购物车
+                        searchAndSelectProduct(productName);
+                    };
+                    contentDiv.appendChild(linkBtn);
+                } else {
+                    const textNode = document.createElement('span');
+                    textNode.textContent = part;
+                    contentDiv.appendChild(textNode);
+                }
+            });
+
+            // 语音播放按钮
             const speakBtn = document.createElement('button');
             speakBtn.className = 'ai-msg-speak-btn';
             speakBtn.innerHTML = '🔊';
             speakBtn.title = '朗读';
-            speakBtn.onclick = () => speakText(text);
+            speakBtn.onclick = () => speakText(text.replace(/【|】/g, ''));
             contentDiv.appendChild(speakBtn);
 
             bubbleDiv.appendChild(contentDiv);
@@ -2118,6 +2337,33 @@
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
 
+    // 快捷提问
+    function quickAsk(question) {
+        const input = document.getElementById('aiChatInput');
+        input.value = question;
+        sendAiMessage();
+    }
+
+    // 搜索并选择商品（从AI回复中点击商品名时）
+    async function searchAndSelectProduct(name) {
+        try {
+            const res = await fetch(`${API}/api/search?q=${encodeURIComponent(name)}`);
+            const results = await res.json();
+            if (results.length === 1) {
+                showDetail(results[0].id);
+            } else if (results.length > 1) {
+                // 多个结果，显示搜索结果
+                renderSearchResults(name, results);
+                showPage('page8');
+                closeAiChat();
+            } else {
+                alert('未找到该商品，请试试搜索功能');
+            }
+        } catch (e) {
+            alert('搜索失败');
+        }
+    }
+
     // ============ 语音交互功能 ============
     // 使用浏览器 Web Speech API 实现实时语音转文字（类似微信语音输入）
     let recognition = null;
@@ -2125,19 +2371,470 @@
     let currentAudioElement = null; // 当前正在播放的语音
     let finalTranscript = ''; // 最终识别结果
 
-    // 初始化语音识别
-    function initSpeechRecognition() {
-        // 兼容不同浏览器
+    // ============ 语音唤起功能（"你好，小伴"） ============
+    let wakeRecognition = null;
+    let isWakeListening = false;
+    let wakeRestartCount = 0;
+    let speechDetectedTimeout = null; // 检测到人声的定时器
+    const WAKE_WORDS = ['你好小伴', '你好 小伴', '嗨小伴', '嗨 小伴', '小伴'];
+
+    // 显示麦克风指示器
+    function showMicIndicator(state) {
+        const indicator = document.getElementById('wakeMicIndicator');
+        if (!indicator) return;
+        indicator.className = 'wake-mic-indicator';
+        if (state === 'listening') {
+            indicator.classList.add('listening');
+        } else if (state === 'speaking') {
+            indicator.classList.add('speaking');
+        } else {
+            indicator.classList.remove('listening', 'speaking');
+            indicator.style.display = 'none';
+        }
+    }
+
+    // 显示语音命令执行提示
+    function showVoiceCommandToast(text, duration = 2500) {
+        const toast = document.getElementById('voiceCommandToast');
+        const toastText = document.getElementById('voiceCommandToastText');
+        if (!toast || !toastText) return;
+        toastText.textContent = text;
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, duration);
+    }
+
+    // 语音命令处理器（纯语音购物）
+    async function processVoiceCommand(text) {
+        const t = text.toLowerCase().replace(/[，。！？、]/g, '');
+        console.log('🎯 语音命令:', t);
+
+        // --- 导航命令 ---
+        if (t.includes('食品饮料') || t.includes('看看食品') || t.includes('看看饮料') || t.includes('买吃的') || t.includes('买喝的')) {
+            showVoiceCommandToast('🍎 正在打开食品饮料...');
+            speakWithBrowserTTS('好的，正在打开食品饮料');
+            go(2);
+            return true;
+        }
+        if (t.includes('日用品') || t.includes('看看日用品') || t.includes('买日用品')) {
+            showVoiceCommandToast('🧹 正在打开日用品...');
+            speakWithBrowserTTS('好的，正在打开日用品');
+            go(3);
+            return true;
+        }
+        if (t.includes('药品') || t.includes('保健') || t.includes('买药') || t.includes('看看药品') || t.includes('看看保健')) {
+            showVoiceCommandToast('💊 正在打开药品保健...');
+            speakWithBrowserTTS('好的，正在打开药品保健');
+            go(4);
+            return true;
+        }
+        if (t.includes('随便看看') || t.includes('逛逛') || t.includes('看看有什么')) {
+            showVoiceCommandToast('👀 随便看看...');
+            speakWithBrowserTTS('好的，随便看看');
+            go(5);
+            return true;
+        }
+        if (t.includes('购物车') || t.includes('我选好的') || t.includes('看看购物车')) {
+            showVoiceCommandToast('🛒 正在打开购物车...');
+            speakWithBrowserTTS('好的，正在打开购物车');
+            go(6);
+            return true;
+        }
+        if (t.includes('我的订单') || t.includes('看看订单')) {
+            showVoiceCommandToast('📋 正在打开我的订单...');
+            speakWithBrowserTTS('好的，正在打开我的订单');
+            go(9);
+            return true;
+        }
+        if (t.includes('首页') || t.includes('回到首页') || t.includes('返回首页')) {
+            showVoiceCommandToast('🏠 返回首页...');
+            speakWithBrowserTTS('好的，返回首页');
+            go(1);
+            return true;
+        }
+
+        // --- 加入购物车命令 ---
+        if (t.includes('加入购物车') || t.includes('加购物车') || t.includes('我要买') || t.includes('帮我加') || t.includes('添加')) {
+            // 提取商品名
+            let productName = t.replace(/加入购物车|加购物车|我要买|帮我加|添加|一下|一个|一份|一点|一些/g, '').trim();
+            if (productName) {
+                showVoiceCommandToast(`🛒 正在搜索"${productName}"...`);
+                speakWithBrowserTTS(`好的，正在找${productName}`);
+                try {
+                    const res = await fetch(`${API}/api/search?q=${encodeURIComponent(productName)}`);
+                    const results = await res.json();
+                    if (results.length > 0) {
+                        const g = results[0];
+                        // 静默加入购物车（不弹confirm）
+                        await addCartSilent(g.id, g.name, g.price);
+                        showVoiceCommandToast(`✅ ${g.name} 已加入购物车`);
+                        speakWithBrowserTTS(`${g.name}已经加入购物车了`);
+                    } else {
+                        showVoiceCommandToast(`❌ 没有找到"${productName}"`);
+                        speakWithBrowserTTS(`抱歉，没有找到${productName}`);
+                    }
+                } catch (e) {
+                    speakWithBrowserTTS('网络错误，请稍后再试');
+                }
+                return true;
+            }
+        }
+
+        // --- 搜索命令 ---
+        if (t.includes('搜索') || t.includes('找找') || t.includes('有没有') || t.includes('找一下') || t.includes('帮我找')) {
+            let keyword = t.replace(/搜索|找找|有没有|找一下|帮我找|吗|么/g, '').trim();
+            if (keyword) {
+                showVoiceCommandToast(`🔍 正在搜索"${keyword}"...`);
+                speakWithBrowserTTS(`好的，正在找${keyword}`);
+                try {
+                    const res = await fetch(`${API}/api/search?q=${encodeURIComponent(keyword)}`);
+                    const results = await res.json();
+                    if (results.length > 0) {
+                        renderSearchResults(keyword, results);
+                        showPage('page8');
+                        speakWithBrowserTTS(`找到了${results.length}个${keyword}相关的商品`);
+                    } else {
+                        speakWithBrowserTTS(`抱歉，没有找到${keyword}相关的商品`);
+                    }
+                } catch (e) {
+                    speakWithBrowserTTS('搜索失败，请稍后再试');
+                }
+                return true;
+            }
+        }
+
+        // --- 结算命令 ---
+        if (t.includes('结算') || t.includes('去结算') || t.includes('下单') || t.includes('付款') || t.includes('付钱') || t.includes('提交订单')) {
+            showVoiceCommandToast('💰 正在结算...');
+            speakWithBrowserTTS('好的，正在为您结算');
+            // 自动执行结算
+            await paySilent();
+            return true;
+        }
+
+        // --- 关闭AI ---
+        if (t.includes('关闭') || t.includes('关掉') || t.includes('再见') || t.includes('拜拜')) {
+            closeAiChat();
+            speakWithBrowserTTS('好的，再见');
+            return true;
+        }
+
+        return false; // 不是命令，交给AI对话处理
+    }
+
+    // 静默加入购物车（不弹confirm）
+    async function addCartSilent(goodsId, name, price) {
+        if (!currentUser) return;
+        try {
+            const res = await fetch(`${API}/api/cart/${currentUser.userId}/items`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ goodsId, name, price })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                cartItems = data.items;
+            }
+        } catch (e) {
+            console.error('加入购物车失败:', e);
+        }
+    }
+
+    // 静默结算（不弹confirm）
+    async function paySilent() {
+        if (!currentUser) {
+            speakWithBrowserTTS('请先登录');
+            return;
+        }
+        try {
+            const cartRes = await fetch(`${API}/api/cart/${currentUser.userId}`);
+            const items = await cartRes.json();
+            if (items.length === 0) {
+                speakWithBrowserTTS('购物车是空的，先加些商品吧');
+                return;
+            }
+            const total = items.reduce((sum, item) => sum + item.price, 0);
+            const res = await fetch(`${API}/api/orders`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userId: currentUser.userId,
+                    items,
+                    total
+                })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                showVoiceCommandToast('✅ 订单已提交，等待子女代付');
+                speakWithBrowserTTS(`订单已提交，合计${total.toFixed(1)}元，等待子女代付`);
+                cartItems = [];
+                go(1);
+            } else {
+                speakWithBrowserTTS('下单失败，请稍后再试');
+            }
+        } catch (e) {
+            speakWithBrowserTTS('网络错误，请稍后再试');
+        }
+    }
+
+    // 检测浏览器是否支持语音识别
+    let browserSupportsSpeech = false;
+
+    // 初始化语音唤起识别（后台持续监听）
+    function initWakeRecognition() {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
+            browserSupportsSpeech = false;
+            console.warn('浏览器不支持 Web Speech API，语音唤起不可用');
+            showNotSupportedToast();
+            return null;
+        }
+
+        const rec = new SpeechRecognition();
+        rec.lang = 'zh-CN';
+        rec.interimResults = true;  // 中间结果也要，更快检测
+        rec.continuous = true;      // 连续模式
+        rec.maxAlternatives = 1;
+
+        rec.onresult = (event) => {
+            // 收集所有结果（包括中间和最终）
+            let allText = '';
+            let hasInterim = false;
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                allText += event.results[i][0].transcript;
+                if (!event.results[i].isFinal) {
+                    hasInterim = true;
+                }
+            }
+
+            console.log('🎤 语音识别结果:', allText);
+
+            // 检测到人声，显示麦克风指示器
+            if (allText && isWakeListening) {
+                showMicIndicator(hasInterim ? 'speaking' : 'listening');
+                // 清除之前的定时器
+                if (speechDetectedTimeout) clearTimeout(speechDetectedTimeout);
+                // 3秒后恢复为普通监听状态
+                speechDetectedTimeout = setTimeout(() => {
+                    if (isWakeListening) showMicIndicator('listening');
+                }, 3000);
+            }
+
+            // 立即检查唤醒词（不区分最终/中间结果）
+            if (allText) {
+                // 标准化文本：移除所有标点符号和空格，用于匹配
+                const normalized = allText.replace(/[，。！？、\s，．；：""''（）【】《》]/g, '');
+                console.log('🔍 标准化后:', normalized);
+                for (const wakeWord of WAKE_WORDS) {
+                    const normalizedWord = wakeWord.replace(/[，。！？、\s，．；：""''（）【】《》]/g, '');
+                    if (normalized.includes(normalizedWord)) {
+                        console.log('✅ 匹配唤醒词:', wakeWord);
+                        onWakeWordDetected(allText, wakeWord);
+                        return;
+                    }
+                }
+            }
+        };
+
+        rec.onstart = () => {
+            console.log('🎙 语音唤起监听已启动');
+            console.log('📢 当前 isWakeListening =', isWakeListening);
+            showMicIndicator('listening');
+            console.log('📢 已调用 showMicIndicator(listening)');
+        };
+
+        rec.onerror = (event) => {
+            if (event.error === 'no-speech') {
+                // 无语音，静默
+            } else if (event.error === 'not-allowed') {
+                console.warn('麦克风权限被拒绝，语音唤起不可用');
+                isWakeListening = false;
+                showMicIndicator('hidden');
+            } else if (event.error === 'network') {
+                console.warn('网络错误，语音唤起暂时不可用');
+            } else {
+                console.warn('语音唤起错误:', event.error);
+            }
+        };
+
+        rec.onend = () => {
+            // 自动重启（保持后台监听）
+            if (isWakeListening) {
+                wakeRestartCount++;
+                // 限制重启次数，避免无限循环
+                if (wakeRestartCount < 50) {
+                    setTimeout(() => {
+                        if (isWakeListening && wakeRecognition) {
+                            try {
+                                wakeRecognition.start();
+                            } catch (e) {
+                                console.warn('重启语音唤起失败:', e);
+                            }
+                        }
+                    }, 250); // 快速重启
+                }
+            }
+        };
+
+        return rec;
+    }
+
+    // 唤醒词被触发
+    function onWakeWordDetected(fullText, wakeWord) {
+        console.log('✅ 唤醒词触发:', fullText, '匹配:', wakeWord);
+        // 停止监听，隐藏指示器
+        stopWakeListening();
+        showMicIndicator('hidden');
+
+        // 检查是否已登录
+        if (!currentUser) {
+            speakWithBrowserTTS('请先登录后使用');
+            restartWakeListening();
+            return;
+        }
+
+        // 检查是否是老人用户
+        if (currentUser.relation === 'child') {
+            speakWithBrowserTTS('子女账号暂不支持');
+            restartWakeListening();
+            return;
+        }
+
+        // 提取唤醒词后面的内容（标准化：移除标点后再替换）
+        const normalizedText = fullText.replace(/[，。！？、\s，．；：""''（）【】《》]/g, '');
+        const normalizedWord = wakeWord.replace(/[，。！？、\s，．；：""''（）【】《》]/g, '');
+        const questionAfterWake = normalizedText.replace(normalizedWord, '').trim();
+        console.log('📝 唤醒词后内容:', questionAfterWake);
+
+        if (questionAfterWake && questionAfterWake.length > 0) {
+            // 有后续内容，先尝试语音命令
+            processVoiceCommand(questionAfterWake).then(handled => {
+                if (!handled) {
+                    // 不是命令，打开AI对话
+                    openAiChat();
+                    setTimeout(() => {
+                        const input = document.getElementById('aiChatInput');
+                        input.value = questionAfterWake;
+                        sendAiMessage();
+                    }, 800);
+                }
+            });
+        } else {
+            // 只有唤醒词，打开AI聊天
+            openAiChat();
+            setTimeout(() => {
+                speakWithBrowserTTS('在呢，请问有什么可以帮您？');
+            }, 300);
+        }
+    }
+
+    // 显示不支持语音的提示横幅
+    function showNotSupportedToast() {
+        // 检查是否已经显示过
+        if (document.getElementById('speechNotSupportedBanner')) return;
+
+        const banner = document.createElement('div');
+        banner.id = 'speechNotSupportedBanner';
+        banner.style.cssText = `
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #FF8C42, #F57C00);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 13px;
+            z-index: 9999;
+            box-shadow: 0 4px 12px rgba(255,140,66,0.4);
+            text-align: center;
+            max-width: 90%;
+            animation: toastSlideIn 0.3s ease-out;
+        `;
+        banner.innerHTML = `
+            <div style="font-weight:bold;margin-bottom:4px;">📱 Safari 不支持语音唤起</div>
+            <div>请点击右下角 🤖 按钮打开AI助手</div>
+            <div style="margin-top:6px;font-size:11px;opacity:0.9;">建议使用 Chrome 或 Edge 浏览器获得完整体验</div>
+        `;
+        document.body.appendChild(banner);
+
+        // 5秒后自动消失
+        setTimeout(() => {
+            banner.style.transition = 'opacity 0.5s';
+            banner.style.opacity = '0';
+            setTimeout(() => banner.remove(), 500);
+        }, 5000);
+    }
+
+    // 开始语音唤起监听
+    function startWakeListening() {
+        if (isWakeListening) return;
+
+        // 检查浏览器支持
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            browserSupportsSpeech = false;
+            console.warn('浏览器不支持语音唤起');
+            return;
+        }
+        browserSupportsSpeech = true;
+
+        wakeRecognition = initWakeRecognition();
+        if (!wakeRecognition) return;
+
+        try {
+            wakeRecognition.start();
+            isWakeListening = true;
+            wakeRestartCount = 0;
+            console.log('🎙 语音唤起已启动，说"你好小伴"即可打开AI助手');
+        } catch (e) {
+            console.warn('启动语音唤起失败:', e);
+            // 延迟重试
+            setTimeout(() => {
+                if (!isWakeListening) startWakeListening();
+            }, 3000);
+        }
+    }
+
+    // 停止语音唤起监听
+    function stopWakeListening() {
+        isWakeListening = false;
+        wakeRestartCount = 0;
+        if (speechDetectedTimeout) {
+            clearTimeout(speechDetectedTimeout);
+            speechDetectedTimeout = null;
+        }
+        if (wakeRecognition) {
+            try { wakeRecognition.abort(); } catch (e) {}
+            try { wakeRecognition.stop(); } catch (e) {}
+            wakeRecognition = null;
+        }
+    }
+
+    // 重启语音唤起监听
+    function restartWakeListening() {
+        wakeRestartCount = 0;
+        setTimeout(() => {
+            if (currentUser && currentUser.relation !== 'child') {
+                startWakeListening();
+            }
+        }, 3000);
+    }
+
+    // 初始化语音识别（聊天窗口内的语音输入）
+    function initSpeechRecognition() {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            browserSupportsSpeech = false;
             console.error('浏览器不支持 Web Speech API');
             return null;
         }
 
         const rec = new SpeechRecognition();
-        rec.lang = 'zh-CN';       // 中文
-        rec.interimResults = true; // 开启实时结果
-        rec.continuous = true;     // 连续识别
+        rec.lang = 'zh-CN';
+        rec.interimResults = true;
+        rec.continuous = true;
 
         rec.onresult = (event) => {
             const input = document.getElementById('aiChatInput');
@@ -2153,7 +2850,6 @@
                 }
             }
 
-            // 实时显示：最终结果 + 正在识别的结果
             const displayText = finalTranscript + interimTranscript;
             input.value = displayText;
             input.placeholder = interimTranscript ? '🎙 正在识别...' : '问我任何购物问题...';
@@ -2168,7 +2864,6 @@
         };
 
         rec.onend = () => {
-            // 如果还在录音状态，重新启动（保持连续识别）
             if (isRecording) {
                 try {
                     rec.start();
@@ -2176,7 +2871,6 @@
                     stopRecording();
                 }
             } else {
-                // 录音结束，如果有识别结果则自动发送
                 if (finalTranscript.trim()) {
                     const input = document.getElementById('aiChatInput');
                     input.value = finalTranscript.trim();
@@ -2194,6 +2888,13 @@
         const micBtn = document.getElementById('aiChatMicBtn');
 
         if (!isRecording) {
+            // 检查浏览器支持
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert('Safari 不支持语音识别\n\n请使用以下方式：\n1. 直接在输入框打字\n2. 使用 Chrome 浏览器获得语音体验');
+                return;
+            }
+
             // 开始录音
             if (!recognition) {
                 recognition = initSpeechRecognition();
@@ -2329,17 +3030,23 @@
         const question = input.value.trim();
         if (!question) return;
 
+        // 隐藏快捷问题（用户开始对话后）
+        document.getElementById('aiQuickQuestions').style.display = 'none';
+
         // 显示用户消息
         addChatMessage('user', question);
         aiChatHistory.push({ role: 'user', content: question });
         input.value = '';
+
+        // 隐藏之前的子女通知
+        document.getElementById('aiChildNotify').classList.remove('show');
 
         // 禁用发送按钮，显示加载
         const sendBtn = document.getElementById('aiChatSendBtn');
         sendBtn.disabled = true;
 
         // 显示"AI正在思考"
-        const loadingId = addChatMessage('bot', '🤔 正在思考...');
+        addChatMessage('bot', '🤔 正在思考...');
 
         try {
             // 获取当前购物车
@@ -2351,12 +3058,16 @@
                 }
             } catch (e) {}
 
+            // 发送对话历史（最近10条）
+            const historyToSend = aiChatHistory.slice(0, -1).slice(-10);
+
             const res = await fetch(`${API}/api/ai-advice`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     question,
                     items,
+                    chatHistory: historyToSend,
                     context: { scene: currentScene, goodsList: currentGoodsList }
                 })
             });
@@ -2370,6 +3081,17 @@
             if (data.success) {
                 addChatMessage('bot', data.advice);
                 aiChatHistory.push({ role: 'bot', content: data.advice });
+
+                // 处理子女联动通知
+                if (data.notifyChild) {
+                    const notifyEl = document.getElementById('aiChildNotify');
+                    const notifyText = document.getElementById('aiChildNotifyText');
+                    const reasonText = data.notifyChild.reason === '药品购买'
+                        ? '检测到药品购买，已通知子女关注'
+                        : `购物车金额 ¥${data.notifyChild.total.toFixed(1)}，已通知子女关注`;
+                    notifyText.textContent = reasonText;
+                    notifyEl.classList.add('show');
+                }
             } else {
                 addChatMessage('bot', '抱歉，我暂时无法回答，请稍后再试。');
             }
@@ -2417,5 +3139,11 @@
         }
     }
     // 未登录：默认显示身份选择页面（pageRoleSelect 已在 HTML 中设为 active）
+
+    // 启动语音唤起监听（后台持续监听"你好小伴"）
+    // 延迟 1 秒启动，确保页面加载完成
+    setTimeout(() => {
+        startWakeListening();
+    }, 1000);
 </script>
 </html>

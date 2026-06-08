@@ -353,10 +353,8 @@ app.post('/api/login', (req, res) => {
     });
 });
 
-// ========== AI 导购接口（支持全场景） ==========
-// 处理 POST 请求，地址为 /api/ai-advice
+// ========== AI 导购接口（支持全场景 + 商品精准推荐 + 价格对比 + 购物清单） ==========
 app.post('/api/ai-advice', async (req, res) => {
-    // 1. 从环境变量中读取 DeepSeek API 密钥
     const apiKey = process.env.DEEPSEEK_API_KEY;
 
     if (!apiKey) {
@@ -364,84 +362,150 @@ app.post('/api/ai-advice', async (req, res) => {
         return res.status(500).json({ error: '服务器配置错误：缺少API密钥' });
     }
 
-    // 2. 从请求体中获取数据
-    const { items, context, question } = req.body;
-    // context: 场景上下文，如 "首页"、"浏览食品饮料"、"搜索牛奶"、"购物车结算"
-    // question: 用户主动提出的问题（全场景聊天时使用）
-    // items: 购物车商品列表（购物车场景时使用）
-
+    const { items, context, question, chatHistory } = req.body;
     const goods = JSON.parse(fs.readFileSync(GOODS_FILE, 'utf8'));
 
-    let prompt = '';
+    // 构建完整商品目录（含子分类和详细描述）
+    const fullGoodsCatalog = goods.map(g => {
+        const subcat = g.subCategory ? ` [${g.subCategory}]` : '';
+        const tags = g.tags && g.tags.length > 0 ? ` 标签:${g.tags.join(',')}` : '';
+        const elderly = g.elderlyFriendly ? ' ⭐老年适用' : '';
+        return `- [${g.id}] ${g.name} (¥${g.price})${subcat}${elderly} - ${g.description || ''}${tags}`;
+    }).join('\n');
 
-    // 3. 根据不同场景构建不同的 prompt
-    if (question) {
-        // === 全场景聊天模式：用户主动提问 ===
-        // 构建当前场景的商品信息
-        let goodsInfo = '';
-        if (context && context.goodsList && context.goodsList.length > 0) {
-            goodsInfo = `\n当前页面展示的商品：\n${context.goodsList.map(g => `- ${g.emoji || ''} ${g.name} (¥${g.price}) - ${g.description || ''}`).join('\n')}`;
-        }
-        let cartInfo = '';
-        if (items && items.length > 0) {
-            cartInfo = `\n用户购物车中的商品：\n${items.map(i => `- ${i.name} (¥${i.price})`).join('\n')}`;
-        }
-
-        prompt = `你是一位亲切温暖的AI购物导购助手，正在帮助一位老年用户购物。
-用户当前在${context ? context.scene : '购物'}页面。
-${goodsInfo}
-${cartInfo}
-用户的问题是：${question}
-请根据以上信息，用亲切、简洁的语言回答用户的问题。回答不超过150字，适合老年人阅读。如果问题与购物无关，友好地引导回购物话题。`;
-    } else if (items && Array.isArray(items) && items.length > 0) {
-        // === 购物车建议模式（原有功能） ===
-        const productsList = items.map(item => `- ${item.name} (¥${item.price})`).join('\n');
-        prompt = `你是一位经验丰富的购物专家和AI导购助手。
-请你根据顾客购物车中的商品清单，为即将结算的用户生成一份购买建议，注意用户是老年人，要求建议内容不超过200字。
-建议应包含：
-1. 对这些商品选择的总体肯定。
-2. 给出 2-3 个实用的后续购买建议（例如相关的搭配商品、补货建议等）。
-3. 语气要亲切、温暖，并提醒一句家人的关爱，符合老年用户的场景。
-购物车商品清单如下：
-${productsList}
-请直接返回你的建议文本。`;
-    } else {
-        // === 默认欢迎模式 ===
-        const allGoodsSummary = `
-商店共有 ${goods.length} 件商品，分为三大类：
-- 食品饮料：${goods.filter(g => g.category === 'food').map(g => g.name).join('、')}
-- 日用品：${goods.filter(g => g.category === 'daily').map(g => g.name).join('、')}
-- 药品保健：${goods.filter(g => g.category === 'medicine').map(g => g.name).join('、')}
-`;
-        prompt = `你是一位亲切温暖的AI购物导购助手，正在帮助一位老年用户购物。
-请主动打招呼，简要介绍商店有哪些商品可以买，引导用户开始浏览。
-${allGoodsSummary}
-回答不超过120字，语气亲切温暖，用简单易懂的语言。`;
+    // 构建当前页面商品信息
+    let currentPageGoods = '';
+    if (context && context.goodsList && context.goodsList.length > 0) {
+        currentPageGoods = `\n当前页面展示的商品：\n${context.goodsList.map(g => `- ${g.name} (¥${g.price}) - ${g.description || ''}`).join('\n')}`;
     }
 
-    // 4. 调用 DeepSeek API
+    // 构建购物车信息
+    let cartInfo = '';
+    if (items && items.length > 0) {
+        cartInfo = `\n用户购物车中的商品：\n${items.map(i => `- ${i.name} (¥${i.price})`).join('\n')}`;
+        cartInfo += `\n购物车合计：¥${items.reduce((s, i) => s + i.price, 0).toFixed(1)}`;
+    }
+
+    // 构建对话历史
+    let historyText = '';
+    if (chatHistory && chatHistory.length > 0) {
+        historyText = '\n之前的对话：\n' + chatHistory.map(h => `${h.role === 'user' ? '用户' : '助手'}: ${h.content}`).join('\n');
+    }
+
+    let prompt = '';
+    let systemPrompt = `你是一位亲切温暖的AI购物导购助手，专门帮助老年用户在线购物。
+
+【商店完整商品目录】
+${fullGoodsCatalog}
+
+${currentPageGoods}
+${cartInfo}
+${historyText}
+
+【回答规则】
+1. 语气亲切温暖，用短句，适合老年人阅读
+2. 回答不超过200字
+3. 推荐商品时，必须使用以下格式标记商品名，方便用户点击：【商品名】
+   例如：推荐您试试【纯牛奶 1L】，营养丰富
+4. 如果用户问"有没有XX"，从商品目录中精确匹配回答
+5. 如果用户问价格对比，列出同类商品价格并推荐最实惠的
+6. 如果用户要求生成购物清单，列出商品后用【商品名】格式标记
+7. 如果问题与购物无关，友好地引导回购物话题
+8. 不要编造商品目录中没有的商品`;
+
+    // 根据不同场景构建 prompt
+    if (question) {
+        prompt = `用户当前在${context ? context.scene : '购物'}页面。
+用户的问题是：${question}
+
+请根据商店商品目录回答用户的问题。如果涉及推荐，请用【商品名】格式标记商品名。`;
+    } else if (items && Array.isArray(items) && items.length > 0) {
+        prompt = `用户即将结算购物车，请分析购物车内容并给出建议：
+1. 对这些商品选择的总体肯定
+2. 是否有可以搭配的商品推荐（用【商品名】格式）
+3. 是否有重复或不需要购买的商品
+4. 语气亲切温暖，提醒一句家人的关爱`;
+    } else {
+        // 欢迎模式
+        const foodCount = goods.filter(g => g.category === 'food').length;
+        const dailyCount = goods.filter(g => g.category === 'daily').length;
+        const medCount = goods.filter(g => g.category === 'medicine').length;
+
+        prompt = `请主动打招呼，简要介绍商店有${foodCount}种食品饮料、${dailyCount}种日用品、${medCount}种药品保健。
+告诉用户可以问你的问题类型：
+- "有没有降血压的药？"
+- "牛奶多少钱？"
+- "帮我推荐适合老人的食品"
+- "帮我列一周买菜清单"
+语气亲切温暖，不超过120字。`;
+    }
+
     try {
         const response = await axios.post(
             'https://api.deepseek.com/chat/completions',
             {
                 model: 'deepseek-chat',
                 messages: [
-                    { role: "system", content: "你是一位专业的购物导购，专门帮助老年人在线购物。语气亲切温暖，语言简洁易懂。" },
+                    { role: "system", content: systemPrompt },
                     { role: "user", content: prompt }
                 ],
                 temperature: 0.7,
-                max_tokens: 500
+                max_tokens: 600
             },
             {
                 headers: {
                     'Authorization': `Bearer ${apiKey}`,
                     'Content-Type': 'application/json'
                 }
-            }
+            },
+            { timeout: 15000 }
         );
 
         const advice = response.data.choices[0].message.content;
-        res.json({ success: true, advice: advice });
+
+        // 解析 AI 回复中的【商品名】标记，匹配到实际商品
+        const productMentions = [];
+        const mentionRegex = /【(.+?)】/g;
+        let match;
+        while ((match = mentionRegex.exec(advice)) !== null) {
+            const mentionedName = match[1].trim();
+            // 模糊匹配商品
+            const matched = goods.find(g =>
+                g.name.includes(mentionedName) ||
+                mentionedName.includes(g.name) ||
+                g.name.includes(mentionedName.split(' ')[0])
+            );
+            if (matched) {
+                productMentions.push({
+                    text: mentionedName,
+                    goods: matched
+                });
+            }
+        }
+
+        // 检测是否需要通知子女（药品购买或大额消费）
+        let notifyChild = null;
+        if (items && items.length > 0) {
+            const hasMedicine = items.some(i => {
+                const g = goods.find(g => g.name === i.name);
+                return g && g.category === 'medicine';
+            });
+            const total = items.reduce((s, i) => s + i.price, 0);
+            if (hasMedicine || total > 100) {
+                notifyChild = {
+                    reason: hasMedicine ? '药品购买' : '大额消费',
+                    total,
+                    items: items.map(i => i.name)
+                };
+            }
+        }
+
+        res.json({
+            success: true,
+            advice: advice,
+            products: productMentions,
+            notifyChild: notifyChild
+        });
 
     } catch (error) {
         console.error('DeepSeek API 调用失败详情:', error.response?.data || error.message);
