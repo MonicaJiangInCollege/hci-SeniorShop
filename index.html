@@ -155,6 +155,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .goods-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(255,140,66,0.2);
         }
 
         .goods-image {
@@ -828,6 +835,128 @@
             align-items: flex-start;
             gap: 6px;
         }
+
+        /* 子分类选择器 */
+        .subcat-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+            justify-content: center;
+        }
+
+        .subcat-btn {
+            padding: 10px 18px;
+            font-size: 16px;
+            border: 2px solid #FFE0B2;
+            border-radius: 24px;
+            background: #FFFDF9;
+            color: #5D4037;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .subcat-btn:hover {
+            background: #FFF3E0;
+            border-color: #FF8C42;
+        }
+
+        .subcat-btn.active {
+            background: #FF8C42;
+            color: white;
+            border-color: #FF8C42;
+        }
+
+        .subcat-btn.all {
+            background: #FFE0B2;
+            border-color: #FFE0B2;
+        }
+
+        /* 商品详情页 */
+        .detail-container {
+            background: #FFFDF9;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(255,140,66,0.12);
+        }
+
+        .detail-emoji {
+            width: 100%;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+            border-radius: 14px;
+            margin-bottom: 16px;
+        }
+
+        .detail-name {
+            font-size: 26px;
+            font-weight: bold;
+            color: #222;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .detail-price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #E65100;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .detail-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .detail-tag {
+            font-size: 14px;
+            color: #FF8C42;
+            background: #FFF3E0;
+            padding: 4px 12px;
+            border-radius: 14px;
+        }
+
+        .detail-desc {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            padding: 12px;
+            background: #FFF8F0;
+            border-radius: 10px;
+        }
+
+        .detail-desc-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #5D4037;
+            margin-bottom: 8px;
+        }
+
+        .detail-add-btn {
+            width: 100%;
+            height: 56px;
+            font-size: 20px;
+            background: #FF8C42;
+            color: white;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .detail-add-btn:hover {
+            background: #F57C00;
+        }
     </style>
 </head>
 
@@ -968,24 +1097,51 @@
         <div id="myOrdersList"></div>
     </div>
 
-    <!-- 页面2：食品 -->
+    <!-- 页面10：商品详情页 -->
+    <div id="page10" class="page">
+        <button class="back" onclick="goBackFromDetail()">返回</button>
+        <div class="detail-container" id="detailContainer"></div>
+    </div>
+
+    <!-- 页面2：食品饮料（含子分类） -->
     <div id="page2" class="page">
         <button class="back" onclick="go(1)">返回首页</button>
         <div class="title">食品饮料</div>
+        <div class="subcat-bar" id="foodSubcatBar">
+            <button class="subcat-btn all active" onclick="filterSubcat('food','all')">全部</button>
+            <button class="subcat-btn" onclick="filterSubcat('food','饮品')">🥤 饮品</button>
+            <button class="subcat-btn" onclick="filterSubcat('food','主食')">🍚 主食</button>
+            <button class="subcat-btn" onclick="filterSubcat('food','零食干货')">🥜 零食干货</button>
+            <button class="subcat-btn" onclick="filterSubcat('food','调味品')">🧂 调味品</button>
+        </div>
         <div class="goods-list" id="foodList"></div>
     </div>
 
-    <!-- 页面3：日用品 -->
+    <!-- 页面3：日用品（含子分类） -->
     <div id="page3" class="page">
         <button class="back" onclick="go(1)">返回首页</button>
         <div class="title">日用品</div>
+        <div class="subcat-bar" id="dailySubcatBar">
+            <button class="subcat-btn all active" onclick="filterSubcat('daily','all')">全部</button>
+            <button class="subcat-btn" onclick="filterSubcat('daily','纸品家清')">🧹 纸品家清</button>
+            <button class="subcat-btn" onclick="filterSubcat('daily','个人护理')">🪥 个人护理</button>
+            <button class="subcat-btn" onclick="filterSubcat('daily','厨房用品')">🍽️ 厨房用品</button>
+            <button class="subcat-btn" onclick="filterSubcat('daily','老年辅具')">👴 老年辅具</button>
+        </div>
         <div class="goods-list" id="dailyList"></div>
     </div>
 
-    <!-- 页面4：药品 -->
+    <!-- 页面4：药品保健（含子分类） -->
     <div id="page4" class="page">
         <button class="back" onclick="go(1)">返回首页</button>
         <div class="title">药品保健</div>
+        <div class="subcat-bar" id="medicineSubcatBar">
+            <button class="subcat-btn all active" onclick="filterSubcat('medicine','all')">全部</button>
+            <button class="subcat-btn" onclick="filterSubcat('medicine','保健滋补')">💊 保健滋补</button>
+            <button class="subcat-btn" onclick="filterSubcat('medicine','医疗器械')">🩺 医疗器械</button>
+            <button class="subcat-btn" onclick="filterSubcat('medicine','防护卫生')">😷 防护卫生</button>
+            <button class="subcat-btn" onclick="filterSubcat('medicine','外用护理')">🧴 外用护理</button>
+        </div>
         <div class="goods-list" id="medicineList"></div>
     </div>
 
@@ -1048,9 +1204,12 @@
     let currentUser = null; // { userId, name, relation }
     let cartItems = [];
     let selectedRole = null; // 当前选择的身份：'elder' 或 'child'
+    let lastPage = null; // 记录进入详情页之前的页面，用于返回
+    let currentCategory = null; // 当前浏览的大分类
+    let currentSubcategory = 'all'; // 当前选中的子分类
 
     // ============ 页面切换 ============
-    const AI_PAGES = ['page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page8', 'page9']; // 显示AI按钮的页面
+    const AI_PAGES = ['page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page8', 'page9', 'page10']; // 显示AI按钮的页面
 
     function showPage(pageId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1082,15 +1241,24 @@
                 showPage('page1');
             }
         } else if (num === 2) {
-            loadGoods('food', 'foodList');
+            currentCategory = 'food';
+            currentSubcategory = 'all';
+            resetSubcatButtons('foodSubcatBar');
+            loadGoodsBySubcat('food', 'all', 'foodList');
             showPage('page2');
             trackBrowse('food');
         } else if (num === 3) {
-            loadGoods('daily', 'dailyList');
+            currentCategory = 'daily';
+            currentSubcategory = 'all';
+            resetSubcatButtons('dailySubcatBar');
+            loadGoodsBySubcat('daily', 'all', 'dailyList');
             showPage('page3');
             trackBrowse('daily');
         } else if (num === 4) {
-            loadGoods('medicine', 'medicineList');
+            currentCategory = 'medicine';
+            currentSubcategory = 'all';
+            resetSubcatButtons('medicineSubcatBar');
+            loadGoodsBySubcat('medicine', 'all', 'medicineList');
             showPage('page4');
             trackBrowse('medicine');
         } else if (num === 5) {
@@ -1259,12 +1427,12 @@
             list.innerHTML = '';
             results.forEach(g => {
                 list.innerHTML += `
-                    <div class="goods-item">
+                    <div class="goods-item" onclick="showDetail(${g.id})">
                         ${getEmojiHtml(g, 'goods-emoji')}
                         <div class="goods-name">${g.name}</div>
                         <div class="goods-desc">${g.description || ''}</div>
                         <div class="goods-price">¥${g.price.toFixed(1)}</div>
-                        <button class="add" onclick="addCart(${g.id}, '${g.name}', ${g.price})">加入我选好的东西</button>
+                        <button class="add" onclick="event.stopPropagation(); addCart(${g.id}, '${g.name}', ${g.price})">加入我选好的东西</button>
                     </div>
                 `;
             });
@@ -1303,7 +1471,7 @@
                 : '';
 
             list.innerHTML += `
-                <div class="recommend-item">
+                <div class="recommend-item" onclick="showDetail(${g.id})">
                     ${getEmojiHtml(g, 'recommend-emoji')}
                     <div class="recommend-name">${g.name}</div>
                     ${tagHtml}
@@ -1328,6 +1496,106 @@
                 })
             });
         } catch (e) { /* 静默失败 */ }
+    }
+
+    // ============ 子分类筛选 ============
+    function filterSubcat(category, subcategory) {
+        currentSubcategory = subcategory;
+        // 更新按钮状态
+        const barId = category === 'food' ? 'foodSubcatBar' : category === 'daily' ? 'dailySubcatBar' : 'medicineSubcatBar';
+        const bar = document.getElementById(barId);
+        bar.querySelectorAll('.subcat-btn').forEach(btn => btn.classList.remove('active'));
+        // 找到对应按钮并激活
+        const buttons = bar.querySelectorAll('.subcat-btn');
+        buttons.forEach(btn => {
+            if ((subcategory === 'all' && btn.classList.contains('all')) ||
+                btn.textContent.includes(subcategory)) {
+                btn.classList.add('active');
+            }
+        });
+
+        const containerId = category === 'food' ? 'foodList' : category === 'daily' ? 'dailyList' : 'medicineList';
+        loadGoodsBySubcat(category, subcategory, containerId);
+    }
+
+    function resetSubcatButtons(barId) {
+        const bar = document.getElementById(barId);
+        bar.querySelectorAll('.subcat-btn').forEach(btn => btn.classList.remove('active'));
+        const allBtn = bar.querySelector('.subcat-btn.all');
+        if (allBtn) allBtn.classList.add('active');
+    }
+
+    async function loadGoodsBySubcat(category, subcategory, containerId) {
+        try {
+            const res = await fetch(`${API}/api/goods/${category}`);
+            let goods = await res.json();
+            // 按子分类筛选
+            if (subcategory && subcategory !== 'all') {
+                goods = goods.filter(g => g.subcategory === subcategory);
+            }
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            if (goods.length === 0) {
+                container.innerHTML = '<div class="empty-tip">该分类暂无商品</div>';
+                return;
+            }
+            goods.forEach(g => {
+                container.innerHTML += `
+                    <div class="goods-item" onclick="showDetail(${g.id})">
+                        ${getEmojiHtml(g, 'goods-emoji')}
+                        <div class="goods-name">${g.name}</div>
+                        <div class="goods-desc">${g.description || ''}</div>
+                        <div class="goods-price">¥${g.price.toFixed(1)}</div>
+                        <button class="add" onclick="event.stopPropagation(); addCart(${g.id}, '${g.name}', ${g.price})">加入我选好的东西</button>
+                    </div>
+                `;
+            });
+        } catch (e) {
+            alert('加载商品失败，请检查服务器');
+        }
+    }
+
+    // ============ 商品详情页 ============
+    function showDetail(goodsId) {
+        // 记录当前页面，用于返回
+        lastPage = document.querySelector('.page.active').id;
+
+        fetch(`${API}/api/goods`)
+            .then(res => res.json())
+            .then(goods => {
+                const g = goods.find(p => p.id === goodsId);
+                if (!g) { alert('商品不存在'); return; }
+
+                // 记录浏览行为
+                trackBrowse(g.category, g.id);
+
+                const container = document.getElementById('detailContainer');
+                const catClass = 'emoji-' + (g.category || 'food');
+                const tagsHtml = (g.tags || []).map(t => `<span class="detail-tag">${t}</span>`).join('');
+
+                container.innerHTML = `
+                    <div class="detail-emoji ${catClass}">${g.emoji || '📦'}</div>
+                    <div class="detail-name">${g.name}</div>
+                    <div class="detail-price">¥${g.price.toFixed(1)}</div>
+                    ${tagsHtml ? `<div class="detail-tags">${tagsHtml}</div>` : ''}
+                    <div class="detail-desc">
+                        <div class="detail-desc-title">📋 商品详情</div>
+                        ${g.detailDesc || g.description || '暂无详细介绍'}
+                    </div>
+                    <button class="detail-add-btn" onclick="addCart(${g.id}, '${g.name.replace(/'/g, "\\'")}', ${g.price})">加入我选好的东西</button>
+                `;
+
+                showPage('page10');
+            })
+            .catch(() => alert('加载商品详情失败'));
+    }
+
+    function goBackFromDetail() {
+        if (lastPage) {
+            showPage(lastPage);
+        } else {
+            go(1);
+        }
     }
 
     // 检查是否已登录
@@ -1387,12 +1655,12 @@
             container.innerHTML = '';
             goods.forEach(g => {
                 container.innerHTML += `
-                    <div class="goods-item">
+                    <div class="goods-item" onclick="showDetail(${g.id})">
                         ${getEmojiHtml(g, 'goods-emoji')}
                         <div class="goods-name">${g.name}</div>
                         <div class="goods-desc">${g.description || ''}</div>
                         <div class="goods-price">¥${g.price.toFixed(1)}</div>
-                        <button class="add" onclick="addCart(${g.id}, '${g.name}', ${g.price})">加入我选好的东西</button>
+                        <button class="add" onclick="event.stopPropagation(); addCart(${g.id}, '${g.name}', ${g.price})">加入我选好的东西</button>
                     </div>
                 `;
             });

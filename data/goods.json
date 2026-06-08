@@ -4,7 +4,9 @@
     "name": "纯牛奶 1L",
     "price": 19.9,
     "category": "food",
+    "subcategory": "饮品",
     "description": "新鲜优质牛奶",
+    "detailDesc": "源自优质牧场，经过高温杀菌处理，奶香浓郁，口感醇厚。每100ml含3.2g优质乳蛋白，钙含量丰富，适合老年人日常饮用补充营养。1升大容量装，满足全家需求。",
     "emoji": "🥛",
     "tags": ["饮品", "营养"],
     "elderlyFriendly": true
@@ -14,7 +16,9 @@
     "name": "全麦面包",
     "price": 12.8,
     "category": "food",
+    "subcategory": "主食",
     "description": "健康全麦配方",
+    "detailDesc": "采用全麦面粉精心烘焙，保留麦麸和胚芽，膳食纤维含量高。口感松软有嚼劲，低糖低油配方，适合关注血糖的中老年人。每袋约10片，早餐搭配牛奶营养更均衡。",
     "emoji": "🍞",
     "tags": ["主食", "健康"],
     "elderlyFriendly": false
@@ -24,7 +28,9 @@
     "name": "鸡蛋 30枚",
     "price": 32.5,
     "category": "food",
+    "subcategory": "零食干货",
     "description": "农家散养土鸡蛋",
+    "detailDesc": "农家散养土鸡所产，蛋黄饱满呈橙黄色，蛋白浓稠。无激素无抗生素，自然放养，鸡蛋口感更香更嫩。30枚家庭实惠装，常温保存即可，适合蒸、煮、炒多种烹饪方式。",
     "emoji": "🥚",
     "tags": ["营养", "农家"],
     "elderlyFriendly": true
@@ -34,7 +40,9 @@
     "name": "东北大米 5kg",
     "price": 49.9,
     "category": "food",
+    "subcategory": "主食",
     "description": "粒粒香甜软糯",
+    "detailDesc": "产自东北黑土地，一年一季慢生长，米粒晶莹饱满。煮出的米饭软糯香甜，凉后不回生，特别适合老年人的口感偏好。5公斤真空包装，防潮防虫，小家庭可吃1-2个月。",
     "emoji": "🍚",
     "tags": ["主食", "五谷"],
     "elderlyFriendly": false
@@ -44,7 +52,9 @@
     "name": "花生油 5L",
     "price": 89.9,
     "category": "food",
+    "subcategory": "调味品",
     "description": "压榨一级花生油",
+    "detailDesc": "选用优质花生，采用传统物理压榨工艺，保留花生原香。油色清亮，香味纯正，炒菜时油烟少。5升家庭装，适合日常煎炒烹炸，是中餐厨房的必备好油。",
     "emoji": "🥜",
     "tags": ["调味", "厨房"],
     "elderlyFriendly": false
@@ -54,7 +64,9 @@
     "name": "红枣 500g",
     "price": 18.8,
     "category": "food",
+    "subcategory": "零食干货",
     "description": "新疆若羌灰枣",
+    "detailDesc": "新疆若羌产地直供，自然吊干，果实饱满核小肉厚。富含铁元素和维生素C，自古就是滋补佳品。可直接食用，也可煮粥、泡茶、煲汤，是老少皆宜的养生零食。",
     "emoji": "🫘",
     "tags": ["养生", "滋补", "老年用品"],
     "elderlyFriendly": true
@@ -64,7 +76,9 @@
     "name": "绿茶 250g",
     "price": 56.0,
     "category": "food",
+    "subcategory": "饮品",
     "description": "明前龙井清香回甘",
+    "detailDesc": "明前采摘的龙井绿茶，芽叶细嫩，色泽翠绿。冲泡后茶汤清亮，香气清雅持久，入口甘醇回甜。绿茶富含茶多酚，有助抗氧化、降血脂，适合中老年人适量饮用养生。",
     "emoji": "🍵",
     "tags": ["饮品", "养生"],
     "elderlyFriendly": true
@@ -74,7 +88,9 @@
     "name": "意大利面 500g",
     "price": 15.6,
     "category": "food",
+    "subcategory": "主食",
     "description": "硬质小麦制作",
+    "detailDesc": "采用意大利传统硬质杜兰小麦制作，面条筋道有弹性，煮后不糊不烂。500克适中份量，搭配番茄肉酱或奶油蘑菇酱，在家也能享受西式美味，给日常餐桌换换口味。",
     "emoji": "🍝",
     "tags": ["主食", "西式"],
     "elderlyFriendly": false
@@ -84,7 +100,9 @@
     "name": "卷纸 10卷",
     "price": 29.9,
     "category": "daily",
+    "subcategory": "纸品家清",
     "description": "柔软舒适",
+    "detailDesc": "四层加厚原生木浆制造，触感柔软不掉屑。每卷200节，耐用实惠。不含荧光剂等有害物质，呵护敏感肌肤，适合全家日常使用。10卷家庭装，一次购买能用很久。",
     "emoji": "🧻",
     "tags": ["纸品", "家居"],
     "elderlyFriendly": false
@@ -94,7 +112,9 @@
     "name": "洗衣液 2kg",
     "price": 35.0,
     "category": "daily",
+    "subcategory": "纸品家清",
     "description": "深层去污",
+    "detailDesc": "含高效活性去污因子，轻松去除领口、袖口顽固污渍。中性温和配方不伤衣物不伤手，低泡易漂洗，省水省力。2公斤大瓶装，每次只需少量即可洗净一桶衣物。",
     "emoji": "🧴",
     "tags": ["清洁", "家居"],
     "elderlyFriendly": false
@@ -104,7 +124,9 @@
     "name": "洗洁精 1.5kg",
     "price": 12.9,
     "category": "daily",
+    "subcategory": "纸品家清",
     "description": "不伤手易冲洗",
+    "detailDesc": "食品级安全配方，有效去除油污的同时温和不伤手。泡沫丰富细腻，冲洗快速无残留，洗后碗碟洁净光亮。1.5公斤实惠大瓶装，按压式设计方便取用，厨房清洁好帮手。",
     "emoji": "🫧",
     "tags": ["清洁", "厨房"],
     "elderlyFriendly": false
@@ -114,7 +136,9 @@
     "name": "垃圾袋 3卷",
     "price": 9.9,
     "category": "daily",
+    "subcategory": "纸品家清",
     "description": "加厚抽绳式",
+    "detailDesc": "加厚PE材质结实耐用，承重力强不漏水。抽绳式收口设计一提即合，不脏手不洒漏，扔垃圾更方便。3卷共90只家庭装，适配常见圆形和方形垃圾桶。",
     "emoji": "🗑️",
     "tags": ["家居", "清洁"],
     "elderlyFriendly": false
@@ -124,7 +148,9 @@
     "name": "抽纸 24包",
     "price": 25.8,
     "category": "daily",
+    "subcategory": "纸品家清",
     "description": "三层柔软不掉屑",
+    "detailDesc": "三层加厚纸巾，柔软亲肤不掉纸屑。每包120抽，大小适中方便取用。原生木浆制造，无香精无荧光剂，擦手擦脸都安心。24包实惠箱装，客厅卧室各放几包随时取用。",
     "emoji": "📦",
     "tags": ["纸品", "家居"],
     "elderlyFriendly": false
@@ -134,7 +160,9 @@
     "name": "牙膏 120g",
     "price": 15.5,
     "category": "daily",
+    "subcategory": "个人护理",
     "description": "清新口气防蛀",
+    "detailDesc": "含氟配方有效预防蛀牙，清新薄荷味持久留香。细腻泡沫深入清洁牙缝，保护牙龈健康。120克大容量，每天早晚使用可用2-3个月，口腔健康的日常守护。",
     "emoji": "🦷",
     "tags": ["个护", "口腔"],
     "elderlyFriendly": false
@@ -144,7 +172,9 @@
     "name": "肥皂 3块装",
     "price": 11.8,
     "category": "daily",
+    "subcategory": "个人护理",
     "description": "天然植物配方",
+    "detailDesc": "天然植物油皂基制成，温和清洁不刺激。泡沫丰富细腻，洗手洗脸洗澡均可使用。无合成香精色素，适合敏感肌肤。3块实惠装，每块约100g，握持舒适不易滑落。",
     "emoji": "🧼",
     "tags": ["个护", "清洁"],
     "elderlyFriendly": false
@@ -154,7 +184,9 @@
     "name": "保鲜膜 2卷",
     "price": 8.5,
     "category": "daily",
+    "subcategory": "厨房用品",
     "description": "食品级安全材质",
+    "detailDesc": "食品级PE材质，安全无毒可直接接触食物。韧性强不易撕裂，密封性好锁住新鲜。适用于冰箱冷藏、微波加热（需戳孔）。自带切割刀片设计，单手即可轻松切断，方便老人操作。",
     "emoji": "🎁",
     "tags": ["厨房", "家居"],
     "elderlyFriendly": false
@@ -164,7 +196,9 @@
     "name": "维生素片",
     "price": 45.0,
     "category": "medicine",
+    "subcategory": "保健滋补",
     "description": "每日营养补充",
+    "detailDesc": "复合维生素配方，一片含多种维生素和矿物质，全面补充日常饮食中的营养缺口。特别添加维生素D和钙，有助于维持骨骼健康。每日一片，建议饭后温水送服，适合中老年人长期服用。",
     "emoji": "💊",
     "tags": ["保健", "营养", "老年用品"],
     "elderlyFriendly": true
@@ -174,7 +208,9 @@
     "name": "创可贴",
     "price": 8.0,
     "category": "medicine",
+    "subcategory": "外用护理",
     "description": "家庭常备",
+    "detailDesc": "医用级透气防水材质，粘性适中不易脱落，换撕时不拉扯皮肤。含止血棉垫，有效保护小伤口。独立包装卫生方便，家庭药箱、出门随身都该备一盒，小磕小碰随手可用。",
     "emoji": "🩹",
     "tags": ["医疗", "应急"],
     "elderlyFriendly": false
@@ -184,7 +220,9 @@
     "name": "钙片 60粒",
     "price": 68.0,
     "category": "medicine",
+    "subcategory": "保健滋补",
     "description": "中老年补钙佳品",
+    "detailDesc": "专为中老年人设计的碳酸钙+维生素D3配方，高含量每片含钙600mg。维生素D3促进钙吸收，有助预防骨质疏松。60粒装够吃2个月，每日一片随餐服用，守护骨骼健康。",
     "emoji": "🦴",
     "tags": ["保健", "补钙", "老年用品"],
     "elderlyFriendly": true
@@ -194,7 +232,9 @@
     "name": "鱼油胶囊 30粒",
     "price": 98.0,
     "category": "medicine",
+    "subcategory": "保健滋补",
     "description": "深海鱼油护心脑",
+    "detailDesc": "选自深海冷水鱼类，富含Omega-3（EPA+DHA），有助调节血脂、保护心脑血管健康。采用分子蒸馏技术去除杂质，胶囊设计易吞咽无腥味。每日2粒随餐服用，是中老年人护心健脑的优质选择。",
     "emoji": "🐟",
     "tags": ["保健", "护心", "老年用品"],
     "elderlyFriendly": true
@@ -204,7 +244,9 @@
     "name": "体温计",
     "price": 22.0,
     "category": "medicine",
+    "subcategory": "医疗器械",
     "description": "电子精准测温",
+    "detailDesc": "电子数字显示，测温快至10秒，精度达±0.1℃。液晶大屏显示清晰，老年人也能轻松读数。可腋下、口腔多部位测量，带蜂鸣提示测温完成。自动关机省电，配收纳盒方便存放。",
     "emoji": "🌡️",
     "tags": ["医疗", "家用"],
     "elderlyFriendly": true
@@ -214,7 +256,9 @@
     "name": "口罩 50只",
     "price": 19.9,
     "category": "medicine",
+    "subcategory": "防护卫生",
     "description": "三层防护透气",
+    "detailDesc": "三层熔喷布过滤结构，有效阻隔飞沫和粉尘。透气舒适不闷热，宽耳带设计久戴不勒耳朵。独立包装干净卫生，50只家庭装性价比高。出行、买菜、就医时佩戴，守护呼吸健康。",
     "emoji": "😷",
     "tags": ["防护", "卫生"],
     "elderlyFriendly": true
@@ -224,7 +268,9 @@
     "name": "葡萄糖口服液 10支",
     "price": 28.0,
     "category": "medicine",
+    "subcategory": "保健滋补",
     "description": "快速补充能量",
+    "detailDesc": "高浓度葡萄糖口服液，吸收快速，能迅速补充身体能量。适合低血糖、体力不支、运动后疲劳时饮用。独立小支包装方便携带，口感微甜不腻，老年人出门随身备两支更安心。",
     "emoji": "🧪",
     "tags": ["保健", "营养", "老年用品"],
     "elderlyFriendly": true
@@ -234,7 +280,9 @@
     "name": "护手霜 200ml",
     "price": 35.0,
     "category": "medicine",
+    "subcategory": "外用护理",
     "description": "滋润保湿防裂",
+    "detailDesc": "含甘油和维生素E，深层滋润干燥肌肤，有效预防和修复手部干裂。质地清爽不油腻，涂抹后快速吸收。200ml大容量按压瓶，适合老年人日常护手护足，尤其秋冬季节必备。",
     "emoji": "🧴",
     "tags": ["个护", "护肤"],
     "elderlyFriendly": true
@@ -244,7 +292,9 @@
     "name": "老花镜 200度",
     "price": 68.0,
     "category": "daily",
+    "subcategory": "老年辅具",
     "description": "高清树脂镜片，轻便舒适",
+    "detailDesc": "高清树脂镜片透光率高，看字清晰不累眼。200度适中度数，适合日常读书看报用。镜架采用TR90超轻材质，仅重约18克，长时间佩戴无压迫感。附送眼镜盒和清洁布，方便收纳保养。",
     "emoji": "👓",
     "tags": ["老年用品", "视力辅助"],
     "elderlyFriendly": true
@@ -254,7 +304,9 @@
     "name": "放大镜 大号",
     "price": 25.0,
     "category": "daily",
+    "subcategory": "老年辅具",
     "description": "手持大镜片，看字更清晰",
+    "detailDesc": "10cm大直径光学镜片，放大效果清晰不畸变。手柄加粗防滑，握持舒适适合老年人使用。可用于看药品说明、阅读报纸、查看手机小字等场景，让生活中的小字不再困扰。",
     "emoji": "🔍",
     "tags": ["老年用品", "视力辅助"],
     "elderlyFriendly": true
@@ -264,7 +316,9 @@
     "name": "四脚拐杖",
     "price": 89.0,
     "category": "daily",
+    "subcategory": "老年辅具",
     "description": "防滑稳固，高度可调节",
+    "detailDesc": "四脚底座设计加大支撑面积，比单脚拐杖更稳更安全，不易侧翻。铝合金杆身轻便坚固，高度可调节范围73-96cm，适合不同身高。防滑橡胶脚垫，室内外均可使用，给老人出行多一份安心。",
     "emoji": "🦯",
     "tags": ["老年用品", "助行"],
     "elderlyFriendly": true
@@ -274,7 +328,9 @@
     "name": "肩颈按摩器",
     "price": 168.0,
     "category": "medicine",
+    "subcategory": "医疗器械",
     "description": "多档力度热敷按摩，缓解酸痛",
+    "detailDesc": "智能揉捏按摩头模拟人手推拿手法，多档力度可调满足不同需求。内置恒温加热片，按摩同时热敷放松肌肉，缓解肩颈僵硬酸痛。U型环抱设计贴合颈部，一键开关操作简单，老人也能轻松使用。",
     "emoji": "💆",
     "tags": ["老年用品", "按摩", "保健"],
     "elderlyFriendly": true
@@ -284,7 +340,9 @@
     "name": "电子血压计",
     "price": 138.0,
     "category": "medicine",
+    "subcategory": "医疗器械",
     "description": "一键测量，大字液晶显示",
+    "detailDesc": "上臂式测量更准确，一键启动全自动测量，操作极其简单。大屏液晶字体清晰，血压和心率同步显示，结果语音播报（可开关）。可存储60组测量数据，方便追踪血压变化趋势，是高血压老人的居家必备好物。",
     "emoji": "🩺",
     "tags": ["老年用品", "医疗", "检测"],
     "elderlyFriendly": true
@@ -294,7 +352,9 @@
     "name": "防滑拖鞋",
     "price": 32.0,
     "category": "daily",
+    "subcategory": "老年辅具",
     "description": "加厚防滑鞋底，浴室安心穿",
+    "detailDesc": "鞋底采用凹凸防滑纹路设计，遇水不打滑，浴室厨房穿着更安全。EVA材质轻便柔软，脚感舒适不磨脚。鞋面加宽设计不挤脚趾，适合老年人脚型。多色可选，男女通用款。",
     "emoji": "🩴",
     "tags": ["老年用品", "安全", "家居"],
     "elderlyFriendly": true
@@ -304,7 +364,9 @@
     "name": "大屏收音机",
     "price": 78.0,
     "category": "daily",
+    "subcategory": "老年辅具",
     "description": "一键搜台，声音洪亮清晰",
+    "detailDesc": "大尺寸调频刻度盘，字大清晰不费眼。双喇叭立体声，声音洪亮饱满，听力不太好的老人也能听清楚。支持FM/AM/SW多波段，一键自动搜台存台，操作简单。内置可充电电池，续航长达12小时。",
     "emoji": "📻",
     "tags": ["老年用品", "娱乐", "数码"],
     "elderlyFriendly": true
@@ -314,7 +376,9 @@
     "name": "保温杯 500ml",
     "price": 45.0,
     "category": "daily",
+    "subcategory": "老年辅具",
     "description": "不锈钢内胆，24小时保温",
+    "detailDesc": "316不锈钢内胆，食品级安全材质，保温保冷效果出色。500ml大容量，广口设计方便泡茶和清洗。杯盖可当小杯子使用，贴心防烫。密封性好不漏水，出门遛弯、跳广场舞随身带，随时喝到热水。",
     "emoji": "☕",
     "tags": ["老年用品", "饮水", "养生"],
     "elderlyFriendly": true
