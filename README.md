@@ -60,34 +60,16 @@ hci_final/
 ├── PROJECT_STATUS.md   # 项目进度文档
 ├── data/               # JSON 数据持久化目录
 │   ├── users.json      # 用户账户数据
-│   ├── goods.json      # 商品数据（39 件商品）
+│   ├── goods.json      # 商品数据（40 件商品）
 │   ├── carts.json      # 购物车数据
 │   ├── orders.json     # 订单数据
 │   └── behavior.json   # 用户行为数据（搜索/浏览记录）
-├── images/             # 前端图标资源
-│   ├── food.png        # 食品饮料分类图标
-│   ├── daily.png       # 日用品分类图标
-│   ├── medicine.png    # 药品保健分类图标
-│   ├── browse.png      # 随便看看图标
-│   └── cart.png        # 购物车图标
-└── docs/               # 设计文档与评估报告
-    ├── design/         # 设计文档
-    │   ├── design-principles.md      # 六条设计原则
-    │   ├── personas.md               # 用户画像
-    │   ├── hci-theory-backing.md     # HCI 理论支撑
-    │   ├── competitor-comparison.md  # 竞品分析
-    │   └── presentation-narrative.md # 演示讲稿
-    └── evaluation/     # 用户评估
-        ├── README.md               # 评估说明
-        ├── study-protocol.md       # 研究方案
-        ├── results.md              # 评估结果
-        ├── raw-data.csv            # 原始数据
-        ├── interview-notes.md      # 访谈笔记
-        ├── iteration-case.md       # 迭代案例
-        └── charts/                 # 图表
-            ├── sus-scores.svg      # SUS 评分
-            ├── task-success.svg    # 任务成功率
-            └── task-times.svg      # 任务用时
+└── images/             # 前端图标资源
+    ├── food.png        # 食品饮料分类图标
+    ├── daily.png       # 日用品分类图标
+    ├── medicine.png    # 药品保健分类图标
+    ├── browse.png      # 随便看看图标
+    └── cart.png        # 购物车图标
 ```
 
 ---
@@ -279,7 +261,7 @@ Companion Cart 遵循六条核心设计原则：
 ### 5.10 智能安全提醒
 
 提交订单时自动检测：
-- **药品检测**：识别维生素、钙片、鱼油、体温计、口罩等药品保健类商品
+- **药品检测**：识别药品保健类商品（medicine 分类）
 - **大额检测**：订单金额超过 ¥100 时触发提醒
 - 触发提醒后显示安全提示，确认后才提交订单
 - 子女端订单卡片会标注"含药品"或"大额"标记
@@ -312,7 +294,7 @@ Companion Cart 遵循六条核心设计原则：
 
 ## 六、商品数据
 
-当前包含 **39 件商品**，覆盖三大品类、十二个子品类：
+当前包含 **40 件商品**，覆盖三大品类、十二个子品类：
 
 ### 食品饮料（16 件）
 
@@ -324,7 +306,7 @@ Companion Cart 遵循六条核心设计原则：
 
 **调味品**：花生油 5L
 
-### 日用品（15 件）
+### 日用品（14 件）
 
 **纸品家清**：卷纸 10卷、洗衣液 2kg、洗洁精 1.5kg、垃圾袋 3卷、抽纸 24包
 
@@ -334,7 +316,7 @@ Companion Cart 遵循六条核心设计原则：
 
 **老年辅具**：老花镜 200度、放大镜 大号、四脚拐杖、防滑拖鞋、大屏收音机、保温杯 500ml
 
-### 药品保健（8 件）
+### 药品保健（10 件）
 
 **保健滋补**：维生素片、钙片 60粒、鱼油胶囊 30粒、葡萄糖口服液 10支
 
@@ -464,14 +446,14 @@ npm start
 
 ### 无障碍购物流程
 
-1. 以老人身份登录后，点击"我看不清，语音帮我买"进入低视力模式
+1. 以老人身份登录后，进入低视力模式
 2. 系统自动朗读当前商品，支持"下一个"、"读一遍"、"放进清单"
 3. 选好后说"让孩子看看"，进入结算确认
 4. 说"确认提交"完成下单
 
 ### 纯语音购物流程
 
-1. 以老人身份登录后，点击"说话购物：开启小伴"
+1. 以老人身份登录后，开启语音模式
 2. 全程语音操作："我要买纯牛奶"、"看看购物车"、"去结算"
 3. 结算时需明确说"确认提交"才下单
 
@@ -525,30 +507,7 @@ npm start
 
 ---
 
-## 十一、设计文档
-
-项目包含完整的设计文档与用户评估报告，详见 `docs/` 目录：
-
-### 设计文档 (`docs/design/`)
-
-- **design-principles.md** — 六条设计原则与交互模态矩阵
-- **personas.md** — 用户画像（老年人 + 子女）
-- **hci-theory-backing.md** — HCI 理论支撑（CSCW、认知负荷理论、信任设计等）
-- **competitor-comparison.md** — 竞品分析（主流电商 vs Companion Cart）
-- **presentation-narrative.md** — 演示讲稿
-
-### 用户评估 (`docs/evaluation/`)
-
-- **study-protocol.md** — 用户研究方案
-- **results.md** — 评估结果（SUS 评分、任务成功率、任务用时）
-- **raw-data.csv** — 原始数据
-- **interview-notes.md** — 访谈笔记
-- **iteration-case.md** — 迭代案例
-- **charts/** — 可视化图表（SUS 评分、任务成功率、任务用时）
-
----
-
-## 十二、已知限制与改进方向
+## 十一、已知限制与改进方向
 
 | 限制 | 说明 | 改进方向 |
 |------|------|----------|
@@ -561,7 +520,7 @@ npm start
 
 ---
 
-## 十三、开发团队
+## 十二、开发团队
 
 - **项目名称**：Companion Cart（原 SeniorShop）
 - **仓库地址**：https://github.com/MonicaJiangInCollege/hci-SeniorShop
@@ -569,6 +528,6 @@ npm start
 
 ---
 
-## 十四、许可证
+## 十三、许可证
 
 本项目仅供学习交流使用。
