@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>老年极简购物助手</title>
+    <title>Companion Cart - AI 协同购物助手</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -339,6 +339,211 @@
             display: none !important;
         }
 
+        .brand-kicker {
+            text-align: center;
+            font-size: 14px;
+            color: #00796b;
+            font-weight: bold;
+            letter-spacing: 0.04em;
+            margin-top: 8px;
+        }
+
+        .companion-hero {
+            background: linear-gradient(135deg, #FFFDF9 0%, #E0F2F1 100%);
+            border: 3px solid #80CBC4;
+            border-radius: 22px;
+            padding: 18px;
+            margin: 12px 0 16px;
+            box-shadow: 0 8px 22px rgba(0, 137, 123, 0.14);
+        }
+
+        .companion-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #00796b;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 999px;
+            margin-bottom: 12px;
+        }
+
+        .companion-title {
+            font-size: 30px;
+            line-height: 1.25;
+            font-weight: bold;
+            color: #123;
+            margin-bottom: 10px;
+        }
+
+        .companion-subtitle {
+            font-size: 18px;
+            color: #4E342E;
+            line-height: 1.55;
+        }
+
+        .companion-actions {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin: 14px 0;
+        }
+
+        .assistive-entry-btn {
+            width: 100%;
+            min-height: 88px;
+            border: 4px solid #111;
+            border-radius: 18px;
+            background: #111;
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+        }
+
+        .home-safe-lanes {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .home-lane-btn {
+            border: 2px solid #FFE0B2;
+            border-radius: 16px;
+            background: #FFFDF9;
+            color: #5D4037;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 14px 8px;
+            min-height: 78px;
+            cursor: pointer;
+        }
+
+        .task-status-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin: 14px 0;
+        }
+
+        .task-status-step {
+            background: #FFF3E0;
+            border: 2px solid #FFE0B2;
+            color: #5D4037;
+            border-radius: 12px;
+            padding: 8px 4px;
+            font-size: 12px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .trust-points {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .trust-point {
+            background: #FFFDF9;
+            border-left: 6px solid #26a69a;
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-size: 16px;
+            color: #4E342E;
+        }
+
+        .low-vision-workspace {
+            display: none;
+            background: #000;
+            color: #fff;
+            border-radius: 22px;
+            padding: 18px;
+            margin: 14px 0;
+            border: 5px solid #fff;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+        }
+
+        body.assistive-mode-active .low-vision-workspace {
+            display: block;
+        }
+
+        body.assistive-mode-active .standard-shopping-area {
+            display: none !important;
+        }
+
+        body.assistive-mode-active {
+            background: #000;
+            color: #fff;
+        }
+
+        .low-vision-label {
+            font-size: 18px;
+            color: #FFD54F;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .low-vision-card {
+            border: 4px solid #FFD54F;
+            border-radius: 18px;
+            padding: 18px;
+            min-height: 210px;
+            background: #111;
+        }
+
+        .low-vision-name {
+            font-size: 34px;
+            font-weight: bold;
+            line-height: 1.25;
+            margin-bottom: 8px;
+        }
+
+        .low-vision-price {
+            font-size: 36px;
+            color: #FFD54F;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .low-vision-desc {
+            font-size: 22px;
+            line-height: 1.45;
+        }
+
+        .low-vision-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .low-vision-controls button {
+            min-height: 64px;
+            border-radius: 14px;
+            border: 3px solid #fff;
+            background: #FFD54F;
+            color: #111;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .checkout-safety-card {
+            background: #FFF8E1;
+            border: 3px solid #FFB74D;
+            border-radius: 16px;
+            padding: 12px;
+            margin: 12px 0;
+            color: #4E342E;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
         /* 子女帮付页面样式 */
         .order-card {
             border: 2px solid #FFE0B2;
@@ -416,6 +621,84 @@
         .pay-btn:disabled {
             background: #ccc;
             cursor: not-allowed;
+        }
+
+        .guardian-hero {
+            background: linear-gradient(135deg, #FFFDF9, #FFF3E0);
+            border: 3px solid #FFCC80;
+            border-radius: 22px;
+            padding: 16px;
+            margin: 12px 0 16px;
+        }
+
+        .guardian-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4E342E;
+            margin-bottom: 8px;
+        }
+
+        .guardian-subtitle {
+            font-size: 16px;
+            color: #6D4C41;
+            line-height: 1.5;
+        }
+
+        .guardian-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .guardian-tab-btn {
+            height: 58px;
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .risk-panel {
+            background: #FFF3E0;
+            border: 2px solid #FFB74D;
+            border-radius: 14px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 14px;
+            color: #4E342E;
+        }
+
+        .source-pill {
+            display: inline-block;
+            background: #E0F2F1;
+            color: #00695C;
+            border-radius: 999px;
+            padding: 4px 10px;
+            margin: 3px 4px 3px 0;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .guardian-actions {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .return-btn {
+            width: 100%;
+            min-height: 44px;
+            background: #FFF3E0;
+            color: #6D4C41;
+            border: 2px solid #FFCC80;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
         }
 
         .empty-tip {
@@ -1186,6 +1469,127 @@
         .detail-add-btn:hover {
             background: #F57C00;
         }
+
+        /* ===== 读给我听 ===== */
+        .read-aloud-btn {
+            position: fixed;
+            top: calc(env(safe-area-inset-top, 0px) + 8px);
+            left: 8px;
+            z-index: 2500;
+            height: 48px;
+            padding: 0 16px;
+            background: #5D4037;
+            color: white;
+            border: none;
+            border-radius: 24px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            display: none;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .read-aloud-btn:hover {
+            background: #4E342E;
+        }
+
+        /* ===== 纯语音模式 ===== */
+        .voice-mode-entry-btn {
+            width: 100%;
+            height: 80px;
+            font-size: 24px;
+            background: linear-gradient(135deg, #26a69a, #00897b);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 14px;
+            box-shadow: 0 4px 14px rgba(0,137,123,0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .voice-mode-entry-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .voice-mode-entry-btn.active {
+            background: linear-gradient(135deg, #E65100, #FF8C42);
+        }
+
+        .voice-mode-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 2800;
+            background: linear-gradient(180deg, rgba(255,248,240,0.97), #FFFDF9);
+            border-top: 3px solid #26a69a;
+            padding: 16px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+            box-shadow: 0 -6px 24px rgba(0,0,0,0.12);
+            display: none;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .voice-mode-panel.active {
+            display: block;
+        }
+
+        .voice-mode-step {
+            font-size: 14px;
+            color: #00897b;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .voice-mode-feedback {
+            font-size: 28px;
+            font-weight: bold;
+            color: #222;
+            line-height: 1.4;
+            min-height: 80px;
+            margin-bottom: 10px;
+        }
+
+        .voice-mode-hints {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .voice-mode-exit-btn {
+            width: 100%;
+            height: 48px;
+            background: #8D6E63;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        body.voice-mode-active .page.active .voice-mode-hide {
+            display: none !important;
+        }
+
+        body.voice-mode-active .page.active .title {
+            font-size: 26px;
+        }
+
+        body.voice-mode-active .ai-float-btn {
+            display: none !important;
+        }
+
+        body.voice-mode-active {
+            padding-bottom: 220px;
+        }
     </style>
 </head>
 
@@ -1259,60 +1663,86 @@
         </div>
     </div>
 
-    <!-- 页面1：老年人首页（仅四个分类 + 购物车，无推荐） -->
+    <!-- 页面1：老人端 Companion Cart 首页 -->
     <div id="page1" class="page">
-        <div class="user-info">您好，<span id="name"></span>！</div>
-        <!-- 搜索框 -->
-        <div class="search-bar">
-            <input type="text" class="search-input" id="searchInput" placeholder="找找您想要的东西" onkeydown="if(event.key==='Enter')search()">
-            <button class="search-btn" onclick="search()">找找</button>
+        <div class="standard-shopping-area voice-mode-hide">
+            <div class="user-info">您好，<span id="name"></span>！</div>
+            <div class="brand-kicker">Companion Cart · AI 协同购物助手</div>
+            <div class="companion-hero">
+                <div class="companion-status">● 小伴在听</div>
+                <div class="companion-title">您只管说想买什么，小伴帮您找，孩子帮您确认付款。</div>
+                <div class="companion-subtitle">适合看不清、点不准、不敢独自付款的购物场景。AI 会朗读商品、筛选风险，家人会看到订单原因后再帮忙付。</div>
+            </div>
+            <div class="companion-actions">
+                <button class="voice-mode-entry-btn" id="voiceModeEntryBtn" onclick="toggleVoiceMode()">🎤 说话购物：开启小伴</button>
+                <button class="assistive-entry-btn" onclick="enterAssistiveMode()">我看不清，语音帮我买</button>
+            </div>
+            <div class="task-status-strip" aria-label="购物任务状态">
+                <div class="task-status-step">正在帮您找</div>
+                <div class="task-status-step">已放入清单</div>
+                <div class="task-status-step">等孩子确认</div>
+                <div class="task-status-step">已付好</div>
+            </div>
+            <div class="home-safe-lanes" role="navigation" aria-label="主要购物分类">
+                <button class="home-lane-btn" onclick="go(2)" aria-label="找吃的，点击浏览食品饮料">找吃的</button>
+                <button class="home-lane-btn" onclick="go(3)" aria-label="找日用，点击浏览日用品">找日用</button>
+                <button class="home-lane-btn" onclick="go(4)" aria-label="找健康用品，点击浏览药品保健">找健康用品</button>
+            </div>
+            <div class="search-bar">
+                <input type="text" class="search-input" id="searchInput" placeholder="也可以打字找东西" onkeydown="if(event.key==='Enter')search()">
+                <button class="search-btn" onclick="search()">找找</button>
+            </div>
+            <div class="trust-points">
+                <div class="trust-point">小伴会读出商品、价格和用途，避免看错。</div>
+                <div class="trust-point">药品、保健品或大额订单会解释风险，再交给家人审核。</div>
+            </div>
+            <button class="btn cart" onclick="go(6)" style="width:100%;height:80px;font-size:22px;margin-top:14px;">
+                <img src="images/cart.png" alt="购物车"/>
+                我选好的清单
+            </button>
+            <button class="btn look" onclick="go(9)" style="width:100%;height:80px;font-size:22px;margin-top:14px;">
+                <img src="images/cart.png" alt="我买的东西"/>
+                我买的东西
+            </button>
+            <button class="back" onclick="logout()" style="margin-top:24px;">退出登录</button>
         </div>
-        <div class="title">您想买点什么？</div>
-        <div class="btn-group">
-            <button class="btn food" onclick="go(2)">
-                <img src="images/food.png" alt="食品饮料"/>
-                食品饮料
-            </button>
-            <button class="btn daily" onclick="go(3)">
-                <img src="images/daily.png" alt="日用品"/>
-                日用品
-            </button>
-            <button class="btn medicine" onclick="go(4)">
-                <img src="images/medicine.png" alt="药品保健"/>
-                药品保健
-            </button>
-            <button class="btn look" onclick="go(5)">
-                <img src="images/browse.png" alt="随便看看"/>
-                随便看看
-            </button>
+        <div class="low-vision-workspace" id="lowVisionWorkspace" aria-live="polite">
+            <div class="low-vision-label">低视力/盲人购物模式 · 每次只读一个选择</div>
+            <div class="low-vision-card" id="lowVisionCard">
+                <div class="low-vision-name">正在准备语音购物</div>
+                <div class="low-vision-price">请稍候</div>
+                <div class="low-vision-desc">您可以说“买血压计”，也可以点下面的大按钮。</div>
+            </div>
+            <div class="low-vision-controls">
+                <button onclick="lowVisionPrev()">上一个</button>
+                <button onclick="lowVisionNext()">下一个</button>
+                <button onclick="readCurrentLowVisionItem()">读一遍</button>
+                <button onclick="addCurrentLowVisionItem()">放进清单</button>
+                <button onclick="initiateVoiceCheckout()">让孩子看看</button>
+                <button onclick="exitAssistiveMode()">退出模式</button>
+            </div>
         </div>
-        <button class="btn cart" onclick="go(6)" style="width:100%;height:80px;font-size:22px;margin-top:14px;">
-            <img src="images/cart.png" alt="购物车"/>
-            我选好的东西
-        </button>
-        <button class="btn look" onclick="go(9)" style="width:100%;height:80px;font-size:22px;margin-top:14px;">
-            <img src="images/cart.png" alt="我买的东西"/>
-            我买的东西
-        </button>
-        <button class="back" onclick="logout()" style="margin-top:24px;">退出登录</button>
     </div>
 
     <!-- 页面8：找找结果 -->
     <div id="page8" class="page">
-        <button class="back" onclick="go(1)">返回首页</button>
+        <button class="back voice-mode-hide" onclick="go(1)">返回首页</button>
         <div class="title">找找结果</div>
-        <div class="search-result-count" id="searchResultCount"></div>
-        <div class="goods-list" id="searchResultList"></div>
-        <div class="search-no-result" id="searchNoResult" style="display:none;">没有找到相关东西，换一个词试试吧 🔍</div>
+        <div class="search-result-count voice-mode-hide" id="searchResultCount"></div>
+        <div class="goods-list voice-mode-hide" id="searchResultList"></div>
+        <div class="search-no-result voice-mode-hide" id="searchNoResult" style="display:none;">没有找到相关东西，换一个词试试吧 🔍</div>
     </div>
 
-    <!-- 页面7：子女首页 - 需要帮付的东西 -->
+    <!-- 页面7：子女端家庭守护台 -->
     <div id="page7" class="page">
-        <div class="user-info">您好，<span id="childUserName"></span>！（子女账号）</div>
-        <div class="title">帮付中心</div>
-        <div style="display:flex;gap:8px;margin-bottom:14px;">
-            <button class="btn food" onclick="showChildTab('pending')" id="tabPending" style="height:50px;font-size:16px;">等着我付</button>
-            <button class="btn daily" onclick="showChildTab('paid')" id="tabPaid" style="height:50px;font-size:16px;">已付过的</button>
+        <div class="user-info">您好，<span id="childUserName"></span>！（家庭守护者）</div>
+        <div class="guardian-hero">
+            <div class="guardian-title">家庭守护台</div>
+            <div class="guardian-subtitle">这里不是简单代付，而是帮父母确认“买了什么、为什么提醒、是否适合付款”。</div>
+        </div>
+        <div class="guardian-tabs">
+            <button class="guardian-tab-btn food" onclick="showChildTab('pending')" id="tabPending">今日待确认</button>
+            <button class="guardian-tab-btn daily" onclick="showChildTab('paid')" id="tabPaid">已帮家人付好</button>
         </div>
         <div id="pendingOrdersList"></div>
         <div id="paidOrdersList" style="display:none;"></div>
@@ -1321,78 +1751,81 @@
 
     <!-- 页面9：老人我买的东西 -->
     <div id="page9" class="page">
-        <button class="back" onclick="go(1)">返回首页</button>
+        <button class="back voice-mode-hide" onclick="go(1)">返回首页</button>
         <div class="title">我买的东西</div>
-        <div id="myOrdersList"></div>
+        <div id="myOrdersList" class="voice-mode-hide"></div>
     </div>
 
     <!-- 页面10：东西详情页 -->
     <div id="page10" class="page">
-        <button class="back" onclick="goBackFromDetail()">返回</button>
-        <div class="detail-container" id="detailContainer"></div>
+        <button class="back voice-mode-hide" onclick="goBackFromDetail()">返回</button>
+        <div class="detail-container voice-mode-hide" id="detailContainer"></div>
     </div>
 
     <!-- 页面2：食品饮料（含子分类） -->
     <div id="page2" class="page">
-        <button class="back" onclick="go(1)">返回首页</button>
+        <button class="back voice-mode-hide" onclick="go(1)">返回首页</button>
         <div class="title">食品饮料</div>
-        <div class="subcat-bar" id="foodSubcatBar">
+        <div class="subcat-bar voice-mode-hide" id="foodSubcatBar">
             <button class="subcat-btn all active" onclick="filterSubcat('food','all')">全部</button>
             <button class="subcat-btn" onclick="filterSubcat('food','饮品')">🥤 饮品</button>
             <button class="subcat-btn" onclick="filterSubcat('food','主食')">🍚 主食</button>
             <button class="subcat-btn" onclick="filterSubcat('food','零食干货')">🥜 零食干货</button>
             <button class="subcat-btn" onclick="filterSubcat('food','调味品')">🧂 调味品</button>
         </div>
-        <div class="goods-list" id="foodList"></div>
+        <div class="goods-list voice-mode-hide" id="foodList"></div>
     </div>
 
     <!-- 页面3：日用品（含子分类） -->
     <div id="page3" class="page">
-        <button class="back" onclick="go(1)">返回首页</button>
+        <button class="back voice-mode-hide" onclick="go(1)">返回首页</button>
         <div class="title">日用品</div>
-        <div class="subcat-bar" id="dailySubcatBar">
+        <div class="subcat-bar voice-mode-hide" id="dailySubcatBar">
             <button class="subcat-btn all active" onclick="filterSubcat('daily','all')">全部</button>
             <button class="subcat-btn" onclick="filterSubcat('daily','纸品家清')">🧹 纸品家清</button>
             <button class="subcat-btn" onclick="filterSubcat('daily','个人护理')">🪥 个人护理</button>
             <button class="subcat-btn" onclick="filterSubcat('daily','厨房用品')">🍽️ 厨房用品</button>
             <button class="subcat-btn" onclick="filterSubcat('daily','老年辅具')">👴 老年辅具</button>
         </div>
-        <div class="goods-list" id="dailyList"></div>
+        <div class="goods-list voice-mode-hide" id="dailyList"></div>
     </div>
 
     <!-- 页面4：药品保健（含子分类） -->
     <div id="page4" class="page">
-        <button class="back" onclick="go(1)">返回首页</button>
+        <button class="back voice-mode-hide" onclick="go(1)">返回首页</button>
         <div class="title">药品保健</div>
-        <div class="subcat-bar" id="medicineSubcatBar">
+        <div class="subcat-bar voice-mode-hide" id="medicineSubcatBar">
             <button class="subcat-btn all active" onclick="filterSubcat('medicine','all')">全部</button>
             <button class="subcat-btn" onclick="filterSubcat('medicine','保健滋补')">💊 保健滋补</button>
             <button class="subcat-btn" onclick="filterSubcat('medicine','医疗器械')">🩺 医疗器械</button>
             <button class="subcat-btn" onclick="filterSubcat('medicine','防护卫生')">😷 防护卫生</button>
             <button class="subcat-btn" onclick="filterSubcat('medicine','外用护理')">🧴 外用护理</button>
         </div>
-        <div class="goods-list" id="medicineList"></div>
+        <div class="goods-list voice-mode-hide" id="medicineList"></div>
     </div>
 
     <!-- 页面5：随便看看（含推荐区 + 全部东西） -->
     <div id="page5" class="page">
-        <button class="back" onclick="go(1)">返回首页</button>
+        <button class="back voice-mode-hide" onclick="go(1)">返回首页</button>
         <div class="title">随便看看</div>
         <!-- 推荐区放在随便看看页面 -->
-        <div class="recommend-section" id="recommendSection">
+        <div class="recommend-section voice-mode-hide" id="recommendSection">
             <div class="recommend-title">猜您喜欢 ❤️</div>
             <div class="recommend-list" id="recommendList"></div>
         </div>
-        <div class="goods-list" id="allList"></div>
+        <div class="goods-list voice-mode-hide" id="allList"></div>
     </div>
 
     <!-- 页面6：购物车 = 我选好的东西 -->
     <div id="page6" class="page">
-        <button class="back" onclick="go(1)">返回首页</button>
-        <div class="title">我选好的东西</div>
-        <div id="cartList"></div>
-        <div class="total">合计：¥<span id="total">0</span></div>
-        <div class="ai-assistant">
+        <button class="back voice-mode-hide" onclick="go(1)">返回首页</button>
+        <div class="title">我选好的清单</div>
+        <div id="cartList" class="voice-mode-hide"></div>
+        <div class="total voice-mode-hide">合计：¥<span id="total">0</span></div>
+        <div class="checkout-safety-card voice-mode-hide" id="checkoutSafetyCard">
+            提交前小伴会朗读清单和金额。若有药品、保健品或金额较高，会说明原因并交给家人确认。
+        </div>
+        <div class="ai-assistant voice-mode-hide">
             <div class="ai-header">
                 <span>🤖 AI 导购助手</span>
                 <button class="ai-refresh-btn" onclick="getAiShoppingAdvice()">✨ 获取购买建议</button>
@@ -1401,8 +1834,8 @@
                 点击按钮，让AI帮你分析一下购物清单，看看有没有漏掉什么好东西！
             </div>
         </div>
-        <button class="btn pay" onclick="pay()" style="width:100%;height:60px;font-size:20px">
-            去付钱（让子女帮忙付）
+        <button class="btn pay voice-mode-hide" onclick="pay()" style="width:100%;height:68px;font-size:20px">
+            超大确认：提交给家人付款
         </button>
     </div>
 
@@ -1415,6 +1848,17 @@
     <!-- ===== 语音命令执行提示 ===== -->
     <div class="voice-command-toast" id="voiceCommandToast">
         <span id="voiceCommandToastText">正在执行...</span>
+    </div>
+
+    <!-- ===== 读给我听 ===== -->
+    <button class="read-aloud-btn" id="readAloudBtn" onclick="readCurrentPageAloud()" title="朗读当前页面">🔊 读给我听</button>
+
+    <!-- ===== 纯语音模式面板 ===== -->
+    <div class="voice-mode-panel" id="voiceModePanel">
+        <div class="voice-mode-step" id="voiceModeStep">当前步骤：说出需求</div>
+        <div class="voice-mode-feedback" id="voiceModeFeedback">小伴在听。您可以直接说“我想买血压计”。</div>
+        <div class="voice-mode-hints" id="voiceModeHints">可说：下一个 / 放进清单 / 读一遍 / 让孩子看看</div>
+        <button class="voice-mode-exit-btn" onclick="exitVoiceMode()">退出小伴语音</button>
     </div>
 
     <!-- ===== AI 聊天弹窗 ===== -->
@@ -1455,13 +1899,35 @@
     let lastPage = null; // 记录进入详情页之前的页面，用于返回
     let currentCategory = null; // 当前浏览的大分类
     let currentSubcategory = 'all'; // 当前选中的子分类
+    let assistiveModeEnabled = false;
+    let lowVisionItems = [];
+    let lowVisionIndex = 0;
 
     // ============ 页面切换 ============
     const AI_PAGES = ['page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page8', 'page9', 'page10']; // 显示AI按钮的页面
+    const READ_ALOUD_PAGES = ['page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page7', 'page8', 'page9', 'page10'];
+
+    // 页面名称映射（用于无障碍朗读）
+    const PAGE_NAME_MAP = {
+        'pageRoleSelect': '身份选择页面，请选择您是老人还是子女',
+        'pageLogin': '登录页面，请输入手机号和密码',
+        'pageRegister': '注册页面，请输入手机号、密码和称呼',
+        'page1': 'Companion Cart 首页，小伴在听，您可以直接说想买什么',
+        'page2': '食品饮料页面',
+        'page3': '日用品页面',
+        'page4': '药品保健页面',
+        'page5': '随便看看页面',
+        'page6': '我选好的清单页面',
+        'page7': '家庭守护台页面',
+        'page8': '找找结果页面',
+        'page9': '我买的东西页面',
+        'page10': '东西详情页面'
+    };
 
     function showPage(pageId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
+        const pageEl = document.getElementById(pageId);
+        pageEl.classList.add('active');
 
         // 控制 AI 浮动按钮显示/隐藏
         const floatBtn = document.getElementById('aiFloatBtn');
@@ -1472,6 +1938,64 @@
                 floatBtn.style.display = 'none';
             }
         }
+
+        updateReadAloudVisibility(pageId);
+        if (voiceModeEnabled) {
+            document.body.classList.add('voice-mode-active');
+        }
+
+        // 无障碍：页面切换后自动朗读页面名称
+        announcePageChange(pageId);
+
+        // 无障碍：焦点管理 — 将焦点移到页面标题
+        setFocusToPageTitle(pageId);
+    }
+
+    // 页面切换时朗读（使用 aria-live 区域，不依赖 TTS）
+    function announcePageChange(pageId) {
+        const name = PAGE_NAME_MAP[pageId] || '';
+        if (!name) return;
+
+        // 确保 aria-live 区域存在
+        let liveRegion = document.getElementById('a11y-live-region');
+        if (!liveRegion) {
+            liveRegion = document.createElement('div');
+            liveRegion.id = 'a11y-live-region';
+            liveRegion.setAttribute('aria-live', 'assertive');
+            liveRegion.setAttribute('aria-atomic', 'true');
+            liveRegion.className = 'sr-only'; // 屏幕阅读器可见，视觉隐藏
+            liveRegion.style.cssText = 'position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;';
+            document.body.appendChild(liveRegion);
+        }
+        // 清空再设置，确保屏幕阅读器重新朗读
+        liveRegion.textContent = '';
+        setTimeout(() => { liveRegion.textContent = name; }, 100);
+
+        // 语音模式下同时用 TTS 朗读
+        if (voiceModeEnabled || assistiveModeEnabled) {
+            speakWithBrowserTTS(name);
+        }
+    }
+
+    // 焦点管理：页面切换后将焦点移到页面标题
+    function setFocusToPageTitle(pageId) {
+        setTimeout(() => {
+            const activePage = document.getElementById(pageId);
+            if (!activePage) return;
+            // 优先找 title 元素
+            const titleEl = activePage.querySelector('.title, .auth-title, .guardian-title');
+            if (titleEl) {
+                titleEl.setAttribute('tabindex', '-1');
+                titleEl.focus();
+            }
+        }, 200);
+    }
+
+    function updateReadAloudVisibility(pageId) {
+        const btn = document.getElementById('readAloudBtn');
+        if (!btn) return;
+        const show = currentUser && READ_ALOUD_PAGES.includes(pageId);
+        btn.style.display = show ? 'flex' : 'none';
     }
 
     function go(num) {
@@ -1616,6 +2140,8 @@
     }
 
     function logout() {
+        exitAssistiveMode();
+        exitVoiceMode();
         currentUser = null;
         localStorage.removeItem('currentUser');
         cartItems = [];
@@ -1978,72 +2504,121 @@
         document.getElementById('total').textContent = total.toFixed(1);
     }
 
-    // ============ 去付钱 ============
-    async function pay() {
-        if (cartItems.length === 0) {
-            alert('您还没有选任何东西哦！');
+    // ============ 统一安全结算 ============
+    function analyzeCartSafety(items, total) {
+        const medicineKeywords = ['维生素', '钙片', '鱼油', '体温计', '口罩', '葡萄糖', '护手霜', '创可贴', '药', '保健', '血压计'];
+        const medicineItems = items.filter(item => medicineKeywords.some(keyword => item.name.includes(keyword)));
+        const isLargeAmount = total > 100;
+        const reasons = [];
+        if (medicineItems.length > 0) {
+            reasons.push(`含健康/药品相关商品：${medicineItems.map(i => i.name).join('、')}`);
+        }
+        if (isLargeAmount) {
+            reasons.push(`金额较高：¥${total.toFixed(1)}`);
+        }
+        return {
+            triggered: reasons.length > 0,
+            medicineItems,
+            isLargeAmount,
+            reasons
+        };
+    }
+
+    function sourceLabel(source) {
+        const labels = {
+            touch: '点击超大确认按钮',
+            voice: '语音确认提交',
+            ai: 'AI 小伴发起结算'
+        };
+        return labels[source] || '普通提交';
+    }
+
+    function buildCheckoutMessage(items, total, safety, source) {
+        const itemText = items.map(item => `${item.name} ¥${item.price.toFixed(1)}`).join('\n');
+        const riskText = safety.triggered
+            ? safety.reasons.map(reason => `- ${reason}`).join('\n')
+            : '- 未发现药品、保健品或大额风险';
+        return `请确认这份购物清单：\n\n${itemText}\n\n合计：¥${total.toFixed(1)}\n提交方式：${sourceLabel(source)}\n\n安全说明：\n${riskText}\n\n提交后会进入家庭守护台，由家人确认并付款。`;
+    }
+
+    async function getLatestCartItems() {
+        const res = await fetch(`${API}/api/cart/${currentUser.userId}`);
+        const items = await res.json();
+        cartItems = items;
+        return items;
+    }
+
+    async function submitSafeCheckout(items, options = {}) {
+        const total = items.reduce((sum, item) => sum + item.price, 0);
+        const source = options.source || 'touch';
+        const assistiveMode = assistiveModeEnabled ? 'lowVision' : 'standard';
+        const safety = analyzeCartSafety(items, total);
+
+        const res = await fetch(`${API}/api/orders`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                userId: currentUser.userId,
+                items,
+                total,
+                source,
+                assistiveMode,
+                voiceNote: source === 'voice' ? '用户通过语音确认提交，请家人审核后付款' : '',
+                safetyReasons: safety.reasons
+            })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+            alert(data.error || '提交失败');
+            return null;
+        }
+
+        cartItems = [];
+        renderCart();
+        const successText = `要买的东西已提交，合计${total.toFixed(1)}元，正在等家人确认付款。`;
+        showVoiceCommandToast('✅ 已交给家庭守护台确认');
+        speakWithBrowserTTS(successText);
+        if (voiceModeEnabled) updateVoiceModeUI('done', '已提交，等家人确认付款');
+        alert(`已提交到家庭守护台！\n编号：${data.order.id}\n${safety.triggered ? '小伴已附上风险说明。' : '家人可以直接确认付款。'}`);
+        go(1);
+        return data;
+    }
+
+    async function requestSafeCheckout(options = {}) {
+        if (!currentUser) {
+            alert('请先登录');
             return;
         }
-
-        const total = cartItems.reduce((sum, item) => sum + item.price, 0);
-
-        // === 智能提醒检测 ===
-        const hasMedicine = cartItems.some(item =>
-            item.name.includes('维生素') || item.name.includes('钙片') ||
-            item.name.includes('鱼油') || item.name.includes('体温计') ||
-            item.name.includes('口罩') || item.name.includes('葡萄糖') ||
-            item.name.includes('护手霜') || item.name.includes('创可贴')
-        );
-        const isLargeAmount = total > 100;
-
-        // 如果有药品或大额消费，显示智能提醒
-        if (hasMedicine || isLargeAmount) {
-            const reminderMsgs = [];
-            if (hasMedicine) {
-                const medNames = cartItems.filter(item =>
-                    item.name.includes('维生素') || item.name.includes('钙片') ||
-                    item.name.includes('鱼油') || item.name.includes('体温计') ||
-                    item.name.includes('口罩') || item.name.includes('葡萄糖') ||
-                    item.name.includes('护手霜') || item.name.includes('创可贴')
-                ).map(i => i.name).join('、');
-                reminderMsgs.push(`📦 检测到药品：${medNames}`);
-            }
-            if (isLargeAmount) {
-                reminderMsgs.push(`💰 要买的东西金额较大：¥${total.toFixed(1)}`);
-            }
-
-            const confirmMsg = `⚠️ 智能安全提醒\n\n${reminderMsgs.join('\n')}\n\n👨‍👧‍👦 提交后，您的子女会收到通知并帮您付钱。\n\n确定要提交吗？`;
-            if (!confirm(confirmMsg)) return;
-        } else {
-            if (!confirm('确定要提交，请子女帮忙付钱吗？')) return;
-        }
-
         try {
-            const res = await fetch(`${API}/api/orders`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    userId: currentUser.userId,
-                    items: cartItems,
-                    total
-                })
-            });
-            const data = await res.json();
-            if (!res.ok) { alert(data.error); return; }
-
-            // 显示成功 + 智能提醒结果
-            let successMsg = '要买的东西已提交！编号：' + data.order.id + '\n等待子女帮忙付钱……';
-            if (data.smartReminder) {
-                successMsg += '\n\n🔔 已自动通知子女关注';
+            let items = options.items || cartItems;
+            if (!items || items.length === 0) {
+                items = await getLatestCartItems();
             }
-            alert(successMsg);
+            if (!items || items.length === 0) {
+                alert('您还没有选任何东西哦！');
+                speakWithBrowserTTS('清单是空的，先加些东西吧');
+                return;
+            }
 
-            cartItems = [];
-            renderCart();
-            go(1);
+            const total = items.reduce((sum, item) => sum + item.price, 0);
+            const source = options.source || 'touch';
+            const safety = analyzeCartSafety(items, total);
+            const message = buildCheckoutMessage(items, total, safety, source);
+
+            if (!options.skipConfirm && !confirm(message)) {
+                speakWithBrowserTTS('已取消提交');
+                return;
+            }
+
+            return submitSafeCheckout(items, { source });
         } catch (e) {
-            alert('网络错误');
+            alert('网络错误，提交失败');
+            speakWithBrowserTTS('网络错误，提交失败，请稍后再试');
         }
+    }
+
+    async function pay() {
+        await requestSafeCheckout({ source: 'touch' });
     }
 
     // ========== 新增：AI 购物建议功能 ==========
@@ -2109,7 +2684,46 @@
     }
 
 
-    // ============ 子女帮付功能 ============
+    // ============ 子女家庭守护台 ============
+    function getOrderSourcePills(order) {
+        const sourceMap = {
+            voice: '语音提交',
+            ai: 'AI 小伴提交',
+            touch: '点击提交'
+        };
+        const modeMap = {
+            lowVision: '低视力/盲人模式',
+            standard: '标准模式'
+        };
+        return `
+            <span class="source-pill">${sourceMap[order.source] || '点击提交'}</span>
+            <span class="source-pill">${modeMap[order.assistiveMode] || '标准模式'}</span>
+        `;
+    }
+
+    function getRiskPanelHtml(order) {
+        const reasons = [];
+        if (order.smartReminder && order.smartReminder.triggered) {
+            reasons.push(...(order.smartReminder.reasons || []));
+        }
+        if (order.safetyReasons && order.safetyReasons.length) {
+            order.safetyReasons.forEach(reason => {
+                if (!reasons.includes(reason)) reasons.push(reason);
+            });
+        }
+        const riskText = reasons.length
+            ? reasons.map(reason => `<div>需要关注：${reason}</div>`).join('')
+            : '<div>小伴未发现明显风险，可核对清单后付款。</div>';
+        const note = order.voiceNote ? `<div style="margin-top:6px;">老人留言：${order.voiceNote}</div>` : '';
+        return `
+            <div class="risk-panel">
+                <strong>小伴风险解释</strong>
+                ${riskText}
+                ${note}
+            </div>
+        `;
+    }
+
     async function loadPendingOrders() {
         try {
             const res = await fetch(`${API}/api/orders/pending?childUserId=${currentUser.userId}`);
@@ -2118,7 +2732,7 @@
             container.innerHTML = '';
 
             if (orders.length === 0) {
-                container.innerHTML = '<div class="empty-tip">暂无等着付的东西 ✨</div>';
+                container.innerHTML = '<div class="empty-tip">今天暂无待确认订单。家人提交后会出现在这里 ✨</div>';
                 return;
             }
 
@@ -2127,15 +2741,17 @@
                     `<div class="order-item-row">${item.name}  ￥${item.price.toFixed(1)}</div>`
                 ).join('');
 
-                // 智能提醒标记
                 let reminderBadge = '';
-                if (order.smartReminder && order.smartReminder.triggered) {
+                if ((order.smartReminder && order.smartReminder.triggered) || (order.safetyReasons && order.safetyReasons.length)) {
                     const badges = [];
-                    if (order.smartReminder.medicineCount > 0) {
+                    if (order.smartReminder && order.smartReminder.medicineCount > 0) {
                         badges.push('<span style="background:#FFF3E0;color:#E65100;padding:3px 8px;border-radius:6px;font-size:11px;margin-right:4px;">💊 含药品</span>');
                     }
-                    if (order.smartReminder.isLargeAmount) {
+                    if (order.smartReminder && order.smartReminder.isLargeAmount) {
                         badges.push('<span style="background:#FCE4EC;color:#C62828;padding:3px 8px;border-radius:6px;font-size:11px;">💰 大额</span>');
+                    }
+                    if (order.assistiveMode === 'lowVision') {
+                        badges.push('<span style="background:#111;color:#FFD54F;padding:3px 8px;border-radius:6px;font-size:11px;">👁 无障碍语音提交</span>');
                     }
                     reminderBadge = `<div style="margin:8px 0;">${badges.join('')}</div>`;
                 }
@@ -2144,15 +2760,20 @@
                     <div class="order-card" style="${order.smartReminder && order.smartReminder.triggered ? 'border-color:#FFCC80;background:#FFFEF8;' : ''}">
                         <div class="order-header">
                             <span class="order-id">编号：${order.id}</span>
-                            <span class="order-status ${order.status}">${order.status === 'pending' ? '等着我付' : '已付过'}</span>
+                            <span class="order-status ${order.status}">${order.status === 'pending' ? '妈妈等你确认' : '已帮家人付好'}</span>
                         </div>
+                        <div>${getOrderSourcePills(order)}</div>
                         ${reminderBadge}
+                        ${getRiskPanelHtml(order)}
                         <div class="order-items">${itemsHtml}</div>
                         <div class="order-total">合计：¥${order.total.toFixed(1)}</div>
+                        <div class="guardian-actions">
                         ${order.status === 'pending'
-                            ? `<button class="pay-btn" onclick="childPayOrder('${order.id}')">帮我付 ¥${order.total.toFixed(1)}</button>`
+                            ? `<button class="pay-btn" onclick="childPayOrder('${order.id}')">确认无误，帮家人付 ¥${order.total.toFixed(1)}</button>
+                               <button class="return-btn" onclick="suggestOrderChange('${order.id}')">先退回，让家人再确认</button>`
                             : '<button class="pay-btn" disabled>已付过</button>'
                         }
+                        </div>
                     </div>
                 `;
             });
@@ -2169,7 +2790,7 @@
             container.innerHTML = '';
 
             if (orders.length === 0) {
-                container.innerHTML = '<div class="empty-tip">暂无已付过的记录 📋</div>';
+                container.innerHTML = '<div class="empty-tip">暂无已帮家人付好的记录 📋</div>';
                 return;
             }
 
@@ -2182,8 +2803,9 @@
                     <div class="order-card">
                         <div class="order-header">
                             <span class="order-id">编号：${order.id}</span>
-                            <span class="order-status paid">已付过</span>
+                            <span class="order-status paid">已帮家人付好</span>
                         </div>
+                        <div>${getOrderSourcePills(order)}</div>
                         <div class="order-items">${itemsHtml}</div>
                         <div class="order-total">合计：¥${order.total.toFixed(1)}</div>
                         <div style="font-size:12px;color:#999;text-align:right;">付钱时间：${order.paidAt ? new Date(order.paidAt).toLocaleString('zh-CN') : '-'}</div>
@@ -2253,7 +2875,7 @@
     }
 
     async function childPayOrder(orderId) {
-        if (!confirm('确认帮忙付钱吗？')) return;
+        if (!confirm('已核对商品、金额和风险说明，确认帮家人付款吗？')) return;
         try {
             const res = await fetch(`${API}/api/orders/${orderId}/pay`, {
                 method: 'POST',
@@ -2267,6 +2889,10 @@
         } catch (e) {
             alert('网络错误');
         }
+    }
+
+    function suggestOrderChange(orderId) {
+        alert(`已记录退回建议：${orderId}\n演示中可口头说明：子女建议老人再确认商品或换一个更合适的选择。`);
     }
 
 
@@ -2407,8 +3033,8 @@
             showVoiceCommandToast(`✅ ${g.name} 已加入购物车`);
             speakWithBrowserTTS(`${g.name}已经加入购物车了`);
         } else if (action.type === 'checkout') {
-            showVoiceCommandToast('💰 正在结算...');
-            await paySilent();
+            showVoiceCommandToast('💰 小伴正在准备安全确认...');
+            await requestSafeCheckout({ source: 'ai' });
         } else if (action.type === 'navigate') {
             const navMap = {
                 'food': 2,
@@ -2458,6 +3084,265 @@
     let speechDetectedTimeout = null; // 检测到人声的定时器
     const WAKE_WORDS = ['你好小伴', '你好 小伴', '嗨小伴', '嗨 小伴', '小伴'];
 
+    // ============ 纯语音模式 ============
+    let voiceModeEnabled = false;
+    let awaitingCheckoutConfirm = false;
+    let voiceModeStep = 'browse';
+
+    const VOICE_MODE_HINTS = {
+        browse: '您可以说：我要买纯牛奶、看看食品饮料、随便看看',
+        cart: '您可以说：看看购物车、去结算、返回首页',
+        checkout_confirm: '请说：确认提交。或说取消放弃',
+        done: '订单已提交。您可以说：我买的东西、返回首页'
+    };
+
+    function toggleVoiceMode() {
+        if (voiceModeEnabled) {
+            exitVoiceMode();
+        } else {
+            enterVoiceMode();
+        }
+    }
+
+    function enterVoiceMode(silent) {
+        if (!currentUser || currentUser.relation === 'child') {
+            if (!silent) alert('请先以老人身份登录后使用语音模式');
+            return;
+        }
+        voiceModeEnabled = true;
+        awaitingCheckoutConfirm = false;
+        voiceModeStep = 'browse';
+        localStorage.setItem('seniorshop_voice_mode', '1');
+        document.body.classList.add('voice-mode-active');
+        const panel = document.getElementById('voiceModePanel');
+        const entryBtn = document.getElementById('voiceModeEntryBtn');
+        if (panel) panel.classList.add('active');
+        if (entryBtn) {
+            entryBtn.textContent = '🎤 语音模式已开启';
+            entryBtn.classList.add('active');
+        }
+        updateVoiceModeUI('browse', '语音模式已开启。说「你好小伴」或直接说您想买什么');
+        if (!silent) {
+            const guidance = '语音模式已开启。您可以说：我要买什么、看看购物车、去结算。结算时请说确认提交。';
+            speakWithBrowserTTS(guidance);
+        }
+        if (!isWakeListening) restartWakeListening();
+    }
+
+    function exitVoiceMode() {
+        voiceModeEnabled = false;
+        awaitingCheckoutConfirm = false;
+        voiceModeStep = 'browse';
+        localStorage.removeItem('seniorshop_voice_mode');
+        document.body.classList.remove('voice-mode-active');
+        const panel = document.getElementById('voiceModePanel');
+        const entryBtn = document.getElementById('voiceModeEntryBtn');
+        if (panel) panel.classList.remove('active');
+        if (entryBtn) {
+            entryBtn.textContent = '🎤 开启语音模式';
+            entryBtn.classList.remove('active');
+        }
+    }
+
+    async function enterAssistiveMode() {
+        if (!currentUser || currentUser.relation === 'child') {
+            alert('请先以老人身份登录后使用无障碍模式');
+            return;
+        }
+        assistiveModeEnabled = true;
+        document.body.classList.add('assistive-mode-active');
+        enterVoiceMode(true);
+        await loadLowVisionItems('血压计');
+        updateVoiceModeUI('browse', '低视力模式已开启。可以说：下一个、放进清单、让孩子看看。');
+        speakWithBrowserTTS('低视力购物模式已开启。小伴每次只读一个商品。您可以说下一个、放进清单、读一遍、让孩子看看。');
+    }
+
+    function exitAssistiveMode() {
+        assistiveModeEnabled = false;
+        document.body.classList.remove('assistive-mode-active');
+        updateVoiceModeUI('browse', '已退出低视力模式');
+        speakWithBrowserTTS('已退出低视力购物模式');
+    }
+
+    async function loadLowVisionItems(keyword) {
+        try {
+            const query = keyword || '血压计';
+            const res = await fetch(`${API}/api/search?q=${encodeURIComponent(query)}`);
+            let results = await res.json();
+            if (!results || results.length === 0) {
+                const allRes = await fetch(`${API}/api/goods`);
+                results = await allRes.json();
+            }
+            lowVisionItems = results.slice(0, 6);
+            lowVisionIndex = 0;
+            renderLowVisionCard();
+        } catch (e) {
+            speakWithBrowserTTS('加载商品失败，请稍后再试');
+        }
+    }
+
+    function renderLowVisionCard() {
+        const card = document.getElementById('lowVisionCard');
+        if (!card) return;
+        if (!lowVisionItems.length) {
+            card.innerHTML = `
+                <div class="low-vision-name">没有找到商品</div>
+                <div class="low-vision-price">请重新说想买什么</div>
+                <div class="low-vision-desc">例如：小伴，我想买血压计。</div>
+            `;
+            return;
+        }
+        const item = lowVisionItems[lowVisionIndex];
+        const position = `${lowVisionIndex + 1}/${lowVisionItems.length}`;
+        card.innerHTML = `
+            <div class="low-vision-label">当前选择 ${position}</div>
+            <div class="low-vision-name">${item.name}</div>
+            <div class="low-vision-price">¥${item.price.toFixed(1)}</div>
+            <div class="low-vision-desc">${item.description || item.detailDesc || '适合家庭日常使用'}</div>
+        `;
+        readCurrentLowVisionItem();
+    }
+
+    function currentLowVisionItem() {
+        return lowVisionItems[lowVisionIndex] || null;
+    }
+
+    function readCurrentLowVisionItem() {
+        const item = currentLowVisionItem();
+        if (!item) {
+            speakWithBrowserTTS('当前没有可朗读的商品');
+            return;
+        }
+        speakWithBrowserTTS(`${item.name}，价格${item.price.toFixed(1)}元。${item.description || '适合家庭日常使用'}。您可以说下一个、放进清单、让孩子看看。`);
+    }
+
+    function lowVisionNext() {
+        if (!lowVisionItems.length) return;
+        lowVisionIndex = (lowVisionIndex + 1) % lowVisionItems.length;
+        renderLowVisionCard();
+    }
+
+    function lowVisionPrev() {
+        if (!lowVisionItems.length) return;
+        lowVisionIndex = (lowVisionIndex - 1 + lowVisionItems.length) % lowVisionItems.length;
+        renderLowVisionCard();
+    }
+
+    async function addCurrentLowVisionItem() {
+        const item = currentLowVisionItem();
+        if (!item) return;
+        await addCartSilent(item.id, item.name, item.price);
+        updateVoiceModeUI('cart', `${item.name} 已放入清单`);
+        speakWithBrowserTTS(`${item.name}已放进清单。需要提交时请说让孩子看看。`);
+    }
+
+    function updateVoiceModeUI(step, feedback) {
+        voiceModeStep = step;
+        const stepLabels = {
+            browse: '选购',
+            cart: '查看购物车',
+            checkout_confirm: '等待确认提交',
+            done: '已完成'
+        };
+        const stepEl = document.getElementById('voiceModeStep');
+        const feedbackEl = document.getElementById('voiceModeFeedback');
+        const hintsEl = document.getElementById('voiceModeHints');
+        if (stepEl) stepEl.textContent = '当前步骤：' + (stepLabels[step] || step);
+        if (feedbackEl && feedback) feedbackEl.textContent = feedback;
+        if (hintsEl) hintsEl.textContent = VOICE_MODE_HINTS[step] || VOICE_MODE_HINTS.browse;
+    }
+
+    async function initiateVoiceCheckout() {
+        if (!currentUser) {
+            speakWithBrowserTTS('请先登录');
+            return;
+        }
+        try {
+            const cartRes = await fetch(`${API}/api/cart/${currentUser.userId}`);
+            const items = await cartRes.json();
+            if (items.length === 0) {
+                updateVoiceModeUI('browse', '购物车是空的，先加些东西吧');
+                speakWithBrowserTTS('购物车是空的，先加些东西吧。您可以说：我要买什么');
+                return;
+            }
+            const total = items.reduce((sum, item) => sum + item.price, 0);
+            const names = items.map(i => i.name).join('、');
+            const safety = analyzeCartSafety(items, total);
+            const riskText = safety.triggered ? `小伴提醒：${safety.reasons.join('，')}，会请家人重点确认。` : '未发现明显风险。';
+            awaitingCheckoutConfirm = true;
+            const msg = `您选了${items.length}件：${names}，合计${total.toFixed(1)}元。${riskText}请说确认提交来交给家人付款，或说取消放弃`;
+            updateVoiceModeUI('checkout_confirm', `合计 ¥${total.toFixed(1)}，请说「确认提交」`);
+            speakWithBrowserTTS(msg);
+        } catch (e) {
+            speakWithBrowserTTS('网络错误，请稍后再试');
+        }
+    }
+
+    // ============ 读给我听 ============
+    async function readCurrentPageAloud() {
+        const activePage = document.querySelector('.page.active');
+        if (!activePage) return;
+        const pageId = activePage.id;
+        let text = '';
+
+        if (pageId === 'page1') {
+            text = 'Companion Cart 首页。小伴在听，您可以直接说想买什么，也可以进入低视力语音模式。药品、保健品或大额订单会请家人确认付款。';
+        } else if (pageId === 'page2') {
+            const count = document.querySelectorAll('#foodList .goods-item').length;
+            text = `食品饮料页面，共有${count}件东西。您可以说我要买什么，或返回首页。`;
+        } else if (pageId === 'page3') {
+            const count = document.querySelectorAll('#dailyList .goods-item').length;
+            text = `日用品页面，共有${count}件东西。`;
+        } else if (pageId === 'page4') {
+            const count = document.querySelectorAll('#medicineList .goods-item').length;
+            text = `药品保健页面，共有${count}件东西。`;
+        } else if (pageId === 'page5') {
+            const recCount = document.querySelectorAll('#recommendList .recommend-item').length;
+            const allCount = document.querySelectorAll('#allList .goods-item').length;
+            text = `随便看看页面。猜您喜欢有${recCount}件推荐，全部东西共${allCount}件。`;
+        } else if (pageId === 'page6') {
+            if (cartItems.length === 0) {
+                text = '我选好的清单页面。清单是空的。';
+            } else {
+                const itemsText = cartItems.map(i => `${i.name}，${i.price.toFixed(1)}元`).join('；');
+                const total = cartItems.reduce((s, i) => s + i.price, 0);
+                text = `我选好的清单。共${cartItems.length}件：${itemsText}。合计${total.toFixed(1)}元。提交前小伴会朗读金额和风险，再交给家人确认付款。`;
+            }
+        } else if (pageId === 'page8') {
+            const countEl = document.getElementById('searchResultCount');
+            const countText = countEl ? countEl.textContent : '';
+            text = countText ? `找找结果。${countText}` : '找找结果页面。';
+        } else if (pageId === 'page9') {
+            const cards = document.querySelectorAll('#myOrdersList .order-card');
+            if (cards.length === 0) {
+                text = '我买的东西页面。暂无订单。';
+            } else {
+                const summaries = [];
+                cards.forEach(card => {
+                    const status = card.querySelector('.order-status');
+                    const total = card.querySelector('.order-total');
+                    summaries.push(`${status ? status.textContent : ''}，${total ? total.textContent : ''}`);
+                });
+                text = `我买的东西。共${cards.length}笔订单。${summaries.join('。')}`;
+            }
+        } else if (pageId === 'page10') {
+            const nameEl = document.querySelector('#detailContainer .detail-name');
+            const priceEl = document.querySelector('#detailContainer .detail-price');
+            const descEl = document.querySelector('#detailContainer .detail-desc');
+            if (nameEl) {
+                text = `${nameEl.textContent}。价格${priceEl ? priceEl.textContent : ''}。${descEl ? descEl.textContent.replace(/\s+/g, '') : ''}`;
+            } else {
+                text = '商品详情页面。';
+            }
+        } else if (pageId === 'page7') {
+            const pending = document.querySelectorAll('#pendingOrdersList .order-card').length;
+            const paid = document.querySelectorAll('#paidOrdersList .order-card').length;
+            text = `家庭守护台。待确认${pending}笔，已帮家人付好的${paid}笔。请先查看风险解释，再确认付款。`;
+        }
+
+        if (text) speakText(text);
+    }
+
     // 显示麦克风指示器
     function showMicIndicator(state) {
         const indicator = document.getElementById('wakeMicIndicator');
@@ -2490,6 +3375,55 @@
         const t = text.toLowerCase().replace(/[，。！？、]/g, '');
         console.log('🎯 语音命令:', t);
 
+        // --- 结算确认（语音模式安全门槛）---
+        if (awaitingCheckoutConfirm) {
+            if (t.includes('取消') || t.includes('不要') || t.includes('放弃')) {
+                awaitingCheckoutConfirm = false;
+                updateVoiceModeUI('browse', '已取消提交');
+                speakWithBrowserTTS('好的，已取消。您可以说：看看购物车');
+                return true;
+            }
+            if (t.includes('确认提交') || t.includes('确认') || t.includes('好的提交') || t.includes('提交吧') || t.includes('好的付')) {
+                awaitingCheckoutConfirm = false;
+                await requestSafeCheckout({ source: 'voice', skipConfirm: true });
+                return true;
+            }
+            speakWithBrowserTTS('请说确认提交来完成下单，或说取消放弃');
+            updateVoiceModeUI('checkout_confirm', '请说「确认提交」或「取消」');
+            return true;
+        }
+
+        // --- 低视力/盲人模式命令 ---
+        if (assistiveModeEnabled) {
+            if (t.includes('下一个') || t.includes('下一件') || t.includes('换一个')) {
+                lowVisionNext();
+                return true;
+            }
+            if (t.includes('上一个') || t.includes('上一件')) {
+                lowVisionPrev();
+                return true;
+            }
+            if (t.includes('读一遍') || t.includes('再读') || t.includes('重复')) {
+                readCurrentLowVisionItem();
+                return true;
+            }
+            if (t.includes('放进清单') || t.includes('加入清单') || t.includes('选这个') || t.includes('选第一个')) {
+                await addCurrentLowVisionItem();
+                return true;
+            }
+            if (t.includes('让孩子看看') || t.includes('让女儿确认') || t.includes('让儿子确认') || t.includes('让家人确认') || t.includes('确认付款')) {
+                await initiateVoiceCheckout();
+                return true;
+            }
+            if (t.includes('想买') || t.includes('帮我找') || t.includes('找')) {
+                const keyword = t.replace(/小伴|我想买|想买|帮我找|找一下|找|买/g, '').trim();
+                if (keyword) {
+                    await loadLowVisionItems(keyword);
+                    return true;
+                }
+            }
+        }
+
         // --- 导航命令 ---
         if (t.includes('食品饮料') || t.includes('看看食品') || t.includes('看看饮料') || t.includes('买吃的') || t.includes('买喝的')) {
             showVoiceCommandToast('🍎 正在打开食品饮料...');
@@ -2519,6 +3453,7 @@
             showVoiceCommandToast('🛒 正在打开购物车...');
             speakWithBrowserTTS('好的，正在打开购物车');
             go(6);
+            if (voiceModeEnabled) updateVoiceModeUI('cart', '购物车已打开');
             return true;
         }
         if (t.includes('我的订单') || t.includes('看看订单') || t.includes('我买的东西')) {
@@ -2550,6 +3485,7 @@
                         await addCartSilent(g.id, g.name, g.price);
                         showVoiceCommandToast(`✅ ${g.name} 已加入购物车`);
                         speakWithBrowserTTS(`${g.name}已经加入购物车了`);
+                        if (voiceModeEnabled) updateVoiceModeUI('browse', `${g.name} 已加入购物车`);
                     } else {
                         showVoiceCommandToast(`❌ 没有找到"${productName}"`);
                         speakWithBrowserTTS(`抱歉，没有找到${productName}`);
@@ -2587,9 +3523,7 @@
         // --- 结算命令 ---
         if (t.includes('结算') || t.includes('去结算') || t.includes('下单') || t.includes('付款') || t.includes('付钱') || t.includes('提交订单')) {
             showVoiceCommandToast('💰 正在结算...');
-            speakWithBrowserTTS('好的，正在为您结算');
-            // 自动执行结算
-            await paySilent();
+            await initiateVoiceCheckout();
             return true;
         }
 
@@ -2621,41 +3555,9 @@
         }
     }
 
-    // 静默结算（不弹confirm）
+    // 兼容旧入口：不再静默绕过，统一进入安全确认。
     async function paySilent() {
-        if (!currentUser) {
-            speakWithBrowserTTS('请先登录');
-            return;
-        }
-        try {
-            const cartRes = await fetch(`${API}/api/cart/${currentUser.userId}`);
-            const items = await cartRes.json();
-            if (items.length === 0) {
-                speakWithBrowserTTS('购物车是空的，先加些东西吧');
-                return;
-            }
-            const total = items.reduce((sum, item) => sum + item.price, 0);
-            const res = await fetch(`${API}/api/orders`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    userId: currentUser.userId,
-                    items,
-                    total
-                })
-            });
-            const data = await res.json();
-            if (res.ok) {
-                showVoiceCommandToast('✅ 要买的东西已提交，等待子女帮忙付钱');
-                speakWithBrowserTTS(`要买的东西已提交，合计${total.toFixed(1)}元，等待子女帮忙付钱`);
-                cartItems = [];
-                go(1);
-            } else {
-                speakWithBrowserTTS('提交失败，请稍后再试');
-            }
-        } catch (e) {
-            speakWithBrowserTTS('网络错误，请稍后再试');
-        }
+        return requestSafeCheckout({ source: voiceModeEnabled ? 'voice' : 'ai' });
     }
 
     // 检测浏览器是否支持语音识别
@@ -3113,7 +4015,7 @@
         const messagesDiv = document.getElementById('aiChatMessages');
         if (messagesDiv.lastChild) messagesDiv.lastChild.remove();
 
-        const welcomeText = '叔叔阿姨好呀！我是您的购物助手小伴😊。咱们这里有16种食品饮料、14种日用品、10种药品保健，都是适合您的宝贝！您随时可以问我："推荐适合老人的零食"、"帮我找降压药"、"牛奶多少钱"或者"看看购物车"。有啥需要尽管说，小伴帮您挑最合适的！';
+        const welcomeText = '叔叔阿姨好，我是 Companion Cart 的购物助手小伴。您可以直接说想买什么，我会帮您找、读给您听，并提醒药品、保健品或金额较高的风险。需要付款时，我会把清单交给家人确认。您可以说：我想买血压计、读一遍、放进清单、让孩子看看。';
         addChatMessage('bot', welcomeText);
         aiChatHistory.push({ role: 'bot', content: welcomeText });
         // 自动语音播报
@@ -3247,6 +4149,9 @@
         } else {
             document.getElementById('name').textContent = currentUser.name || '';
             showPage('page1');
+            if (localStorage.getItem('seniorshop_voice_mode') === '1') {
+                enterVoiceMode(true);
+            }
         }
     }
     // 未登录：默认显示身份选择页面（pageRoleSelect 已在 HTML 中设为 active）

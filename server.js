@@ -457,7 +457,7 @@ app.post('/api/ai-advice', async (req, res) => {
     }
 
     let prompt = '';
-    let systemPrompt = `你是一位亲切温暖的AI购物导购助手，专门帮助老年用户在线购物。
+    let systemPrompt = `你是 Companion Cart 的AI协同购物助手“小伴”，专门帮助老年人与视障/低视力用户通过说话完成安全购物。
 
 【商店完整商品目录】
 ${fullGoodsCatalog}
@@ -467,7 +467,7 @@ ${cartInfo}
 ${historyText}
 
 【回答规则】
-1. 语气亲切温暖，用短句，适合老年人阅读
+1. 语气亲切温暖，用短句，适合老年人和低视力用户听读
 2. 回答不超过200字
 3. 推荐商品时，必须使用以下格式标记商品名，方便用户点击：【商品名】
    例如：推荐您试试【纯牛奶 1L】，营养丰富
@@ -477,14 +477,15 @@ ${historyText}
 7. 如果问题与购物无关，友好地引导回购物话题
 8. 不要编造商品目录中没有的商品
 9. 如果用户说"我要买XX"或"帮我加XX"，确认已帮用户加入购物车，并推荐搭配商品
-10. 如果用户说"好呀"、"好的"、"行"等确认词，表示确认上文的加购操作`;
+10. 如果用户说"好呀"、"好的"、"行"等确认词，表示确认上文的加购操作
+11. 涉及药品、保健品、医疗器械或金额较高时，要说明会请家人一起确认付款，不要催促用户直接付款`;
 
     // 如果有检测到的动作，在system prompt中告知
     if (detectedAction && detectedAction.type === 'add_to_cart') {
         systemPrompt += `\n\n【重要提示】用户要求把【${detectedAction.goods.name}】加入购物车，你已经在回复中确认了。请在回复中确认已加入购物车，并推荐相关搭配商品（用【商品名】格式）。`;
     }
     if (detectedAction && detectedAction.type === 'checkout') {
-        systemPrompt += `\n\n【重要提示】用户要求结算，请确认订单信息并告知等待子女代付。`;
+        systemPrompt += `\n\n【重要提示】用户要求结算，请确认订单信息，说明会朗读清单和金额，并交给家人守护台审核付款。`;
     }
 
     // 根据不同场景构建 prompt
@@ -505,13 +506,13 @@ ${historyText}
         const dailyCount = goods.filter(g => g.category === 'daily').length;
         const medCount = goods.filter(g => g.category === 'medicine').length;
 
-        prompt = `请用亲切的语气打招呼，称呼用户为"叔叔阿姨"，介绍自己是"购物助手小伴"。
+        prompt = `请用亲切的语气打招呼，称呼用户为"叔叔阿姨"，介绍自己是"Companion Cart 的购物助手小伴"。
 简要介绍商店有${foodCount}种食品饮料、${dailyCount}种日用品、${medCount}种药品保健。
 告诉用户可以这样问你：
-- "推荐适合老人的零食"
-- "帮我找降压药"
+- "我想买血压计"
+- "读一遍"
 - "牛奶多少钱"
-- "看看购物车"
+- "让孩子看看"
 语气亲切温暖，像家人一样，不超过120字。`;
     }
 
@@ -648,7 +649,7 @@ app.delete('/api/cart/:userId/items/:itemId', (req, res) => {
 
 // --- 创建订单（含智能提醒：药品/大额消费） ---
 app.post('/api/orders', (req, res) => {
-    const { userId, items, total } = req.body;
+    const { userId, items, total, source, assistiveMode, voiceNote, safetyReasons } = req.body;
     if (!userId || !items || items.length === 0) {
         return res.status(400).json({ error: '订单信息不完整' });
     }
@@ -701,6 +702,10 @@ app.post('/api/orders', (req, res) => {
         payerId: null,
         createdAt: new Date().toISOString(),
         paidAt: null,
+        source: source || 'touch',
+        assistiveMode: assistiveMode || 'standard',
+        voiceNote: voiceNote || '',
+        safetyReasons: Array.isArray(safetyReasons) ? safetyReasons : [],
         smartReminder: smartReminder // 保存提醒信息到订单中
     };
     orders.push(order);

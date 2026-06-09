@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 280" font-family="Microsoft YaHei, sans-serif">
+  <rect width="480" height="280" fill="#FFF8F0"/>
+  <text x="240" y="26" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">����%	</text>
+  <rect x="75" y="60" width="300" height="36" fill="#eee" rx="6"/>
+  <rect x="75" y="60" width="300" height="36" fill="#4CAF50" rx="6"/>
+  <text x="390" y="83" font-size="13" fill="#333">T1 100%</text>
+  <text x="55" y="83" text-anchor="end" font-size="12">�{U</text>
+  <rect x="75" y="110" width="300" height="36" fill="#eee" rx="6"/>
+  <rect x="75" y="110" width="300" height="36" fill="#4CAF50" rx="6"/>
+  <text x="390" y="133" font-size="13" fill="#333">T2 100%</text>
+  <text x="55" y="133" text-anchor="end" font-size="12">�-[v</text>
+  <rect x="75" y="160" width="300" height="36" fill="#eee" rx="6"/>
+  <rect x="75" y="160" width="250" height="36" fill="#FF8C42" rx="6"/>
+  <text x="390" y="183" font-size="13" fill="#333">T3 83%�100%</text>
+  <text x="55" y="183" text-anchor="end" font-size="12">Ф��</text>
+  <rect x="75" y="210" width="300" height="36" fill="#eee" rx="6"/>
+  <rect x="75" y="210" width="300" height="36" fill="#4CAF50" rx="6"/>
+  <text x="390" y="233" font-size="13" fill="#333">T4 100%</text>
+  <text x="55" y="233" text-anchor="end" font-size="12">Ps.�</text>
+  <text x="240" y="265" text-anchor="middle" font-size="12" fill="#666">;S 91.7% � �� T3 � 100%</text>
+</svg>
