@@ -1663,46 +1663,36 @@
         </div>
     </div>
 
-    <!-- 页面1：老人端 Companion Cart 首页 -->
+    <!-- 页面1：老人端首页 -->
     <div id="page1" class="page">
         <div class="standard-shopping-area voice-mode-hide">
             <div class="user-info">您好，<span id="name"></span>！</div>
-            <div class="brand-kicker">Companion Cart · AI 协同购物助手</div>
-            <div class="companion-hero">
-                <div class="companion-status">● 小伴在听</div>
-                <div class="companion-title">您只管说想买什么，小伴帮您找，孩子帮您确认付款。</div>
-                <div class="companion-subtitle">适合看不清、点不准、不敢独自付款的购物场景。AI 会朗读商品、筛选风险，家人会看到订单原因后再帮忙付。</div>
-            </div>
-            <div class="companion-actions">
-                <button class="voice-mode-entry-btn" id="voiceModeEntryBtn" onclick="toggleVoiceMode()">🎤 说话购物：开启小伴</button>
-                <button class="assistive-entry-btn" onclick="enterAssistiveMode()">我看不清，语音帮我买</button>
-            </div>
-            <div class="task-status-strip" aria-label="购物任务状态">
-                <div class="task-status-step">正在帮您找</div>
-                <div class="task-status-step">已放入清单</div>
-                <div class="task-status-step">等孩子确认</div>
-                <div class="task-status-step">已付好</div>
-            </div>
-            <div class="home-safe-lanes" role="navigation" aria-label="主要购物分类">
-                <button class="home-lane-btn" onclick="go(2)" aria-label="找吃的，点击浏览食品饮料">找吃的</button>
-                <button class="home-lane-btn" onclick="go(3)" aria-label="找日用，点击浏览日用品">找日用</button>
-                <button class="home-lane-btn" onclick="go(4)" aria-label="找健康用品，点击浏览药品保健">找健康用品</button>
-            </div>
             <div class="search-bar">
-                <input type="text" class="search-input" id="searchInput" placeholder="也可以打字找东西" onkeydown="if(event.key==='Enter')search()">
-                <button class="search-btn" onclick="search()">找找</button>
+                <input type="text" class="search-input" id="searchInput" placeholder="搜索您想要的商品" onkeydown="if(event.key==='Enter')search()">
+                <button class="search-btn" onclick="search()">搜索</button>
             </div>
-            <div class="trust-points">
-                <div class="trust-point">小伴会读出商品、价格和用途，避免看错。</div>
-                <div class="trust-point">药品、保健品或大额订单会解释风险，再交给家人审核。</div>
+            <div class="title">您想买点什么？</div>
+            <div class="btn-group">
+                <button class="btn food" onclick="go(2)">
+                    <img src="images/food.png" alt="食品饮料"/>
+                    食品饮料
+                </button>
+                <button class="btn daily" onclick="go(3)">
+                    <img src="images/daily.png" alt="日用品"/>
+                    日用品
+                </button>
+                <button class="btn medicine" onclick="go(4)">
+                    <img src="images/medicine.png" alt="药品保健"/>
+                    药品保健
+                </button>
+                <button class="btn look" onclick="go(5)">
+                    <img src="images/browse.png" alt="随便看看"/>
+                    随便看看
+                </button>
             </div>
             <button class="btn cart" onclick="go(6)" style="width:100%;height:80px;font-size:22px;margin-top:14px;">
                 <img src="images/cart.png" alt="购物车"/>
-                我选好的清单
-            </button>
-            <button class="btn look" onclick="go(9)" style="width:100%;height:80px;font-size:22px;margin-top:14px;">
-                <img src="images/cart.png" alt="我买的东西"/>
-                我买的东西
+                我选好的东西
             </button>
             <button class="back" onclick="logout()" style="margin-top:24px;">退出登录</button>
         </div>
