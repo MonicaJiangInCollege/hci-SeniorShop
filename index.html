@@ -2384,6 +2384,7 @@
                 showPage('page1');
                 loadFavorites();
                 loadFrequentAndShow();
+                checkReturnedOrders();
             }
         } else if (num === 2) {
             currentCategory = 'food';
@@ -3561,27 +3562,71 @@ ${getGoodsCardHtml(g)}
                 const itemsHtml = order.items.map(item =>
                     `<div class="order-item-row">${item.name}  ￥${item.price.toFixed(1)}</div>`
                 ).join('');
-                const statusLabels = { pending: '等子女付款中...', paid: '已付款', shipped: '已发货 📦', delivered: '已送达 ✅', completed: '已完成' };
+
+                const statusLabels = {
+                    pending: '等子女付款中...',
+                    paid: '已付款',
+                    shipped: '已发货 📦',
+                    delivered: '已送达 ✅',
+                    completed: '已完成',
+                    returned: '已退回，请重新下单'
+                };
                 const isActive = order.status !== 'pending';
 
+                // 退回提示
+                const returnReasonHtml = order.status === 'returned'
+                    ? `<div style="background:#FFF3E0;color:#E65100;padding:6px;border-radius:8px;margin:8px 0;font-size:13px;">⚠️ 子女已退回此订单，请重新确认商品后再次提交。</div>`
+                    : '';
+
+                // 操作按钮
+                let actionButtons = '';
+                if (order.status === 'pending') {
+                    actionButtons = `<button class="pay-btn" onclick="selfPayOrder('${order.id}')" style="margin-top:8px;">自己付款</button>`;
+                } else if (order.status === 'returned') {
+                    actionButtons = `<button class="pay-btn" onclick="reorderFromReturned('${order.id}')" style="margin-top:8px;">重新下单</button>`;
+                }
+
                 container.innerHTML += `
-                    <div class="order-card" ${isActive ? `onclick="toggleOrderDetail('${order.id}')" style="cursor:pointer;"` : ''}>
-                        <div class="order-header">
-                            <span class="order-id">编号：${order.id}</span>
-                            <span class="order-status ${order.status}">${statusLabels[order.status] || order.status}</span>
-                        </div>
-                        <div class="order-items">${itemsHtml}</div>
-                        <div class="order-total">合计：¥${order.total.toFixed(1)}</div>
-                        <div style="font-size:12px;color:#999;text-align:right;">提交时间：${new Date(order.createdAt).toLocaleString('zh-CN')}</div>
-                        ${isActive ? `<div id="orderDetail_${order.id}" style="display:none;margin-top:8px;">${renderOrderProgress(order)}</div>` : ''}
+                <div class="order-card" ${isActive ? `onclick="toggleOrderDetail('${order.id}')" style="cursor:pointer;"` : ''}>
+                    <div class="order-header">
+                        <span class="order-id">编号：${order.id}</span>
+                        <span class="order-status ${order.status}">${statusLabels[order.status] || order.status}</span>
                     </div>
-                `;
+                    <div class="order-items">${itemsHtml}</div>
+                    ${returnReasonHtml}
+                    <div class="order-total">合计：¥${order.total.toFixed(1)}</div>
+                    <div style="font-size:12px;color:#999;text-align:right;">提交时间：${new Date(order.createdAt).toLocaleString('zh-CN')}</div>
+                    ${isActive ? `<div id="orderDetail_${order.id}" style="display:none;margin-top:8px;">${renderOrderProgress(order)}</div>` : ''}
+                    ${actionButtons}
+                </div>
+            `;
             });
         } catch (e) {
-            alert('加载失败');
+            alert('加载订单失败：' + e.message);
         }
     }
 
+    async function selfPayOrder(orderId) {
+        const ok = await accessibleConfirm('自己付款', '确定要自己支付这笔订单吗？付款后将无法退回。');
+        if (!ok) return;
+        try {
+            const res = await fetch(`${API}/api/orders/${orderId}/pay`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ payerId: currentUser.userId })
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                alert(data.error);
+                return;
+            }
+            alert('付款成功！');
+            loadMyOrders(); // 刷新订单列表
+        } catch (e) {
+            alert('网络错误');
+        }
+    }
+    
     async function childPayOrder(orderId) {
         const ok = await accessibleConfirm('确认帮家人付款', '已核对商品、金额和风险说明，确认帮家人付款吗？');
         if (!ok) return;
@@ -3595,13 +3640,69 @@ ${getGoodsCardHtml(g)}
             if (!res.ok) { alert(data.error); return; }
             alert('付钱成功！🎉');
             loadPendingOrders();
+            showChildTab('paid');
         } catch (e) {
             alert('网络错误');
         }
     }
 
-    function suggestOrderChange(orderId) {
-        alert(`已记录退回建议：${orderId}\n演示中可口头说明：子女建议老人再确认商品或换一个更合适的选择。`);
+    async function suggestOrderChange(orderId) {
+        const ok = await accessibleConfirm('退回订单', '确定要退回这笔订单，让家人重新确认吗？退回后订单将从待确认列表移除，老人将收到提示。');
+        if (!ok) return;
+        try {
+            const res = await fetch(`${API}/api/orders/${orderId}/return`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ childUserId: currentUser.userId })
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                alert(data.error);
+                return;
+            }
+            alert('已退回，老人将收到提示。');
+            loadPendingOrders();  // 刷新待确认列表，退回的订单消失
+        } catch (e) {
+            alert('网络错误');
+        }
+    }
+
+    async function reorderFromReturned(orderId) {
+        // 获取所有订单
+        const res = await fetch(`${API}/api/orders/${currentUser.userId}`);
+        const orders = await res.json();
+        const order = orders.find(o => o.id === orderId);
+        if (!order) return;
+        // 将订单中的每个商品重新加入购物车
+        for (const item of order.items) {
+            await addCartSilent(item.goodsId, item.name, item.price);
+        }
+        alert('已将商品重新加入购物车，请前往结算并重新提交。');
+        loadMyOrders(); // 刷新订单列表（该退回订单仍然存在，用户可忽略或后续删除）
+    }
+
+    async function checkReturnedOrders() {
+        if (!currentUser || currentUser.relation !== 'elder') return;
+        const res = await fetch(`${API}/api/orders/${currentUser.userId}`);
+        const orders = await res.json();
+        const returnedOrders = orders.filter(o => o.status === 'returned');
+        const banner = document.getElementById('returnedOrderBanner');
+        if (returnedOrders.length > 0) {
+            if (!banner) {
+                const newBanner = document.createElement('div');
+                newBanner.id = 'returnedOrderBanner';
+                newBanner.style.cssText = 'background:#FF8C42;color:white;padding:10px;text-align:center;margin:10px 0;border-radius:12px;cursor:pointer;';
+                const container = document.querySelector('#page1 .standard-shopping-area');
+                if (container) container.prepend(newBanner);
+                newBanner.onclick = () => go(9);
+            }
+            const currentBanner = document.getElementById('returnedOrderBanner');
+            if (currentBanner) {
+                currentBanner.innerHTML = `⚠️ 您有${returnedOrders.length}个订单被子女退回，请点击查看并重新下单。`;
+            }
+        } else {
+            if (banner) banner.remove();
+        }
     }
 
 
