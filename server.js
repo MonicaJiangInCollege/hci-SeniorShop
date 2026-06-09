@@ -952,8 +952,52 @@ app.post('/api/speech/tts', (req, res) => {
 });
 
 // ============ 启动服务器 ============
+const os = require('os');
+
+function getLocalIP() {
+    const interfaces = os.networkInterfaces();
+    // 优先匹配常见局域网段（含运营商级 NAT 100.64.0.0/10）
+    const privatePattern = /^(192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[01])\.|100\.(6[4-9]|[7-9]\d|1[0-1]\d|12[0-7])\.)/;
+    
+    // 第一优先级：WLAN/无线局域网适配器（手机热点场景）
+    for (const name of Object.keys(interfaces)) {
+        if (/无线|WLAN|Wi-Fi/i.test(name)) {
+            for (const iface of interfaces[name]) {
+                if (iface.family === 'IPv4' && !iface.internal) {
+                    return iface.address;
+                }
+            }
+        }
+    }
+    
+    // 第二优先级：以太网/Wired 适配器
+    for (const name of Object.keys(interfaces)) {
+        if (/以太|Ethernet/i.test(name)) {
+            for (const iface of interfaces[name]) {
+                if (iface.family === 'IPv4' && !iface.internal && privatePattern.test(iface.address)) {
+                    return iface.address;
+                }
+            }
+        }
+    }
+    
+    // 兜底：任意非内网 IPv4
+    for (const name of Object.keys(interfaces)) {
+        for (const iface of interfaces[name]) {
+            if (iface.family === 'IPv4' && !iface.internal) {
+                return iface.address;
+            }
+        }
+    }
+    
+    return 'localhost';
+}
+
+const LOCAL_IP = getLocalIP();
+
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`服务器运行在 http://localhost:${PORT}`);
-    console.log(`局域网访问: http://100.81.72.22:${PORT}`);
+    console.log(`局域网访问: http://${LOCAL_IP}:${PORT}`);
     console.log('数据文件存储在 ./data/ 目录');
+    console.log('提示：手机请在同一局域网下，浏览器打开 http://' + LOCAL_IP + ':' + PORT);
 });

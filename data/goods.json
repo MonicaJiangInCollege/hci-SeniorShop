@@ -8,6 +8,8 @@
     "description": "新鲜优质牛奶",
     "detailDesc": "源自优质牧场，经过高温杀菌处理，奶香浓郁，口感醇厚。每100ml含3.2g优质乳蛋白，钙含量丰富，适合老年人日常饮用补充营养。1升大容量装，满足全家需求。",
     "emoji": "🥛",
+    "image": "images/pure_milk.jpg",
+    "imageAlt": "纯牛奶产品图：新鲜优质牛奶，奶香浓郁",
     "tags": ["饮品", "营养"],
     "elderlyFriendly": true
   },
@@ -20,6 +22,8 @@
     "description": "低脂健康，适合控脂老人",
     "detailDesc": "采用先进脱脂工艺，去除脂肪保留营养。每100ml仅含0.5g脂肪，热量降低30%，但蛋白质和钙含量不变。适合需要控制脂肪摄入的中老年人，血脂偏高者首选。口感清爽不腻，1升装方便储存。",
     "emoji": "🥛",
+    "image": "images/full_fat_milk.jpg",
+    "imageAlt": "全脂牛奶产品图：低脂健康牛奶，适合控脂老人",
     "tags": ["饮品", "低脂", "健康"],
     "elderlyFriendly": true
   },
@@ -288,6 +292,33 @@
     "elderlyFriendly": false
   },
   {
+    "id": 28,
+    "name": "肩颈按摩器",
+    "price": 168.0,
+    "category": "medicine",
+    "subcategory": "医疗器械",
+    "description": "多档力度热敷按摩，缓解酸痛",
+    "detailDesc": "智能揉捏按摩头模拟人手推拿手法，多档力度可调满足不同需求。内置恒温加热片，按摩同时热敷放松肌肉，缓解肩颈僵硬酸痛。U型环抱设计贴合颈部，一键开关操作简单，老人也能轻松使用。",
+    "image": "images/massager.jpg",
+    "imageAlt": "SKG肩颈按摩仪，一键启动、操作易懂。温和按摩加暖心热敷，力度轻柔不刺激，久坐、劳作后使用，舒缓全身疲惫",
+    "tags": ["老年用品", "按摩", "保健"],
+    "elderlyFriendly": true
+  },
+  {
+    "id": 29,
+    "name": "电子血压计",
+    "price": 138.0,
+    "category": "medicine",
+    "subcategory": "医疗器械",
+    "description": "一键测量，大字液晶显示",
+    "detailDesc": "上臂式测量更准确，一键启动全自动测量，操作极其简单。大屏液晶字体清晰，血压和心率同步显示，结果语音播报（可开关）。可存储60组测量数据，方便追踪血压变化趋势，是高血压老人的居家必备好物。",
+    "emoji": "🩺",
+    "image": "images/blood_pressure_monitor.jpg",
+    "imageAlt": "奥克斯牌进口血压仪，操作简单无需复杂设置。全程语音提示，屏幕字体宽大，视力不佳也能轻松使用，居家自测血压更安心",
+    "tags": ["老年用品", "医疗", "检测"],
+    "elderlyFriendly": true
+  },
+  {
     "id": 5,
     "name": "维生素片",
     "price": 45.0,
@@ -417,30 +448,6 @@
     "detailDesc": "四脚底座设计加大支撑面积，比单脚拐杖更稳更安全，不易侧翻。铝合金杆身轻便坚固，高度可调节范围73-96cm，适合不同身高。防滑橡胶脚垫，室内外均可使用，给老人出行多一份安心。",
     "emoji": "🦯",
     "tags": ["老年用品", "助行"],
-    "elderlyFriendly": true
-  },
-  {
-    "id": 28,
-    "name": "肩颈按摩器",
-    "price": 168.0,
-    "category": "medicine",
-    "subcategory": "医疗器械",
-    "description": "多档力度热敷按摩，缓解酸痛",
-    "detailDesc": "智能揉捏按摩头模拟人手推拿手法，多档力度可调满足不同需求。内置恒温加热片，按摩同时热敷放松肌肉，缓解肩颈僵硬酸痛。U型环抱设计贴合颈部，一键开关操作简单，老人也能轻松使用。",
-    "emoji": "💆",
-    "tags": ["老年用品", "按摩", "保健"],
-    "elderlyFriendly": true
-  },
-  {
-    "id": 29,
-    "name": "电子血压计",
-    "price": 138.0,
-    "category": "medicine",
-    "subcategory": "医疗器械",
-    "description": "一键测量，大字液晶显示",
-    "detailDesc": "上臂式测量更准确，一键启动全自动测量，操作极其简单。大屏液晶字体清晰，血压和心率同步显示，结果语音播报（可开关）。可存储60组测量数据，方便追踪血压变化趋势，是高血压老人的居家必备好物。",
-    "emoji": "🩺",
-    "tags": ["老年用品", "医疗", "检测"],
     "elderlyFriendly": true
   },
   {

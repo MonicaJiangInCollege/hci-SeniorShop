@@ -1591,6 +1591,106 @@
         body.voice-mode-active {
             padding-bottom: 220px;
         }
+
+        /* ===== 屏幕阅读器可见但视觉隐藏的类 ===== */
+        .sr-only {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
+        }
+
+        /* ===== 无障碍确认弹窗 ===== */
+        .a11y-dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 5000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .a11y-dialog-overlay.active {
+            display: flex;
+        }
+
+        .a11y-dialog {
+            background: #FFFDF9;
+            border-radius: 20px;
+            padding: 24px 20px;
+            max-width: 400px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+            animation: dialogPopIn 0.2s ease-out;
+        }
+
+        @keyframes dialogPopIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .a11y-dialog-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #222;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .a11y-dialog-body {
+            font-size: 18px;
+            color: #333;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            white-space: pre-line;
+        }
+
+        .a11y-dialog-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .a11y-dialog-btn {
+            min-height: 52px;
+            padding: 0 28px;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .a11y-dialog-btn.cancel {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .a11y-dialog-btn.cancel:hover {
+            background: #e0e0e0;
+        }
+
+        .a11y-dialog-btn.confirm {
+            background: #FF8C42;
+            color: white;
+        }
+
+        .a11y-dialog-btn.confirm:hover {
+            background: #F57C00;
+        }
     </style>
 </head>
 
@@ -1675,24 +1775,24 @@
             <div class="title">您想买点什么？</div>
             <div class="btn-group">
                 <button class="btn food" onclick="go(2)">
-                    <img src="images/food.png" alt="食品饮料"/>
+                    <img src="images/food.png" alt="" role="presentation"/>
                     食品饮料
                 </button>
                 <button class="btn daily" onclick="go(3)">
-                    <img src="images/daily.png" alt="日用品"/>
+                    <img src="images/daily.png" alt="" role="presentation"/>
                     日用品
                 </button>
                 <button class="btn medicine" onclick="go(4)">
-                    <img src="images/medicine.png" alt="药品保健"/>
+                    <img src="images/medicine.png" alt="" role="presentation"/>
                     药品保健
                 </button>
                 <button class="btn look" onclick="go(5)">
-                    <img src="images/browse.png" alt="随便看看"/>
+                    <img src="images/browse.png" alt="" role="presentation"/>
                     随便看看
                 </button>
             </div>
             <button class="btn cart" onclick="go(6)" style="width:100%;height:80px;font-size:22px;margin-top:14px;">
-                <img src="images/cart.png" alt="购物车"/>
+                <img src="images/cart.png" alt="" role="presentation"/>
                 我选好的东西
             </button>
             <button class="back" onclick="logout()" style="margin-top:24px;">退出登录</button>
@@ -1702,7 +1802,7 @@
             <div class="low-vision-card" id="lowVisionCard">
                 <div class="low-vision-name">正在准备语音购物</div>
                 <div class="low-vision-price">请稍候</div>
-                <div class="low-vision-desc">您可以说“买血压计”，也可以点下面的大按钮。</div>
+                <div class="low-vision-desc">您可以说"买血压计"，也可以点下面的大按钮。</div>
             </div>
             <div class="low-vision-controls">
                 <button onclick="lowVisionPrev()">上一个</button>
@@ -1852,6 +1952,18 @@
         <button class="voice-mode-exit-btn" onclick="exitVoiceMode()">退出小伴语音</button>
     </div>
 
+    <!-- ===== 无障碍确认弹窗 ===== -->
+    <div class="a11y-dialog-overlay" id="a11yDialogOverlay">
+        <div class="a11y-dialog" role="dialog" aria-modal="true" aria-labelledby="a11yDialogTitle">
+            <div class="a11y-dialog-title" id="a11yDialogTitle"></div>
+            <div class="a11y-dialog-body" id="a11yDialogBody"></div>
+            <div class="a11y-dialog-actions">
+                <button class="a11y-dialog-btn cancel" id="a11yDialogCancel" onclick="accessibleDialogCancel()">取消</button>
+                <button class="a11y-dialog-btn confirm" id="a11yDialogConfirm" onclick="accessibleDialogConfirm()">确认</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ===== AI 聊天弹窗 ===== -->
     <div class="ai-chat-overlay" id="aiChatOverlay">
         <div class="ai-chat-box">
@@ -1893,6 +2005,69 @@
     let assistiveModeEnabled = false;
     let lowVisionItems = [];
     let lowVisionIndex = 0;
+
+    // ============ 无障碍确认弹窗 ============
+    let accessibleDialogResolve = null;
+    let accessibleDialogTriggerBtn = null; // 保存触发按钮引用，用于恢复焦点
+
+    // 打开无障碍确认弹窗（返回 Promise）
+    function accessibleConfirm(title, message) {
+        return new Promise((resolve) => {
+            accessibleDialogResolve = resolve;
+            const overlay = document.getElementById('a11yDialogOverlay');
+            const titleEl = document.getElementById('a11yDialogTitle');
+            const bodyEl = document.getElementById('a11yDialogBody');
+            const confirmBtn = document.getElementById('a11yDialogConfirm');
+            const cancelBtn = document.getElementById('a11yDialogCancel');
+
+            titleEl.textContent = title;
+            bodyEl.textContent = message;
+            overlay.classList.add('active');
+
+            // 焦点管理：将焦点移到确认按钮
+            setTimeout(() => {
+                confirmBtn.focus();
+            }, 100);
+
+            // 朗读内容（辅助 VoiceOver 用户）
+            speakWithBrowserTTS(title + '。' + message);
+        });
+    }
+
+    function accessibleDialogConfirm() {
+        const overlay = document.getElementById('a11yDialogOverlay');
+        overlay.classList.remove('active');
+        if (accessibleDialogResolve) {
+            accessibleDialogResolve(true);
+            accessibleDialogResolve = null;
+        }
+        // 恢复焦点到触发按钮
+        if (accessibleDialogTriggerBtn) {
+            accessibleDialogTriggerBtn.focus();
+            accessibleDialogTriggerBtn = null;
+        }
+    }
+
+    function accessibleDialogCancel() {
+        const overlay = document.getElementById('a11yDialogOverlay');
+        overlay.classList.remove('active');
+        if (accessibleDialogResolve) {
+            accessibleDialogResolve(false);
+            accessibleDialogResolve = null;
+        }
+        // 恢复焦点到触发按钮
+        if (accessibleDialogTriggerBtn) {
+            accessibleDialogTriggerBtn.focus();
+            accessibleDialogTriggerBtn = null;
+        }
+    }
+
+    // 点击遮罩关闭（视为取消）
+    document.addEventListener('click', function(e) {
+        if (e.target.id === 'a11yDialogOverlay') {
+            accessibleDialogCancel();
+        }
+    });
 
     // ============ 页面切换 ============
     const AI_PAGES = ['page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page8', 'page9', 'page10']; // 显示AI按钮的页面
@@ -2378,14 +2553,15 @@
 
     // ============ 东西 ============
     function getEmojiHtml(g, cssClass) {
-        // 用 emoji 代替图片，图文对应
+        // 优先使用真实图片（有 image 字段时显示 <img>，配合 alt 提供无障碍描述）
+        // 没有真实图片时使用 emoji，并设 aria-hidden="true" 避免旁白朗读 Unicode 含义
+        const imageAlt = g.imageAlt || g.description || g.name;
+        if (g.image) {
+            return `<img src="${g.image}" alt="${imageAlt}" class="${cssClass}" onerror="this.style.display='none'"/>`;
+        }
         if (g.emoji) {
             const catClass = 'emoji-' + (g.category || 'food');
-            return `<div class="${cssClass} ${catClass}">${g.emoji}</div>`;
-        }
-        // 无 emoji 时使用原图片
-        if (g.image) {
-            return `<img src="${g.image}" alt="${g.name}" class="${cssClass}" onerror="this.style.display='none'"/>`;
+            return `<div class="${cssClass} ${catClass}" aria-hidden="true">${g.emoji}</div><span class="sr-only">${imageAlt}</span>`;
         }
         return '';
     }
@@ -2447,7 +2623,8 @@
     }
 
     async function addCart(goodsId, name, price) {
-        if (!confirm('确定要把 ' + name + ' 加入购物车吗？')) return;
+        const ok = await accessibleConfirm('加入购物车', '确定要把 ' + name + ' 加入购物车吗？');
+        if (!ok) return;
         if (!currentUser) { alert('请先登录'); return; }
         try {
             const res = await fetch(`${API}/api/cart/${currentUser.userId}/items`, {
@@ -2596,9 +2773,12 @@
             const safety = analyzeCartSafety(items, total);
             const message = buildCheckoutMessage(items, total, safety, source);
 
-            if (!options.skipConfirm && !confirm(message)) {
-                speakWithBrowserTTS('已取消提交');
-                return;
+            if (!options.skipConfirm) {
+                const ok = await accessibleConfirm('确认提交购物清单', message);
+                if (!ok) {
+                    speakWithBrowserTTS('已取消提交');
+                    return;
+                }
             }
 
             return submitSafeCheckout(items, { source });
@@ -2866,7 +3046,8 @@
     }
 
     async function childPayOrder(orderId) {
-        if (!confirm('已核对商品、金额和风险说明，确认帮家人付款吗？')) return;
+        const ok = await accessibleConfirm('确认帮家人付款', '已核对商品、金额和风险说明，确认帮家人付款吗？');
+        if (!ok) return;
         try {
             const res = await fetch(`${API}/api/orders/${orderId}/pay`, {
                 method: 'POST',
@@ -3949,6 +4130,7 @@
     }
 
     // 语音合成：先尝试百度 TTS，失败则降级浏览器 TTS
+    // Safari 限制：音频必须由用户手势直接触发，否则 play() 会被阻止
     async function speakText(text) {
         if (!text) return;
 
@@ -3956,7 +4138,7 @@
         const cleanText = stripEmojis(text);
         if (!cleanText) return;
 
-        // 先尝试百度 TTS（更自然的声音）
+        // 先尝试百度 TTS（更自然的声音，Safari 也支持 Audio）
         try {
             const res = await fetch(`${API}/api/speech/tts`, {
                 method: 'POST',
@@ -3971,19 +4153,85 @@
                     currentAudioElement.pause();
                 }
                 currentAudioElement = new Audio(audioUrl);
-                await currentAudioElement.play();
-                currentAudioElement.onended = () => {
+                try {
+                    await currentAudioElement.play();
+                    currentAudioElement.onended = () => {
+                        URL.revokeObjectURL(audioUrl);
+                        currentAudioElement = null;
+                    };
+                    currentAudioElement.onerror = () => {
+                        URL.revokeObjectURL(audioUrl);
+                        currentAudioElement = null;
+                        console.warn('音频播放失败');
+                    };
+                    return;
+                } catch (playError) {
+                    // Safari 自动播放被阻止
                     URL.revokeObjectURL(audioUrl);
                     currentAudioElement = null;
-                };
-                return;
+                    console.warn('Safari 阻止自动播放音频:', playError);
+                    showAudioBlockedHint();
+                    // 尝试浏览器 TTS（Safari 不支持，但其他浏览器可能支持）
+                    speakWithBrowserTTS(cleanText);
+                    return;
+                }
             }
         } catch (e) {
             console.warn('百度 TTS 失败，降级浏览器 TTS:', e);
         }
 
-        // 降级：浏览器内置 TTS
+        // 降级：浏览器内置 TTS（Safari 不支持 speechSynthesis）
         speakWithBrowserTTS(cleanText);
+    }
+
+    // 显示音频被阻止的提示
+    let audioHintShown = false;
+    function showAudioBlockedHint() {
+        if (audioHintShown) return;
+        audioHintShown = true;
+
+        // 检查是否是 Safari
+        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+        let hint = '';
+        if (isSafari) {
+            hint = '🔇 Safari 限制了自动播放\n\n请点击页面任意位置后再试，或点击「读给我听」按钮来播放语音。';
+        } else {
+            hint = '🔇 浏览器限制了语音播放\n\n请点击页面任意位置后再试。';
+        }
+
+        // 显示提示（使用 toast 而非 alert，避免阻塞）
+        const toast = document.createElement('div');
+        toast.style.cssText = `
+            position: fixed; top: 60px; left: 50%; transform: translateX(-50%);
+            background: rgba(93,64,55,0.95); color: white; padding: 12px 24px;
+            border-radius: 16px; font-size: 15px; z-index: 9999;
+            text-align: center; max-width: 90%; line-height: 1.6;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+        `;
+        toast.textContent = hint;
+        document.body.appendChild(toast);
+
+        // 点击任意位置解除音频限制
+        const unlockHandler = () => {
+            document.removeEventListener('click', unlockHandler);
+            document.removeEventListener('touchstart', unlockHandler);
+            audioHintShown = false;
+            toast.style.transition = 'opacity 0.5s';
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 500);
+        };
+        setTimeout(() => {
+            document.addEventListener('click', unlockHandler, { once: true });
+            document.addEventListener('touchstart', unlockHandler, { once: true });
+        }, 100);
+
+        // 5秒后自动消失
+        setTimeout(() => {
+            toast.style.transition = 'opacity 0.5s';
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 500);
+        }, 5000);
     }
 
     // 浏览器内置 TTS
@@ -4171,8 +4419,18 @@
 
     // 启动语音唤起监听（后台持续监听"你好小伴"）
     // 延迟 1 秒启动，确保页面加载完成
+    // Safari (iOS) 不支持 Web Speech API，需要安全处理
     setTimeout(() => {
-        startWakeListening();
+        try {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (SpeechRecognition) {
+                startWakeListening();
+            } else {
+                console.log('浏览器不支持语音唤起，跳过');
+            }
+        } catch (e) {
+            console.warn('启动语音唤起失败:', e);
+        }
     }, 1000);
 </script>
 </html>

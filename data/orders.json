@@ -12,10 +12,10 @@
       }
     ],
     "total": 19.9,
-    "status": "pending",
-    "payerId": null,
+    "status": "paid",
+    "payerId": "1780901083778",
     "createdAt": "2026-06-08T06:05:21.734Z",
-    "paidAt": null
+    "paidAt": "2026-06-09T06:19:42.130Z"
   },
   {
     "id": "ORD1780924701995",
@@ -41,5 +41,111 @@
     "payerId": null,
     "createdAt": "2026-06-08T13:18:21.995Z",
     "paidAt": null
+  },
+  {
+    "id": "ORD1780985942647",
+    "userId": "1780560275301",
+    "items": [
+      {
+        "id": "1780985930209",
+        "goodsId": 29,
+        "name": "电子血压计",
+        "price": 138,
+        "addedAt": "2026-06-09T06:18:50.209Z"
+      }
+    ],
+    "total": 138,
+    "status": "paid",
+    "payerId": "1780901083778",
+    "createdAt": "2026-06-09T06:19:02.647Z",
+    "paidAt": "2026-06-09T06:20:04.004Z",
+    "source": "touch",
+    "assistiveMode": "standard",
+    "voiceNote": "",
+    "safetyReasons": [
+      "含健康/药品相关商品：电子血压计",
+      "金额较高：¥138.0"
+    ],
+    "smartReminder": {
+      "triggered": true,
+      "reasons": [
+        "药品1件：电子血压计",
+        "大额消费：¥138.0"
+      ],
+      "medicineCount": 1,
+      "isLargeAmount": true,
+      "total": 138,
+      "message": "药品1件：电子血压计，大额消费：¥138.0"
+    }
+  },
+  {
+    "id": "ORD1780987450285",
+    "userId": "1780560275301",
+    "items": [
+      {
+        "id": "1780987373418",
+        "goodsId": 28,
+        "name": "肩颈按摩器",
+        "price": 168,
+        "addedAt": "2026-06-09T06:42:53.418Z"
+      }
+    ],
+    "total": 168,
+    "status": "pending",
+    "payerId": null,
+    "createdAt": "2026-06-09T06:44:10.285Z",
+    "paidAt": null,
+    "source": "touch",
+    "assistiveMode": "standard",
+    "voiceNote": "",
+    "safetyReasons": [
+      "金额较高：¥168.0"
+    ],
+    "smartReminder": {
+      "triggered": true,
+      "reasons": [
+        "药品1件：肩颈按摩器",
+        "大额消费：¥168.0"
+      ],
+      "medicineCount": 1,
+      "isLargeAmount": true,
+      "total": 168,
+      "message": "药品1件：肩颈按摩器，大额消费：¥168.0"
+    }
+  },
+  {
+    "id": "ORD1780996694141",
+    "userId": "1780560275301",
+    "items": [
+      {
+        "id": "1780996661006",
+        "goodsId": 28,
+        "name": "肩颈按摩器",
+        "price": 168,
+        "addedAt": "2026-06-09T09:17:41.006Z"
+      }
+    ],
+    "total": 168,
+    "status": "pending",
+    "payerId": null,
+    "createdAt": "2026-06-09T09:18:14.141Z",
+    "paidAt": null,
+    "source": "touch",
+    "assistiveMode": "standard",
+    "voiceNote": "",
+    "safetyReasons": [
+      "金额较高：¥168.0"
+    ],
+    "smartReminder": {
+      "triggered": true,
+      "reasons": [
+        "药品1件：肩颈按摩器",
+        "大额消费：¥168.0"
+      ],
+      "medicineCount": 1,
+      "isLargeAmount": true,
+      "total": 168,
+      "message": "药品1件：肩颈按摩器，大额消费：¥168.0"
+    }
   }
 ]

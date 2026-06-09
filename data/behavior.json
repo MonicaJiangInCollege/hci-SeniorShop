@@ -75,9 +75,124 @@
       {
         "time": "2026-06-08T13:18:11.968Z",
         "category": "daily"
+      },
+      {
+        "time": "2026-06-09T06:17:40.184Z",
+        "category": "medicine"
+      },
+      {
+        "time": "2026-06-09T06:28:02.057Z",
+        "category": "medicine"
+      },
+      {
+        "time": "2026-06-09T06:42:47.471Z",
+        "category": "food"
+      },
+      {
+        "time": "2026-06-09T06:42:49.384Z",
+        "category": "medicine"
+      },
+      {
+        "time": "2026-06-09T07:10:46.451Z",
+        "category": "food"
+      },
+      {
+        "time": "2026-06-09T07:14:53.357Z",
+        "category": "food"
+      },
+      {
+        "time": "2026-06-09T07:31:55.261Z",
+        "category": "food"
+      },
+      {
+        "time": "2026-06-09T07:37:24.671Z",
+        "category": "food"
+      },
+      {
+        "time": "2026-06-09T07:37:39.653Z",
+        "category": "food"
+      },
+      {
+        "time": "2026-06-09T07:40:34.708Z",
+        "category": "medicine"
+      },
+      {
+        "time": "2026-06-09T07:47:21.130Z",
+        "category": "food"
+      },
+      {
+        "time": "2026-06-09T07:47:29.809Z",
+        "category": "medicine"
+      },
+      {
+        "time": "2026-06-09T07:57:37.801Z",
+        "category": "medicine"
+      },
+      {
+        "time": "2026-06-09T07:57:37.973Z",
+        "goodsId": 28,
+        "category": "medicine"
+      },
+      {
+        "time": "2026-06-09T07:58:38.289Z",
+        "category": "medicine"
+      },
+      {
+        "time": "2026-06-09T08:01:41.271Z",
+        "category": "medicine"
+      },
+      {
+        "time": "2026-06-09T08:01:46.075Z",
+        "category": "medicine"
+      },
+      {
+        "time": "2026-06-09T08:02:05.089Z",
+        "category": "medicine"
+      },
+      {
+        "time": "2026-06-09T08:04:12.448Z",
+        "category": "medicine"
+      },
+      {
+        "time": "2026-06-09T08:08:36.434Z",
+        "category": "medicine"
+      },
+      {
+        "time": "2026-06-09T08:14:33.036Z",
+        "category": "medicine"
+      },
+      {
+        "time": "2026-06-09T08:15:44.850Z",
+        "category": "medicine"
+      },
+      {
+        "time": "2026-06-09T08:28:59.109Z",
+        "category": "food"
+      },
+      {
+        "time": "2026-06-09T08:31:32.190Z",
+        "category": "food"
+      },
+      {
+        "time": "2026-06-09T08:31:35.392Z",
+        "category": "medicine"
+      },
+      {
+        "time": "2026-06-09T09:00:34.308Z",
+        "category": "food"
+      },
+      {
+        "time": "2026-06-09T09:12:49.665Z",
+        "category": "medicine"
+      },
+      {
+        "time": "2026-06-09T09:17:21.973Z",
+        "category": "medicine"
       }
     ],
-    "viewCounts": {}
+    "viewCounts": {
+      "28": 1
+    }
   },
   {
     "userId": "1780680040432",
