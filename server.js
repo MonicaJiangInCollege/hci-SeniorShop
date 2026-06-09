@@ -46,6 +46,9 @@ const GOODS_FILE = path.join(DATA_DIR, 'goods.json');
 const CARTS_FILE = path.join(DATA_DIR, 'carts.json');
 const ORDERS_FILE = path.join(DATA_DIR, 'orders.json');
 const BEHAVIOR_FILE = path.join(DATA_DIR, 'behavior.json');
+const ADDRESSES_FILE = path.join(DATA_DIR, 'addresses.json');
+const FAVORITES_FILE = path.join(DATA_DIR, 'favorites.json');
+const REVIEWS_FILE = path.join(DATA_DIR, 'reviews.json');
 
 // 确保 data 目录存在
 if (!fs.existsSync(DATA_DIR)) {
@@ -105,6 +108,9 @@ initDataFile(USERS_FILE, []);
 initDataFile(CARTS_FILE, []);
 initDataFile(ORDERS_FILE, []);
 initDataFile(BEHAVIOR_FILE, []);
+initDataFile(ADDRESSES_FILE, []);
+initDataFile(FAVORITES_FILE, []);
+initDataFile(REVIEWS_FILE, []);
 
 // ============ 推荐算法 ============
 
@@ -949,6 +955,152 @@ app.post('/api/speech/tts', (req, res) => {
             console.error('百度语音合成错误:', err);
             res.status(500).json({ error: '语音合成服务异常' });
         });
+});
+
+// --- 收货地址 ---
+app.get('/api/addresses/:userId', (req, res) => {
+    const addrs = JSON.parse(fs.readFileSync(ADDRESSES_FILE, 'utf8'));
+    res.json(addrs.filter(a => a.userId === req.params.userId));
+});
+
+app.post('/api/addresses/:userId', (req, res) => {
+    const { name, phone, province, city, district, detail } = req.body;
+    if (!name || !phone || !detail) {
+        return res.status(400).json({ error: '请填写完整的地址信息' });
+    }
+    let addrs = JSON.parse(fs.readFileSync(ADDRESSES_FILE, 'utf8'));
+    const isFirst = !addrs.some(a => a.userId === req.params.userId);
+    const addr = {
+        id: Date.now().toString(),
+        userId: req.params.userId,
+        name, phone, province: province || '', city: city || '', district: district || '', detail,
+        isDefault: isFirst,
+        createdAt: new Date().toISOString()
+    };
+    addrs.push(addr);
+    saveData(ADDRESSES_FILE, addrs);
+    res.json({ message: '地址已保存', addr });
+});
+
+app.delete('/api/addresses/:userId/:addrId', (req, res) => {
+    let addrs = JSON.parse(fs.readFileSync(ADDRESSES_FILE, 'utf8'));
+    addrs = addrs.filter(a => !(a.userId === req.params.userId && a.id === req.params.addrId));
+    saveData(ADDRESSES_FILE, addrs);
+    res.json({ message: '地址已删除' });
+});
+
+app.put('/api/addresses/:userId/:addrId/default', (req, res) => {
+    let addrs = JSON.parse(fs.readFileSync(ADDRESSES_FILE, 'utf8'));
+    addrs.forEach(a => {
+        if (a.userId === req.params.userId) a.isDefault = (a.id === req.params.addrId);
+    });
+    saveData(ADDRESSES_FILE, addrs);
+    res.json({ message: '默认地址已更新' });
+});
+
+// --- 常购清单 ---
+app.get('/api/frequent/:userId', (req, res) => {
+    const orders = JSON.parse(fs.readFileSync(ORDERS_FILE, 'utf8'));
+    const goods = JSON.parse(fs.readFileSync(GOODS_FILE, 'utf8'));
+    const userOrders = orders.filter(o => o.userId === req.params.userId && o.status !== 'pending');
+    // 统计商品出现次数
+    const countMap = {};
+    userOrders.forEach(o => {
+        o.items.forEach(item => {
+            countMap[item.goodsId] = (countMap[item.goodsId] || 0) + 1;
+        });
+    });
+    // 按出现次数排序，取 top 6
+    const sorted = Object.entries(countMap)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 6)
+        .map(([goodsId]) => {
+            const g = goods.find(p => p.id === parseInt(goodsId));
+            return g || null;
+        })
+        .filter(Boolean);
+    res.json(sorted);
+});
+
+// --- 收藏夹 ---
+app.get('/api/favorites/:userId', (req, res) => {
+    const favs = JSON.parse(fs.readFileSync(FAVORITES_FILE, 'utf8'));
+    const goods = JSON.parse(fs.readFileSync(GOODS_FILE, 'utf8'));
+    let userFav = favs.find(f => f.userId === req.params.userId);
+    if (!userFav) { return res.json([]); }
+    const items = userFav.goodsIds.map(id => goods.find(g => g.id === id)).filter(Boolean);
+    res.json(items);
+});
+
+app.post('/api/favorites/:userId', (req, res) => {
+    const { goodsId } = req.body;
+    let favs = JSON.parse(fs.readFileSync(FAVORITES_FILE, 'utf8'));
+    let userFav = favs.find(f => f.userId === req.params.userId);
+    if (!userFav) {
+        userFav = { userId: req.params.userId, goodsIds: [] };
+        favs.push(userFav);
+    }
+    if (!userFav.goodsIds.includes(goodsId)) {
+        userFav.goodsIds.push(goodsId);
+    }
+    saveData(FAVORITES_FILE, favs);
+    res.json({ message: '已收藏', goodsIds: userFav.goodsIds });
+});
+
+app.delete('/api/favorites/:userId/:goodsId', (req, res) => {
+    let favs = JSON.parse(fs.readFileSync(FAVORITES_FILE, 'utf8'));
+    let userFav = favs.find(f => f.userId === req.params.userId);
+    if (userFav) {
+        userFav.goodsIds = userFav.goodsIds.filter(id => id !== parseInt(req.params.goodsId));
+    }
+    saveData(FAVORITES_FILE, favs);
+    res.json({ message: '已取消收藏' });
+});
+
+// --- 商品评价 ---
+app.get('/api/reviews/:goodsId', (req, res) => {
+    const reviews = JSON.parse(fs.readFileSync(REVIEWS_FILE, 'utf8'));
+    res.json(reviews.filter(r => r.goodsId === parseInt(req.params.goodsId)));
+});
+
+app.post('/api/reviews', (req, res) => {
+    const { goodsId, userId, userName, rating, tags, content } = req.body;
+    if (!goodsId || !userId || !rating) {
+        return res.status(400).json({ error: '缺少评价信息' });
+    }
+    let reviews = JSON.parse(fs.readFileSync(REVIEWS_FILE, 'utf8'));
+    const review = {
+        id: Date.now().toString(),
+        goodsId, userId, userName: userName || '匿名用户', rating: Math.min(5, Math.max(1, rating)),
+        tags: tags || [], content: content || '',
+        createdAt: new Date().toISOString()
+    };
+    reviews.push(review);
+    saveData(REVIEWS_FILE, reviews);
+    res.json({ message: '评价已发表', review });
+});
+
+// --- 订单状态更新（模拟物流） ---
+app.put('/api/orders/:orderId/status', (req, res) => {
+    const { status, trackingNumber } = req.body;
+    const validStatuses = ['paid', 'shipped', 'delivered', 'completed'];
+    if (!validStatuses.includes(status)) {
+        return res.status(400).json({ error: '无效状态' });
+    }
+    let orders = JSON.parse(fs.readFileSync(ORDERS_FILE, 'utf8'));
+    const order = orders.find(o => o.id === req.params.orderId);
+    if (!order) return res.status(404).json({ error: '订单不存在' });
+    order.status = status;
+    if (!order.statusHistory) order.statusHistory = [];
+    order.statusHistory.push({ status, time: new Date().toISOString() });
+    if (trackingNumber) order.trackingNumber = trackingNumber;
+    if (status === 'shipped') {
+        order.logisticsInfo = '您的包裹正在运输中，快递员正在快马加鞭为您配送';
+    } else if (status === 'delivered') {
+        order.logisticsInfo = '您的包裹已送达，请查收！如有问题请联系子女或客服';
+    }
+    saveData(ORDERS_FILE, orders);
+    res.json({ message: '订单状态已更新', order });
 });
 
 // ============ 启动服务器 ============

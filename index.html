@@ -20,10 +20,14 @@
             overflow-x: hidden;
         }
 
+        :root {
+            --base-font: 20px;
+        }
+
         body {
             background: #FFF8F0;
             padding: env(safe-area-inset-top) 8px env(safe-area-inset-bottom) 8px;
-            font-size: 20px;
+            font-size: var(--base-font);
             line-height: 1.5;
             max-width: 100%;
             margin: 0 auto;
@@ -1691,6 +1695,125 @@
         .a11y-dialog-btn.confirm:hover {
             background: #F57C00;
         }
+
+        /* 字体大小调节 */
+        .font-size-controls {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin: 12px 0;
+            align-items: center;
+        }
+        .font-size-label { font-size: 13px; color: #999; }
+        .font-btn {
+            width: 44px; height: 44px; border-radius: 50%;
+            border: 2px solid #ddd; background: white;
+            font-size: 18px; font-weight: bold; cursor: pointer; color: #555;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .font-btn:hover { background: #FFF3E0; border-color: #FF8C42; }
+
+        /* 通知徽章 */
+        .badge {
+            display: inline-block; min-width: 22px; height: 22px; line-height: 22px;
+            border-radius: 11px; background: #E53935; color: white;
+            font-size: 12px; font-weight: bold; text-align: center; padding: 0 6px;
+            vertical-align: top; margin-left: 4px;
+        }
+        .badge:empty { display: none; }
+
+        /* 收藏按钮 */
+        .fav-btn {
+            background: none; border: none; font-size: 22px; cursor: pointer;
+            padding: 4px 8px; transition: transform 0.2s;
+        }
+        .fav-btn:hover { transform: scale(1.3); }
+        .fav-btn.faved { color: #E53935; }
+        .fav-btn:not(.faved) { opacity: 0.5; }
+
+        /* 对比复选框 */
+        .compare-check {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 13px; color: #888; margin-top: 4px;
+        }
+        .compare-check input { width: 18px; height: 18px; accent-color: #FF8C42; }
+
+        /* 对比浮动栏 */
+        .compare-float-bar {
+            position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+            background: #333; color: white; padding: 10px 20px; border-radius: 24px;
+            font-size: 16px; font-weight: bold; cursor: pointer; z-index: 999;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3); display: none;
+        }
+        .compare-float-bar.show { display: block; }
+
+        /* 地址卡片 */
+        .addr-card {
+            border: 2px solid #FFE0B2; border-radius: 12px; padding: 12px;
+            margin: 8px 0; background: #FFFDF9; position: relative;
+        }
+        .addr-card.default { border-color: #FF8C42; background: #FFF8F0; }
+        .addr-card .addr-default-tag {
+            font-size: 12px; color: #FF8C42; font-weight: bold;
+        }
+        .addr-card .addr-actions { margin-top: 8px; display: flex; gap: 8px; }
+
+        /* 订单进度条 */
+        .order-progress { display: flex; justify-content: space-between; margin: 16px 0; position: relative; }
+        .order-progress::before {
+            content: ''; position: absolute; top: 14px; left: 10%; right: 10%;
+            height: 4px; background: #eee; z-index: 0;
+        }
+        .progress-step {
+            display: flex; flex-direction: column; align-items: center;
+            z-index: 1; font-size: 12px; color: #999; flex: 1;
+        }
+        .progress-step .dot {
+            width: 32px; height: 32px; border-radius: 50%; background: #eee;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px; margin-bottom: 4px;
+        }
+        .progress-step.done .dot { background: #FF8C42; color: white; }
+        .progress-step.done { color: #FF8C42; font-weight: bold; }
+
+        /* 评价星级 */
+        .stars { display: flex; gap: 4px; font-size: 28px; cursor: pointer; }
+        .stars .star { color: #ddd; transition: color 0.2s; }
+        .stars .star.on { color: #FFB300; }
+        .stars.readonly { cursor: default; }
+
+        /* 评价标签按钮 */
+        .review-tag-btn {
+            font-size: 14px; padding: 6px 14px; border: 2px solid #ddd;
+            border-radius: 20px; background: white; cursor: pointer;
+            margin: 4px; transition: all 0.2s;
+        }
+        .review-tag-btn.selected {
+            background: #FF8C42; color: white; border-color: #FF8C42;
+        }
+
+        /* 常买清单 */
+        .frequent-section { margin: 14px 0; }
+        .frequent-title { font-size: 20px; font-weight: bold; color: #5D4037; text-align: center; margin-bottom: 10px; }
+        .frequent-add-all {
+            width: 100%; height: 42px; font-size: 16px; background: #FFA726;
+            color: white; border: none; border-radius: 12px; cursor: pointer;
+            font-weight: bold; margin-top: 8px; transition: background 0.2s;
+        }
+        .frequent-add-all:hover { background: #F57C00; }
+
+        /* 对比页 */
+        .compare-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .compare-card {
+            border: 2px solid #FFE0B2; border-radius: 14px; padding: 14px;
+            background: #FFFDF9; text-align: center;
+        }
+        .compare-card .compare-emoji {
+            font-size: 72px; padding: 16px; border-radius: 12px; margin-bottom: 8px;
+        }
+        .compare-card .compare-price { font-size: 24px; font-weight: bold; color: #E65100; }
+        .compare-card .compare-detail { font-size: 14px; color: #666; line-height: 1.6; text-align: left; margin-top: 8px; }
+        .compare-card .compare-better { color: #4CAF50; font-weight: bold; }
     </style>
 </head>
 
@@ -1795,7 +1918,23 @@
                 <img src="images/cart.png" alt="" role="presentation"/>
                 我选好的东西
             </button>
+            <!-- 快捷入口 -->
+            <div style="display:flex;gap:8px;margin-top:8px;">
+                <button class="btn look" onclick="go(12)" style="height:56px;font-size:16px;flex:1;">❤️ 我收藏的</button>
+                <button class="btn look" onclick="go(11)" style="height:56px;font-size:16px;flex:1;">📍 收货地址</button>
+            </div>
+            <!-- 常买清单 -->
+            <div class="frequent-section voice-mode-hide" id="frequentSection" style="display:none;">
+                <div class="frequent-title">📋 常买清单</div>
+                <div class="goods-list" id="frequentList"></div>
+                <button class="frequent-add-all" onclick="addAllFrequent()">一键加入购物车</button>
+            </div>
             <button class="back" onclick="logout()" style="margin-top:24px;">退出登录</button>
+            <div class="font-size-controls">
+                <span class="font-size-label">字号：</span>
+                <button class="font-btn" onclick="changeFontSize(-1)" title="缩小字号">A-</button>
+                <button class="font-btn" onclick="changeFontSize(1)" title="放大字号">A+</button>
+            </div>
         </div>
         <div class="low-vision-workspace" id="lowVisionWorkspace" aria-live="polite">
             <div class="low-vision-label">低视力/盲人购物模式 · 每次只读一个选择</div>
@@ -1832,7 +1971,7 @@
             <div class="guardian-subtitle">这里不是简单代付，而是帮父母确认“买了什么、为什么提醒、是否适合付款”。</div>
         </div>
         <div class="guardian-tabs">
-            <button class="guardian-tab-btn food" onclick="showChildTab('pending')" id="tabPending">今日待确认</button>
+            <button class="guardian-tab-btn food" onclick="showChildTab('pending')" id="tabPending">今日待确认 <span class="badge" data-badge="pending" id="pendingBadge"></span></button>
             <button class="guardian-tab-btn daily" onclick="showChildTab('paid')" id="tabPaid">已帮家人付好</button>
         </div>
         <div id="pendingOrdersList"></div>
@@ -1852,6 +1991,43 @@
         <button class="back voice-mode-hide" onclick="goBackFromDetail()">返回</button>
         <div class="detail-container voice-mode-hide" id="detailContainer"></div>
     </div>
+
+    <!-- 页面11：收货地址管理 -->
+    <div id="page11" class="page">
+        <button class="back voice-mode-hide" onclick="go(1)">返回首页</button>
+        <div class="title">收货地址</div>
+        <div id="addressList"></div>
+        <div id="addressForm" style="display:none;">
+            <div class="form-group"><label>收货人姓名</label><input type="text" id="addrName" placeholder="请输入收货人姓名"></div>
+            <div class="form-group"><label>手机号</label><input type="tel" id="addrPhone" placeholder="请输入手机号"></div>
+            <div class="form-group"><label>省份</label><input type="text" id="addrProvince" placeholder="如：广东"></div>
+            <div class="form-group"><label>城市</label><input type="text" id="addrCity" placeholder="如：深圳"></div>
+            <div class="form-group"><label>区/县</label><input type="text" id="addrDistrict" placeholder="如：南山区"></div>
+            <div class="form-group"><label>详细地址</label><input type="text" id="addrDetail" placeholder="如：某某小区1栋101"></div>
+            <button class="auth-btn" onclick="saveAddress()">保存地址</button>
+            <button class="back" onclick="cancelAddressForm()" style="margin-top:8px;">取消</button>
+        </div>
+        <button class="auth-btn" id="showAddrFormBtn" onclick="showAddressForm()" style="margin-top:12px;">➕ 新增地址</button>
+    </div>
+
+    <!-- 页面12：我的收藏 -->
+    <div id="page12" class="page">
+        <button class="back voice-mode-hide" onclick="go(1)">返回首页</button>
+        <div class="title">我的收藏 ❤️</div>
+        <div class="goods-list" id="favoriteList"></div>
+        <div class="empty-tip" id="favEmptyTip" style="display:none;">还没有收藏任何商品，去逛逛吧 🛒</div>
+    </div>
+
+    <!-- 页面13：商品对比 -->
+    <div id="page13" class="page">
+        <button class="back voice-mode-hide" onclick="goBackFromDetail()">返回</button>
+        <div class="title">商品对比</div>
+        <div class="compare-container" id="compareContainer"></div>
+        <button class="auth-btn" onclick="clearCompare()" style="margin-top:12px;">清空对比</button>
+    </div>
+
+    <!-- 对比浮动按钮 -->
+    <button class="compare-float-bar voice-mode-hide" id="compareFloatBar" onclick="goCompare()">📊 开始对比 (0/2)</button>
 
     <!-- 页面2：食品饮料（含子分类） -->
     <div id="page2" class="page">
@@ -1923,6 +2099,13 @@
             </div>
             <div class="ai-advice-content" id="aiAdviceContent">
                 点击按钮，让AI帮你分析一下购物清单，看看有没有漏掉什么好东西！
+            </div>
+        </div>
+        <!-- 收货地址选择 -->
+        <div class="voice-mode-hide" style="margin:12px 0;" id="checkoutAddrSection">
+            <div style="font-size:16px;font-weight:bold;margin-bottom:6px;">📍 收货地址</div>
+            <div id="checkoutAddrDisplay" style="font-size:15px;color:#666;padding:8px;border:2px dashed #ddd;border-radius:10px;text-align:center;cursor:pointer;" onclick="go(11)">
+                点击选择收货地址
             </div>
         </div>
         <button class="btn pay voice-mode-hide" onclick="pay()" style="width:100%;height:68px;font-size:20px">
@@ -2005,6 +2188,28 @@
     let assistiveModeEnabled = false;
     let lowVisionItems = [];
     let lowVisionIndex = 0;
+    let compareList = [];       // 对比列表（最多2个商品ID）
+    let favoriteIds = [];       // 收藏商品ID列表
+    let selectedAddressId = null; // 结算时选中的地址ID
+    const FONT_SIZES = [16, 20, 24, 28]; // 字号档位
+
+    // ============ 字体大小调节 ============
+    function changeFontSize(delta) {
+        const root = document.documentElement;
+        const current = parseInt(getComputedStyle(root).getPropertyValue('--base-font'));
+        let idx = FONT_SIZES.indexOf(current);
+        if (idx === -1) idx = 1; // 默认20px
+        const newIdx = Math.max(0, Math.min(FONT_SIZES.length - 1, idx + delta));
+        const newSize = FONT_SIZES[newIdx];
+        root.style.setProperty('--base-font', newSize + 'px');
+        localStorage.setItem('fontSize', newSize);
+    }
+    function initFontSize() {
+        const saved = localStorage.getItem('fontSize');
+        if (saved) {
+            document.documentElement.style.setProperty('--base-font', saved + 'px');
+        }
+    }
 
     // ============ 无障碍确认弹窗 ============
     let accessibleDialogResolve = null;
@@ -2070,8 +2275,8 @@
     });
 
     // ============ 页面切换 ============
-    const AI_PAGES = ['page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page8', 'page9', 'page10']; // 显示AI按钮的页面
-    const READ_ALOUD_PAGES = ['page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page7', 'page8', 'page9', 'page10'];
+    const AI_PAGES = ['page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page8', 'page9', 'page10', 'page11', 'page12', 'page13'];
+    const READ_ALOUD_PAGES = ['page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page7', 'page8', 'page9', 'page10', 'page11', 'page12', 'page13'];
 
     // 页面名称映射（用于无障碍朗读）
     const PAGE_NAME_MAP = {
@@ -2177,6 +2382,8 @@
                     document.getElementById('name').textContent = currentUser.name || '';
                 }
                 showPage('page1');
+                loadFavorites();
+                loadFrequentAndShow();
             }
         } else if (num === 2) {
             currentCategory = 'food';
@@ -2209,10 +2416,17 @@
             }
         } else if (num === 6) {
             loadCart();
+            loadCheckoutAddress();
             showPage('page6');
         } else if (num === 9) {
             loadMyOrders();
             showPage('page9');
+        } else if (num === 11) {
+            showPage('page11');
+            loadAddresses();
+        } else if (num === 12) {
+            showPage('page12');
+            loadFavorites();
         }
     }
 
@@ -2367,13 +2581,7 @@
             list.innerHTML = '';
             results.forEach(g => {
                 list.innerHTML += `
-                    <div class="goods-item" onclick="showDetail(${g.id})">
-                        ${getEmojiHtml(g, 'goods-emoji')}
-                        <div class="goods-name">${g.name}</div>
-                        <div class="goods-desc">${g.description || ''}</div>
-                        <div class="goods-price">¥${g.price.toFixed(1)}</div>
-                        <button class="add" onclick="event.stopPropagation(); addCart(${g.id}, '${g.name}', ${g.price})">加入我选好的东西</button>
-                    </div>
+${getGoodsCardHtml(g)}
                 `;
             });
         }
@@ -2481,13 +2689,7 @@
             }
             goods.forEach(g => {
                 container.innerHTML += `
-                    <div class="goods-item" onclick="showDetail(${g.id})">
-                        ${getEmojiHtml(g, 'goods-emoji')}
-                        <div class="goods-name">${g.name}</div>
-                        <div class="goods-desc">${g.description || ''}</div>
-                        <div class="goods-price">¥${g.price.toFixed(1)}</div>
-                        <button class="add" onclick="event.stopPropagation(); addCart(${g.id}, '${g.name}', ${g.price})">加入我选好的东西</button>
-                    </div>
+${getGoodsCardHtml(g)}
                 `;
             });
         } catch (e) {
@@ -2515,6 +2717,13 @@
 
                 container.innerHTML = `
                     <div class="detail-emoji ${catClass}">${g.emoji || '📦'}</div>
+                    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:8px;">
+                        <button class="fav-btn ${favoriteIds.includes(g.id) ? 'faved' : ''}" data-goods-id="${g.id}" onclick="toggleFav(${g.id}, event)" style="font-size:28px;">${favoriteIds.includes(g.id) ? '❤️' : '🤍'}</button>
+                        <div class="compare-check" style="align-items:center;">
+                            <input type="checkbox" data-goods-id="${g.id}" onchange="toggleCompare(${g.id}, event)" ${compareList.includes(g.id) ? 'checked' : ''}>
+                            <span>加入对比</span>
+                        </div>
+                    </div>
                     <div class="detail-name">${g.name}</div>
                     <div class="detail-price">¥${g.price.toFixed(1)}</div>
                     ${tagsHtml ? `<div class="detail-tags">${tagsHtml}</div>` : ''}
@@ -2522,8 +2731,21 @@
                         <div class="detail-desc-title">📋 东西详情</div>
                         ${g.detailDesc || g.description || '暂无详细介绍'}
                     </div>
+                    <div id="reviewList" style="margin-bottom:14px;"><div class="empty-tip" style="font-size:14px;">加载评价中...</div></div>
+                    <div style="border-top:2px solid #f0f0f0;padding-top:12px;margin-bottom:14px;">
+                        <div style="font-size:16px;font-weight:bold;margin-bottom:6px;">✍️ 写评价</div>
+                        <div class="stars" id="reviewStars">
+                            ${[1,2,3,4,5].map(i => `<span class="star" onclick="setReviewRating(${i})">★</span>`).join('')}
+                        </div>
+                        <div style="margin:8px 0;">
+                            ${['操作简单','性价比高','质量好','适合老人','口感好','发货快','包装好','很实用'].map(t => `<button class="review-tag-btn" onclick="toggleReviewTag('${t}', this)">${t}</button>`).join('')}
+                        </div>
+                        <textarea id="reviewContent" placeholder="写下您的评价..." style="width:100%;height:60px;border:2px solid #ddd;border-radius:10px;padding:8px;font-size:15px;"></textarea>
+                        <button class="add" onclick="submitReview(${g.id})" style="margin-top:8px;">发表评价</button>
+                    </div>
                     <button class="detail-add-btn" onclick="addCart(${g.id}, '${g.name.replace(/'/g, "\\'")}', ${g.price})">加入我选好的东西</button>
                 `;
+                loadReviews(g.id);
 
                 showPage('page10');
             })
@@ -2536,6 +2758,324 @@
         } else {
             go(1);
         }
+    }
+
+    // ============ 收货地址 ============
+    function showAddressForm() {
+        document.getElementById('addressForm').style.display = 'block';
+        document.getElementById('showAddrFormBtn').style.display = 'none';
+    }
+    function cancelAddressForm() {
+        document.getElementById('addressForm').style.display = 'none';
+        document.getElementById('showAddrFormBtn').style.display = 'block';
+        ['addrName','addrPhone','addrProvince','addrCity','addrDistrict','addrDetail'].forEach(id => document.getElementById(id).value = '');
+    }
+    async function saveAddress() {
+        const name = document.getElementById('addrName').value.trim();
+        const phone = document.getElementById('addrPhone').value.trim();
+        const province = document.getElementById('addrProvince').value.trim();
+        const city = document.getElementById('addrCity').value.trim();
+        const district = document.getElementById('addrDistrict').value.trim();
+        const detail = document.getElementById('addrDetail').value.trim();
+        if (!name || !phone || !detail) { alert('请填写姓名、手机号和详细地址'); return; }
+        const res = await fetch(`${API}/api/addresses/${currentUser.userId}`, {
+            method: 'POST', headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({ name, phone, province, city, district, detail })
+        });
+        if (!res.ok) { alert((await res.json()).error); return; }
+        alert('地址已保存！');
+        cancelAddressForm();
+        loadAddresses();
+    }
+    async function loadAddresses() {
+        if (!currentUser) return;
+        const res = await fetch(`${API}/api/addresses/${currentUser.userId}`);
+        const addrs = await res.json();
+        const list = document.getElementById('addressList');
+        if (addrs.length === 0) { list.innerHTML = '<div class="empty-tip">暂无收货地址，请添加</div>'; return; }
+        list.innerHTML = addrs.map(a => `
+            <div class="addr-card ${a.isDefault ? 'default' : ''}">
+                ${a.isDefault ? '<span class="addr-default-tag">⭐ 默认</span>' : ''}
+                <div style="font-size:18px;font-weight:bold;">${a.name} ${a.phone}</div>
+                <div style="font-size:15px;color:#666;margin-top:4px;">${a.province}${a.city}${a.district} ${a.detail}</div>
+                <div class="addr-actions">
+                    ${!a.isDefault ? `<button class="cart-item-remove" onclick="setDefaultAddr('${a.id}')">设为默认</button>` : ''}
+                    <button class="cart-item-remove" style="background:#999;" onclick="deleteAddr('${a.id}')">删除</button>
+                </div>
+            </div>
+        `).join('');
+    }
+    async function setDefaultAddr(addrId) {
+        await fetch(`${API}/api/addresses/${currentUser.userId}/${addrId}/default`, { method: 'PUT' });
+        loadAddresses();
+    }
+    async function deleteAddr(addrId) {
+        if (!confirm('确定删除该地址吗？')) return;
+        await fetch(`${API}/api/addresses/${currentUser.userId}/${addrId}`, { method: 'DELETE' });
+        loadAddresses();
+    }
+
+    async function loadCheckoutAddress() {
+        if (!currentUser) return;
+        const res = await fetch(`${API}/api/addresses/${currentUser.userId}`);
+        const addrs = await res.json();
+        const def = addrs.find(a => a.isDefault) || addrs[0];
+        const display = document.getElementById('checkoutAddrDisplay');
+        if (display && def) {
+            selectedAddressId = def.id;
+            display.innerHTML = `📍 ${def.name} ${def.phone}<br>${def.province}${def.city}${def.district} ${def.detail}`;
+            display.style.borderColor = '#FF8C42';
+            display.style.color = '#333';
+        }
+    }
+
+    // ============ 常买清单 ============
+    async function loadFrequent() {
+        if (!currentUser) return;
+        const res = await fetch(`${API}/api/frequent/${currentUser.userId}`);
+        const items = await res.json();
+        const container = document.getElementById('frequentList');
+        if (!container) return;
+        if (!items || items.length === 0) { container.innerHTML = ''; return; }
+        container.innerHTML = items.map(g => `
+            <div class="goods-item" onclick="showDetail(${g.id})">
+                ${getEmojiHtml(g, 'goods-emoji')}
+                <div class="goods-name">${g.name}</div>
+                <div class="goods-price">¥${g.price.toFixed(1)}</div>
+                <button class="add" onclick="event.stopPropagation(); addCart(${g.id}, '${g.name}', ${g.price})">加入购物车</button>
+            </div>
+        `).join('');
+    }
+    async function addAllFrequent() {
+        const res = await fetch(`${API}/api/frequent/${currentUser.userId}`);
+        const items = await res.json();
+        if (!items || items.length === 0) { alert('暂无购买记录'); return; }
+        for (const g of items) { await addCartSilent(g.id, g.name, g.price); }
+        alert('已全部加入购物车！');
+    }
+    async function addCartSilent(goodsId, name, price) {
+        if (!currentUser) return;
+        try {
+            await fetch(`${API}/api/cart/${currentUser.userId}/items`, {
+                method: 'POST', headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({ goodsId, name, price })
+            });
+        } catch (e) { /* silent */ }
+    }
+
+    // ============ 收藏夹 ============
+    async function toggleFav(goodsId, event) {
+        if (event) event.stopPropagation();
+        if (!currentUser) { alert('请先登录'); return; }
+        const isFaved = favoriteIds.includes(goodsId);
+        if (isFaved) {
+            await fetch(`${API}/api/favorites/${currentUser.userId}/${goodsId}`, { method: 'DELETE' });
+            favoriteIds = favoriteIds.filter(id => id !== goodsId);
+        } else {
+            await fetch(`${API}/api/favorites/${currentUser.userId}`, {
+                method: 'POST', headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({ goodsId })
+            });
+            favoriteIds.push(goodsId);
+        }
+        updateAllFavButtons();
+    }
+    function updateAllFavButtons() {
+        document.querySelectorAll('.fav-btn').forEach(btn => {
+            const gid = parseInt(btn.dataset.goodsId);
+            if (favoriteIds.includes(gid)) { btn.classList.add('faved'); btn.textContent = '❤️'; }
+            else { btn.classList.remove('faved'); btn.textContent = '🤍'; }
+        });
+    }
+    async function loadFavorites() {
+        if (!currentUser) return;
+        const res = await fetch(`${API}/api/favorites/${currentUser.userId}`);
+        const items = await res.json();
+        favoriteIds = items.map(g => g.id);
+        updateAllFavButtons();
+        const list = document.getElementById('favoriteList');
+        const empty = document.getElementById('favEmptyTip');
+        if (list) {
+            if (items.length === 0) { list.innerHTML = ''; if (empty) empty.style.display = 'block'; return; }
+            if (empty) empty.style.display = 'none';
+            list.innerHTML = items.map(g => `
+                <div class="goods-item" onclick="showDetail(${g.id})">
+                    ${getEmojiHtml(g, 'goods-emoji')}
+                    <div class="goods-name">${g.name}</div>
+                    <div class="goods-price">¥${g.price.toFixed(1)}</div>
+                    <button class="add" onclick="event.stopPropagation(); addCart(${g.id}, '${g.name}', ${g.price})">加入购物车</button>
+                </div>
+            `).join('');
+        }
+    }
+
+    // ============ 商品对比 ============
+    function toggleCompare(goodsId, event) {
+        if (event) event.stopPropagation();
+        if (compareList.includes(goodsId)) {
+            compareList = compareList.filter(id => id !== goodsId);
+        } else if (compareList.length < 2) {
+            compareList.push(goodsId);
+        } else {
+            alert('最多对比2个商品，请先移除一个');
+            return;
+        }
+        updateCompareUI();
+    }
+    function updateCompareUI() {
+        const bar = document.getElementById('compareFloatBar');
+        if (bar) {
+            bar.textContent = `📊 开始对比 (${compareList.length}/2)`;
+            bar.classList.toggle('show', compareList.length > 0);
+        }
+        document.querySelectorAll('.compare-check input').forEach(cb => {
+            cb.checked = compareList.includes(parseInt(cb.dataset.goodsId));
+        });
+    }
+    function goCompare() {
+        if (compareList.length < 2) { alert('请先选择2个商品进行对比'); return; }
+        lastPage = document.querySelector('.page.active').id;
+        fetch(`${API}/api/goods`)
+            .then(r => r.json())
+            .then(goods => {
+                const g1 = goods.find(g => g.id === compareList[0]);
+                const g2 = goods.find(g => g.id === compareList[1]);
+                if (!g1 || !g2) { alert('商品不存在'); return; }
+                const container = document.getElementById('compareContainer');
+                const catClass1 = 'emoji-' + (g1.category || 'food');
+                const catClass2 = 'emoji-' + (g2.category || 'food');
+                container.innerHTML = `
+                    <div class="compare-card">
+                        <div class="compare-emoji ${catClass1}">${g1.emoji}</div>
+                        <div class="goods-name">${g1.name}</div>
+                        <div class="compare-price ${g1.price < g2.price ? 'compare-better' : ''}">¥${g1.price.toFixed(1)}${g1.price < g2.price ? ' ✓更实惠' : ''}</div>
+                        <div class="compare-detail">${g1.detailDesc || g1.description}</div>
+                        <div style="margin-top:8px;">${(g1.tags||[]).map(t=>`<span class="review-tag-btn" style="cursor:default;">${t}</span>`).join('')}</div>
+                    </div>
+                    <div class="compare-card">
+                        <div class="compare-emoji ${catClass2}">${g2.emoji}</div>
+                        <div class="goods-name">${g2.name}</div>
+                        <div class="compare-price ${g2.price < g1.price ? 'compare-better' : ''}">¥${g2.price.toFixed(1)}${g2.price < g1.price ? ' ✓更实惠' : ''}</div>
+                        <div class="compare-detail">${g2.detailDesc || g2.description}</div>
+                        <div style="margin-top:8px;">${(g2.tags||[]).map(t=>`<span class="review-tag-btn" style="cursor:default;">${t}</span>`).join('')}</div>
+                    </div>
+                `;
+                showPage('page13');
+            });
+    }
+    function clearCompare() {
+        compareList = [];
+        updateCompareUI();
+        goBackFromDetail();
+    }
+
+    // ============ 子女通知徽章 ============
+    async function updateNotificationBadge() {
+        if (!currentUser || currentUser.relation !== 'child') return;
+        try {
+            const res = await fetch(`${API}/api/orders/pending?childUserId=${currentUser.userId}`);
+            const orders = await res.json();
+            const cnt = orders.length;
+            const badges = document.querySelectorAll('.badge[data-badge="pending"]');
+            badges.forEach(b => { b.textContent = cnt > 0 ? cnt : ''; });
+        } catch (e) { /* silent */ }
+    }
+
+    // ============ 订单物流追踪 ============
+    function toggleOrderDetail(orderId) {
+        const detail = document.getElementById('orderDetail_' + orderId);
+        if (detail) {
+            detail.style.display = detail.style.display === 'none' ? 'block' : 'none';
+        }
+    }
+    function renderOrderProgress(order) {
+        const steps = [
+            { key: 'pending', label: '已提交', icon: '📝' },
+            { key: 'paid', label: '已付款', icon: '💰' },
+            { key: 'shipped', label: '已发货', icon: '📦' },
+            { key: 'delivered', label: '已送达', icon: '✅' }
+        ];
+        const currentIdx = steps.findIndex(s => s.key === order.status);
+        return `
+            <div class="order-progress">
+                ${steps.map((s, i) => `
+                    <div class="progress-step ${i <= currentIdx ? 'done' : ''}">
+                        <div class="dot">${s.icon}</div>
+                        <span>${s.label}</span>
+                    </div>
+                `).join('')}
+            </div>
+            ${order.logisticsInfo ? `<div style="font-size:15px;color:#666;text-align:center;margin:8px 0;">${order.logisticsInfo}</div>` : ''}
+            ${order.trackingNumber ? `<div style="font-size:13px;color:#999;text-align:center;">快递单号：${order.trackingNumber}</div>` : ''}
+        `;
+    }
+
+    // ============ 商品评价 ============
+    let reviewRating = 0;
+    let reviewTags = [];
+    function setReviewRating(rating) {
+        reviewRating = rating;
+        document.querySelectorAll('#reviewStars .star').forEach((s, i) => {
+            s.classList.toggle('on', i < rating);
+        });
+    }
+    function toggleReviewTag(tag, btn) {
+        if (reviewTags.includes(tag)) { reviewTags = reviewTags.filter(t => t !== tag); btn.classList.remove('selected'); }
+        else { reviewTags.push(tag); btn.classList.add('selected'); }
+    }
+    async function submitReview(goodsId) {
+        if (!currentUser) { alert('请先登录'); return; }
+        if (reviewRating === 0) { alert('请给商品打分'); return; }
+        const content = document.getElementById('reviewContent').value.trim();
+        await fetch(`${API}/api/reviews`, {
+            method: 'POST', headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({ goodsId, userId: currentUser.userId, userName: currentUser.name, rating: reviewRating, tags: reviewTags, content })
+        });
+        alert('评价已发表！');
+        reviewRating = 0; reviewTags = [];
+        showDetail(goodsId);
+    }
+    async function loadReviews(goodsId) {
+        const res = await fetch(`${API}/api/reviews/${goodsId}`);
+        const reviews = await res.json();
+        const container = document.getElementById('reviewList');
+        if (!container) return;
+        if (reviews.length === 0) { container.innerHTML = '<div class="empty-tip" style="font-size:14px;">暂无评价，成为第一个评价的人吧 ✍️</div>'; return; }
+        const avgRating = (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1);
+        container.innerHTML = `
+            <div style="font-size:20px;font-weight:bold;margin-bottom:8px;">⭐ ${avgRating} 分 (${reviews.length}条评价)</div>
+            ${reviews.map(r => `
+                <div style="border-top:1px solid #f0f0f0;padding:8px 0;">
+                    <div style="display:flex;justify-content:space-between;">
+                        <span style="font-weight:bold;">${r.userName}</span>
+                        <span style="color:#FFB300;">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span>
+                    </div>
+                    ${r.tags.length > 0 ? `<div>${r.tags.map(t=>`<span class="review-tag-btn" style="cursor:default;font-size:12px;">${t}</span>`).join('')}</div>` : ''}
+                    ${r.content ? `<div style="font-size:14px;color:#555;margin-top:4px;">${r.content}</div>` : ''}
+                    <div style="font-size:11px;color:#999;">${new Date(r.createdAt).toLocaleDateString('zh-CN')}</div>
+                </div>
+            `).join('')}
+        `;
+    }
+
+    // ============ 商品卡片辅助函数 ============
+    function getGoodsCardHtml(g) {
+        return `
+            <div class="goods-item" onclick="showDetail(${g.id})">
+                ${getEmojiHtml(g, 'goods-emoji')}
+                <div class="goods-name">${g.name}</div>
+                <div class="goods-desc">${g.description || ''}</div>
+                <div class="goods-price">¥${g.price.toFixed(1)}</div>
+                <div style="display:flex;width:100%;justify-content:space-between;align-items:center;">
+                    <button class="fav-btn" data-goods-id="${g.id}" onclick="toggleFav(${g.id}, event)">🤍</button>
+                    <div class="compare-check" onclick="event.stopPropagation();">
+                        <input type="checkbox" data-goods-id="${g.id}" onchange="toggleCompare(${g.id}, event)">
+                        <span>对比</span>
+                    </div>
+                    <button class="add" style="flex:1;margin:0 4px;" onclick="event.stopPropagation(); addCart(${g.id}, '${g.name}', ${g.price})">加入购物车</button>
+                </div>
+            </div>
+        `;
     }
 
     // 检查是否已登录
@@ -2596,13 +3136,7 @@
             container.innerHTML = '';
             goods.forEach(g => {
                 container.innerHTML += `
-                    <div class="goods-item" onclick="showDetail(${g.id})">
-                        ${getEmojiHtml(g, 'goods-emoji')}
-                        <div class="goods-name">${g.name}</div>
-                        <div class="goods-desc">${g.description || ''}</div>
-                        <div class="goods-price">¥${g.price.toFixed(1)}</div>
-                        <button class="add" onclick="event.stopPropagation(); addCart(${g.id}, '${g.name}', ${g.price})">加入我选好的东西</button>
-                    </div>
+${getGoodsCardHtml(g)}
                 `;
             });
         } catch (e) {
@@ -3027,16 +3561,19 @@
                 const itemsHtml = order.items.map(item =>
                     `<div class="order-item-row">${item.name}  ￥${item.price.toFixed(1)}</div>`
                 ).join('');
+                const statusLabels = { pending: '等子女付款中...', paid: '已付款', shipped: '已发货 📦', delivered: '已送达 ✅', completed: '已完成' };
+                const isActive = order.status !== 'pending';
 
                 container.innerHTML += `
-                    <div class="order-card">
+                    <div class="order-card" ${isActive ? `onclick="toggleOrderDetail('${order.id}')" style="cursor:pointer;"` : ''}>
                         <div class="order-header">
                             <span class="order-id">编号：${order.id}</span>
-                            <span class="order-status ${order.status}">${order.status === 'pending' ? '等子女帮忙付钱中...' : '子女已帮忙付钱 ✅'}</span>
+                            <span class="order-status ${order.status}">${statusLabels[order.status] || order.status}</span>
                         </div>
                         <div class="order-items">${itemsHtml}</div>
                         <div class="order-total">合计：¥${order.total.toFixed(1)}</div>
                         <div style="font-size:12px;color:#999;text-align:right;">提交时间：${new Date(order.createdAt).toLocaleString('zh-CN')}</div>
+                        ${isActive ? `<div id="orderDetail_${order.id}" style="display:none;margin-top:8px;">${renderOrderProgress(order)}</div>` : ''}
                     </div>
                 `;
             });
@@ -4398,6 +4935,7 @@
     };
 
     // ============ 初始化 ============
+    initFontSize();
     checkLogin();
     if (currentUser) {
         // 已登录：直接进入对应首页
@@ -4407,12 +4945,26 @@
             loadPendingOrders();
             showChildTab('pending');
             showPage('page7');
+            updateNotificationBadge();
         } else {
             document.getElementById('name').textContent = currentUser.name || '';
             showPage('page1');
+            loadFavorites();
+            loadFrequentAndShow();
+            updateNotificationBadge();
             if (localStorage.getItem('seniorshop_voice_mode') === '1') {
                 enterVoiceMode(true);
             }
+        }
+        updateAllFavButtons();
+    }
+    async function loadFrequentAndShow() {
+        const res = await fetch(`${API}/api/frequent/${currentUser.userId}`);
+        const items = await res.json();
+        const section = document.getElementById('frequentSection');
+        if (section && items && items.length > 0) {
+            section.style.display = 'block';
+            loadFrequent();
         }
     }
     // 未登录：默认显示身份选择页面（pageRoleSelect 已在 HTML 中设为 active）
