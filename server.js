@@ -798,6 +798,40 @@ app.post('/api/orders/:orderId/pay', (req, res) => {
     res.json({ message: '代付成功！', order });
 });
 
+// 退回订单（子女退回让家人重新确认）
+app.put('/api/orders/:orderId/return', (req, res) => {
+    const { childUserId } = req.body;
+    if (!childUserId) {
+        return res.status(400).json({ error: '缺少子女用户ID' });
+    }
+
+    let orders = JSON.parse(fs.readFileSync(ORDERS_FILE, 'utf8'));
+    const order = orders.find(o => o.id === req.params.orderId);
+    if (!order) {
+        return res.status(404).json({ error: '订单不存在' });
+    }
+    if (order.status !== 'pending') {
+        return res.status(400).json({ error: '只有待付款订单可以退回' });
+    }
+
+    // 权限校验：该子女是否绑定了该订单对应的老人
+    let users = JSON.parse(fs.readFileSync(USERS_FILE, 'utf8'));
+    const child = users.find(u => u.id === childUserId);
+    if (!child || !child.parentId) {
+        return res.status(403).json({ error: '无权限' });
+    }
+    if (order.userId !== child.parentId) {
+        return res.status(403).json({ error: '该订单不属于您绑定的老人' });
+    }
+
+    order.status = 'returned';
+    order.returnedAt = new Date().toISOString();
+    order.returnedBy = childUserId;
+    saveData(ORDERS_FILE, orders);
+
+    res.json({ message: '已退回，老人可重新确认', order });
+});
+
 // --- 商品搜索 ---
 app.get('/api/search', (req, res) => {
     const q = (req.query.q || '').trim().toLowerCase();
