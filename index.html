@@ -2944,6 +2944,8 @@
     // 关闭 AI 聊天窗口
     function closeAiChat() {
         document.getElementById('aiChatOverlay').classList.remove('active');
+        // 关闭时停止所有语音播报
+        stopAllSpeech();
     }
 
     // 点击遮罩层关闭
