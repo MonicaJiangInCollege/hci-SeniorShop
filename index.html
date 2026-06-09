@@ -3898,6 +3898,8 @@
                 micBtn.classList.add('recording');
                 micBtn.innerHTML = '⏹';
                 micBtn.title = '停止录音';
+                // 开始说话时，立即停止正在播报的 TTS
+                stopAllSpeech();
             } catch (err) {
                 console.error('启动语音识别失败:', err);
             }
@@ -3922,6 +3924,24 @@
 
         const input = document.getElementById('aiChatInput');
         input.placeholder = '问我任何购物问题...';
+    }
+
+    // 停止所有正在播放的语音（百度 TTS + 浏览器 TTS）
+    function stopAllSpeech() {
+        // 停止百度 TTS（Audio 元素）
+        if (currentAudioElement) {
+            currentAudioElement.pause();
+            currentAudioElement.currentTime = 0;
+            const url = currentAudioElement.src;
+            currentAudioElement = null;
+            if (url && url.startsWith('blob:')) {
+                URL.revokeObjectURL(url);
+            }
+        }
+        // 停止浏览器内置 TTS
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+        }
     }
 
     // 移除文本中的 Emoji 和特殊符号（TTS 无法正确朗读）
